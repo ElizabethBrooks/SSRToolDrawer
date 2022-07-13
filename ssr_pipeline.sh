@@ -25,11 +25,8 @@ infoPath=$(grep "info:" "InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 #Make a new directory for project analysis
 projectDir=$(basename $readPath)
 
-#Move to the data directory
-cd $readPath
-
 #Name output file of inputs
-inputOutFile="summary.txt"
+inputOutFile=$readPath"/ssr_pipeline_summary.txt"
 echo "SSR pipline for $projectDir" > $inputOutFile
 
 #Loop through all filtered sam files
