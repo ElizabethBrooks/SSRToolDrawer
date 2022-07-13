@@ -18,9 +18,9 @@ conda activate python2
 inputsFile=$1
 
 #Retrieve paired reads absolute path for alignment
-readPath=$(grep "reads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/reads://g")
+readPath=$(grep "reads:" "InputData/"$inputsFile | tr -d " " | sed "s/reads://g")
 #Retrieve adapter absolute path for alignment
-infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
+infoPath=$(grep "info:" "InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 
 #Make a new directory for project analysis
 projectDir=$(basename $readPath)
