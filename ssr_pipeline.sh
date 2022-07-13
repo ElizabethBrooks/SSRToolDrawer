@@ -4,7 +4,7 @@
 #$ -r n
 #$ -N ssr_pipeline_jobOutput
 #$ -pe smp 8
-#Script to perform trimmomatic trimming of paired end reads
+#Script to run the SSR pipeline
 #Usage: qsub ssr_pipeline.sh inputsFile
 #Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_test_July2022.txt
 
@@ -12,8 +12,12 @@
 module load bio
 
 #Activate the python2 environment
+#source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
 #conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 #conda activate python2
+
+#Make sure numpy is installed
+#pip install numpy
 
 #Retrieve input argument of a inputs file
 inputsFile=$1
@@ -33,7 +37,7 @@ echo "SSR pipline for $projectDir" > $inputOutFile
 #Loop through all filtered sam files
 for f1 in "$readPath"/*_L001.sam.filter50.sam; do
 	#Print status message
-	echo "Processing $curSample"
+	echo "Processing $f1"
 	#Run SSR pipeline
 	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
 	python2 SnipMatrix.py $f1".Matrix.txt"
