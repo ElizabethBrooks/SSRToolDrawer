@@ -48,7 +48,7 @@ for f1 in "$readPath"/*_L001.sam; do
 	echo python2 SnipMatrix.py $f1".Matrix.txt" >> $inputOutFile
 	#Status message
 	echo "Processed!"
-#done
+done
 
 #Retrieve sample list
 #sampleList=$(ls /scratch365/ebrooks5/romero_test_July2022/sam/*_L001.sam.filter50.sam | sed "s/^/\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' ')
