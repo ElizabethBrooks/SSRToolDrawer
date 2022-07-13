@@ -51,6 +51,7 @@ echo "SSR pipline for $projectDir" > $inputOutFile
 #done
 
 #Retrieve sample list
+#ls /scratch365/ebrooks5/romero_test_July2022/sam/*_L001.sam.filter50.sam | sed "s/^/\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' '
 #sampleList=$(ls "$readPath"/*_L001.sam.filter50.sam | sed "s/\/scratch365\/ebrooks5\/romero_test_July2022\/sam\//\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' ')
 
 #Format matrix
