@@ -17,7 +17,8 @@ for i in contig_list:
 	print >> G, i,"		",  
 print >> G
 for i in sample_list:
-	os.system("cp "+i+".sam.Matrix.1.txt.trimmed.txt temp")
+	os.system("cp "+i+".sam.Matrix.txt.trimmed.txt temp")
+	#os.system("cp "+i+".sam.Matrix.1.txt.trimmed.txt temp")
 	os.system("sed temp -e '1,1d' > tempA")
 	os.system("sed -i -e 's/([0-9]\+)//g' tempA")
 	os.system("rm temp")

@@ -37,9 +37,9 @@ inputOutFile=$readPath"/ssr_pipeline_summary.txt"
 echo "SSR pipline for $projectDir" > $inputOutFile
 
 #Loop through all filtered sam files
-for f1 in "$readPath"/*_L001.sam.filter50.sam; do
+#for f1 in "$readPath"/*_L001.sam.filter50.sam; do
 	#Print status message
-	echo "Processing $f1"
+	#echo "Processing $f1"
 	#Run SSR pipeline
 	#python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
 	#python2 SnipMatrix.py $f1".Matrix.txt"
@@ -47,8 +47,8 @@ for f1 in "$readPath"/*_L001.sam.filter50.sam; do
 	#echo python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired" >> $inputOutFile
 	#echo python2 SnipMatrix.py $f1".Matrix.txt" >> $inputOutFile
 	#Status message
-	echo "Processed!"
-done
+	#echo "Processed!"
+#done
 
 #Retrieve sample list
 #sampleList=$(ls "$readPath"/*_L001.sam.filter50.sam | sed "s/\/scratch365\/ebrooks5\/romero_test_July2022\/sam\//\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' ')
