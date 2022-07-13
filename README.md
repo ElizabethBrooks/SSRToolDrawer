@@ -13,13 +13,34 @@ SNPMatrix.py: This script will filter the matrix output of GapGenes.py. It filte
 FormatMatrix.py: Formats the output of SNPMatrix.py into a format that can be read by JoinMap.
 
 
+## Workflows
+
 An example workflow would include trimming data with trimmomatic and mapping with BWA. After mapping, the SAM files can be processed as follows.
 
-python GapGenes.v3.py -sam <SAM file> -C <SSR info file> -P/S
-python SnipMatrix.py <Output file from GapGenes>
-python Format_Matrix.py
+- python GapGenes.v3.py -sam \<SAM file\> -C \<SSR info file\> -P/S
+- python SnipMatrix.py \<Output file from GapGenes\>
+- python Format_Matrix.py
   
-  For SNPs, a VCF file must be generated. It is recommended to use a tool like BCFTools. Before calling SNPs you can filter the SAM file to only include reads mapped within 50bp of the SSR. An example of this workflow would be.
-  python SamIAm.py <SAM file> -p <yes/no>
-  <Call SNPs with your workflow>
-    python Format_VCF-Matrix.py
+For SNPs, a VCF file must be generated. It is recommended to use a tool like BCFTools. Before calling SNPs you can filter the SAM file to only include reads mapped within 50bp of the SSR. An example of this workflow would be.
+  
+- python SamIAm.py \<SAM file\> -p \<yes/no\>
+- \<Call SNPs with your workflow\>
+- python Format_VCF-Matrix.py
+
+
+## Data
+
+Original test: 
+- yoda/JRS_MiSeq_7-27-17
+
+1st chestnut:
+- Leia/JRS_Chestnut_11_2019
+- Leia/JRS_Chestnut_11_2019-2
+
+Walnut:
+- Leia/JRS_Black_Walnut_03_2020-1
+- Leia/JRS_Black_Walnut_03_2020-2
+
+Last chestnut:
+- lando/JRS-chestnut_2021_miseq
+- lando/JRS-chestnut_02-2022_miseq

@@ -1,0 +1,2 @@
+reads: /scratch365/ebrooks5/romero_test_July2022/sam
+info: /scratch365/ebrooks5/romero_test_July2022/sam/SSR_info.txt
