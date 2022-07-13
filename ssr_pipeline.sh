@@ -11,9 +11,11 @@
 #Required modules for ND CRC servers
 module load bio
 
-#Activate the python2 environment
-#source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
-#conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
+#Activate the python2 environment for local run
+source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
+conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
+
+#Activate the python2 environment for job run
 #conda activate python2
 
 #Make sure numpy is installed
@@ -40,12 +42,12 @@ for f1 in "$readPath"/*_L001.sam.filter50.sam; do
 	echo "Processing $f1"
 	#Run SSR pipeline
 	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
-	python2 SnipMatrix.py $f1".Matrix.txt"
-	python2 Format_Matrix.py
+	#python2 SnipMatrix.py $f1".Matrix.txt"
+	#python2 Format_Matrix.py
 	#Write inputs out to summary file
 	echo python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired" >> $inputOutFile
-	echo python2 SnipMatrix.py $f1".Matrix.txt" >> $inputOutFile
-	echo python2 Format_Matrix.py >> $inputOutFile
+	#echo python2 SnipMatrix.py $f1".Matrix.txt" >> $inputOutFile
+	#echo python2 Format_Matrix.py >> $inputOutFile
 	#Status message
 	echo "Processed!"
 done
