@@ -12,7 +12,8 @@
 module load bio
 
 #Activate the python2 environment
-conda activate python2
+#conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
+#conda activate python2
 
 #Retrieve input argument of a inputs file
 inputsFile=$1
@@ -34,13 +35,13 @@ for f1 in "$readPath"/*_L001.sam.filter50.sam; do
 	#Print status message
 	echo "Processing $curSample"
 	#Run SSR pipeline
-	python GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
-	python SnipMatrix.py $f1".Matrix.txt"
-	python Format_Matrix.py
+	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
+	python2 SnipMatrix.py $f1".Matrix.txt"
+	python2 Format_Matrix.py
 	#Write inputs out to summary file
-	echo python GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired" >> $inputOutFile
-	echo python SnipMatrix.py $f1".Matrix.txt" >> $inputOutFile
-	echo python Format_Matrix.py >> $inputOutFile
+	echo python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired" >> $inputOutFile
+	echo python2 SnipMatrix.py $f1".Matrix.txt" >> $inputOutFile
+	echo python2 Format_Matrix.py >> $inputOutFile
 	#Status message
 	echo "Processed!"
 done
