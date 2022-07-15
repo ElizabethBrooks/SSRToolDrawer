@@ -31,16 +31,23 @@ For SNPs, a VCF file must be generated. It is recommended to use a tool like BCF
 ## Data
 
 Original test: 
-- yoda/JRS_MiSeq_7-27-17
+- /afs/crc.nd.edu/group/genomics/yoda/JRS_MiSeq_7-27-17
 
 1st chestnut:
-- Leia/JRS_Chestnut_11_2019
-- Leia/JRS_Chestnut_11_2019-2
+- /afs/crc.nd.edu/group/genomics/Leia/JRS_Chestnut_11_2019
+- /afs/crc.nd.edu/group/genomics/Leia/JRS_Chestnut_11_2019-2
 
 Walnut:
-- Leia/JRS_Black_Walnut_03_2020-1
-- Leia/JRS_Black_Walnut_03_2020-2
+- /afs/crc.nd.edu/group/genomics/Leia/JRS_Black_Walnut_03_2020-1
+- /afs/crc.nd.edu/group/genomics/Leia/JRS_Black_Walnut_03_2020-2
 
 Last chestnut:
-- lando/JRS-chestnut_2021_miseq
-- lando/JRS-chestnut_02-2022_miseq
+- /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_2021_miseq
+- /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq
+
+Latest chestnut:
+/afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
+
+## Input Files
+- SSR_info.txt
+- finalset-2.fa
