@@ -2,12 +2,11 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
-#$ -N trimmomatic_projects_jobOutput
+#$ -N trimmomatic_ssr_projects_jobOutput
 #$ -pe smp 8
 #Script to perform trimmomatic trimming of paired end reads
-#Usage: qsub trimmomatic_projects.sh inputsFile
-#Usage Ex: qsub trimmomatic_projects.sh inputPaths_yoon_adipocyte_July2022.txt
-#Usage Ex: qsub trimmomatic_projects.sh inputPaths_yoon_junkrat_July2022.txt
+#Usage: qsub trimmomatic_ssr_projects.sh inputsFile
+#Usage Ex: qsub trimmomatic_ssr_projects.sh inputPaths_romero_test_July2022.txt
 
 #Required modules for ND CRC servers
 module load bio
