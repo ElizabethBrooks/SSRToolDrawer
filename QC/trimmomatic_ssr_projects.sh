@@ -4,7 +4,7 @@
 #$ -r n
 #$ -N trimmomatic_ssr_projects_jobOutput
 #$ -pe smp 8
-#Script to perform trimmomatic trimming of paired end reads
+#Script to perform trimming of paired end reads
 #Usage: qsub trimmomatic_ssr_projects.sh inputsFile
 #Usage Ex: qsub trimmomatic_ssr_projects.sh inputPaths_romero_test_July2022.txt
 
