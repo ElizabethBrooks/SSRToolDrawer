@@ -6,7 +6,7 @@
 #$ -pe smp 8
 #Script to run the SSR pipeline
 #Usage: qsub ssr_pipeline.sh inputsFile
-#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_test_July2022.txt
+#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_July2022.txt
 
 #Required modules for ND CRC servers
 module load bio
@@ -25,9 +25,9 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 inputsFile=$1
 
 #Retrieve paired reads absolute path for alignment
-readPath=$(grep "reads:" "InputData/"$inputsFile | tr -d " " | sed "s/reads://g")
+readPath=$(grep "reads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/reads://g")
 #Retrieve adapter absolute path for alignment
-infoPath=$(grep "info:" "InputData/"$inputsFile | tr -d " " | sed "s/info://g")
+infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 
 #Make a new directory for project analysis
 projectDir=$(basename $readPath)
