@@ -1,4 +1,4 @@
-pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
+reads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
 adapter: /afs/crc.nd.edu/x86_64_linux/bio/Trimmomatic/0.32/adapters/TruSeq3-PE.fa:2:30:10
 info: /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq/trimmed/sam/SSR_info.txt
 genomeReference: /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq/trimmed/finalset-2.fa
