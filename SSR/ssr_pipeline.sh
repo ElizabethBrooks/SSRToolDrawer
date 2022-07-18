@@ -28,6 +28,8 @@ inputsFile=$1
 readPath=$(grep "reads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/reads://g")
 #Retrieve adapter absolute path for alignment
 infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
+#Retrieve analysis outputs absolute path
+outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 #Make a new directory for project analysis
 projectDir=$(basename $readPath)
