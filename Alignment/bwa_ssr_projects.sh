@@ -57,10 +57,10 @@ for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 	#Print status message
 	echo "Processing $curSampleNoPath"
 	#Run bwa with default settings
-	bwa mem -t 8 $ref "$f1" "$curSample"_pReverse.fq.gz > "$curSampleNoPath"/accepted_hits.sam
+	bwa mem -t 8 $ref $f1 $curSample"_pReverse.fq.gz" > $curSampleNoPath".sam"
 	#Add sample and hisat2 run inputs to output summary file
 	echo $curSampleNoPath >> $inputOutFile
-	echo "bwa mem -t 8 $ref $f1 $curSample\_pReverse.fq.gz > $curSampleNoPath/accepted_hits.sam" >> "$inputOutFile"
+	echo "bwa mem -t 8 $ref $f1 $curSample\_pReverse.fq.gz > $curSampleNoPath.sam" >> "$inputOutFile"
 	echo "Processed!"
 done
 #Print status message

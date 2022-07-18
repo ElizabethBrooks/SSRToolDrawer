@@ -31,29 +31,13 @@ infoPath=$(grep "info:" "InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 
 #Make a new directory for project analysis
 projectDir=$(basename $readPath)
-outputsPath=$outputsPath"/"$projectDir
-
-#Set input paths
-inputsPath=$outputsPath"/aligned"
-
-#Make an outputs directory for analysis
-anOut=$outputsPath"/SSR"
-mkdir $anOut
-#Check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $anOut directory already exsists... please remove before proceeding."
-	exit 1
-fi
-#Move to the outputs directory
-cd $anOut
 
 #Name output file of inputs
-inputOutFile="summary.txt"
-#Add pipeline info to outputs
+inputOutFile=$readPath"/ssr_pipeline_summary.txt"
 echo "SSR pipline for $projectDir" > $inputOutFile
 
 #Loop through all filtered sam files
-for f1 in "$inputsPath"/*_L001.sam; do
+for f1 in "$readPath"/*_L001.sam; do
 	#Print status message
 	echo "Processing $f1"
 	#Run SSR pipeline
@@ -71,8 +55,8 @@ done
 #sampleList=$(ls "$readPath"/*_L001.sam.filter50.sam | sed "s/\/scratch365\/ebrooks5\/romero_test_July2022\/sam\//\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' ')
 
 #Format matrix
-#python2 Format_Matrix.py
-#echo python2 Format_Matrix.py >> $inputOutFile
+python2 Format_Matrix.py
+echo python2 Format_Matrix.py >> $inputOutFile
 
 #Print status message
-#echo "Analysis complete!"
+echo "Analysis complete!"
