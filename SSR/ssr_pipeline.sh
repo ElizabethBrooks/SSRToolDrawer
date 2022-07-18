@@ -21,6 +21,9 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 #Make sure numpy is installed
 #pip install numpy
 
+#Retrieve working directory
+loc=$(pwd)
+
 #Retrieve input argument of a inputs file
 inputsFile=$1
 
@@ -59,11 +62,11 @@ for f1 in "$inputsPath"/*_L001.sam; do
 	#Print status message
 	echo "Processing $f1"
 	#Run SSR pipeline
-	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
-	python2 SnipMatrix.py $f1".Matrix.txt"
+	$loc"/"python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
+	$loc"/"python2 SnipMatrix.py $f1".Matrix.txt"
 	#Write inputs out to summary file
-	echo python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired" >> $inputOutFile
-	echo python2 SnipMatrix.py $f1".Matrix.txt" >> $inputOutFile
+	echo $loc"/python2 GapGenes.v3.py -sam "$f1" -C "$infoPath" -P unpaired" >> $inputOutFile
+	echo $loc"/python2 SnipMatrix.py "$f1".Matrix.txt" >> $inputOutFile
 	#Status message
 	echo "Processed!"
 done
