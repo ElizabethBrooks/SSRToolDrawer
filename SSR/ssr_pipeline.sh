@@ -3,7 +3,6 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_pipeline_jobOutput
-#$ -pe smp 8
 #Script to run the SSR pipeline
 #Usage: qsub ssr_pipeline.sh inputsFile
 #Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_July2022.txt
@@ -25,7 +24,7 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 inputsFile=$1
 
 #Retrieve paired reads absolute path for alignment
-readPath=$(grep "reads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/reads://g")
+readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 #Retrieve adapter absolute path for alignment
 infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 #Retrieve analysis outputs absolute path
@@ -48,19 +47,20 @@ if [ $? -ne 0 ]; then
 fi
 
 #Copy pipeline scripts to outputs directory
-cp GapGenes.v3.py $anOut
-cp SnipMatrix.py $anOut
+cp GapGenes.v3.py $inputsPath
+cp SnipMatrix.py $inputsPath
+cp Format_Matrix.py $inputsPath
 
 #Move to the outputs directory
-cd $anOut
+cd $inputsPath
 
 #Name output file of inputs
-inputOutFile="summary.txt"
+inputOutFile=$anOut"/summary.txt"
 #Add pipeline info to outputs
 echo "SSR pipline for $projectDir" > $inputOutFile
 
 #Loop through all filtered sam files
-for f1 in "$inputsPath"/*_L001.sam; do
+for f1 in "$inputsPath"/*.sam; do
 	#Print status message
 	echo "Processing $f1"
 	#Run SSR pipeline
@@ -73,13 +73,14 @@ for f1 in "$inputsPath"/*_L001.sam; do
 	echo "Processed!"
 done
 
-#Retrieve sample list
-#sampleList=$(ls /scratch365/ebrooks5/romero_test_July2022/sam/*_L001.sam.filter50.sam | sed "s/^/\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' ')
+#Retrieve sample list examples
+#for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done
+#sampleList=$(ls "$inputsPath"/*.sam | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' ')
 #sampleList=$(ls "$readPath"/*_L001.sam.filter50.sam | sed "s/\/scratch365\/ebrooks5\/romero_test_July2022\/sam\//\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' ')
 
 #Format matrix
-#python2 Format_Matrix.py
-#echo python2 Format_Matrix.py >> $inputOutFile
+python2 Format_Matrix.py
+echo python2 Format_Matrix.py >> $inputOutFile
 
 #Print status message
-#echo "Analysis complete!"
+echo "Analysis complete!"
