@@ -73,10 +73,8 @@ for f1 in "$inputsPath"/*.sam; do
 	echo "Processed!"
 done
 
-#Retrieve sample list examples
+#Retrieve sample list
 #for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done
-#sampleList=$(ls "$inputsPath"/*.sam | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' ')
-#sampleList=$(ls "$readPath"/*_L001.sam.filter50.sam | sed "s/\/scratch365\/ebrooks5\/romero_test_July2022\/sam\//\"/g" | sed "s/\.sam\.filter50\.sam/\",/g" | tr '\n' ' ')
 
 #Format matrix
 python2 Format_Matrix.py
