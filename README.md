@@ -20,6 +20,7 @@ The sequence capture data should first be assessed for quality with fastqc, trim
 - \<Call SNPs with bcftools\>
 - python2 Format_VCF-Matrix.py
 
+
 ## Description of Tools
 The following scripts were generated to form a pipeline that takes sequence capture data and generates a data matrix consisting of Short Sequence Repeat (SSR) information. In addition to the novel scripts, two previously written scripts were used. FindReadLengths.py was used to verify our sequence capture had worked correctly, and SnipVCF.py to filter downstream SNPs. Both tools can be found at https://git.io/JTYMb.
 
@@ -33,6 +34,7 @@ SNPMatrix.py: This script will filter the matrix output of GapGenes.py. It filte
 
 FormatMatrix.py: Formats the output of SNPMatrix.py into a format that can be read by JoinMap.
 
+
 ## Workflow Input Files
 
 ### SSR Information
@@ -44,9 +46,10 @@ FormatMatrix.py: Formats the output of SNPMatrix.py into a format that can be re
 ### Sequence Capture Data
 - run1: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/190920_Chestnut_Multiplex-PCR_Plate02
 - run2: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/211111_JB-688_Romero-Severson-Chestnut
-- run3: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220128_JB-861_Romero-Severson-Chestnut
-- run4: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220408_JB-998_ChestnutSSR_Round4
+- run3: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220128_JB-861_Romero-Severson-Chestnut/Fastq
+- run4: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220408_JB-998_ChestnutSSR_Round4/Fastq
 - run5: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
+
 
 ## Previous Analysis
 
