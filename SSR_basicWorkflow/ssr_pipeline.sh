@@ -115,7 +115,10 @@ echo "python2 Format_Matrix.py" >> $inputOutFile
 #Clean up
 rm $inputsPath"/GapGenes.v3.py"
 rm $inputsPath"/SnipMatrix.py"
-#rm $inputsPath"/Format_Matrix.py"
+rm $inputsPath"/Format_Matrix.py"
+
+#Re-name and copy output matrix
+cp SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
 
 #Print status message
 echo "Analysis complete!"

@@ -57,7 +57,10 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
 python2 Format_Matrix.py
 
 #Clean up
-#rm $inputsPath"/Format_Matrix.py"
+rm $inputsPath"/Format_Matrix.py"
+
+#Re-name and copy output matrix
+cp SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
 
 #Print status message
 echo "Analysis complete!"
