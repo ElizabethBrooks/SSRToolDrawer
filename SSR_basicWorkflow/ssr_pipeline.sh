@@ -101,6 +101,7 @@ done
 
 #Retrieve and format sample tag list
 sampleTags=$(for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' ' | sed 's/..$//'; done)
+sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 #Find and replace the sample list
 sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" "$inputsPath"/Format_Matrix.py
