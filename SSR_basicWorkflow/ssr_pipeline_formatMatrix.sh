@@ -30,12 +30,6 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 
 #Make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
-mkdir $outputsPath
-#Check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
 
 
 #SSR Analysis Stage
