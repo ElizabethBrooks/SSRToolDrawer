@@ -39,9 +39,6 @@ cd $anOut
 #Set trimmed reads absolute path
 trimmedFolder=$outputsPath"/trimmed"
 
-#Copy the reference to the mapping directory
-cp $ref tmp_seqs.fa
-
 #Loop through all forward and reverse paired reads and run Hisat2 on each pair
 # using 8 threads and samtools to convert output sam files to bam
 for f1 in "$trimmedFolder"/*pForward.fq.gz; do
@@ -55,16 +52,15 @@ for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 	#Print status message
 	echo "Processing $curSampleNoPath"
 	#Run bwa with default settings
-	bwa mem -t 8 tmp_seqs.fa $f1 $curSample"_pReverse.fq.gz" > $curSampleNoPath".sam"
+	bwa mem -t 8 $ref $f1 $curSample"_pReverse.fq.gz" > $curSampleNoPath".sam"
 	#Add sample and hisat2 run inputs to output summary file
 	echo $curSampleNoPath >> $inputOutFile
-	echo "bwa mem -t 8 tmp_seqs.fa $f1 $curSample\_pReverse.fq.gz > $curSampleNoPath.sam" >> "$inputOutFile"
+	echo "bwa mem -t 8 $ref $f1 $curSample\_pReverse.fq.gz > $curSampleNoPath.sam" >> "$inputOutFile"
 	echo "Processed!"
 done
 
 #Clean up
 rm -r "$trimmedFolder"
-rm tmp_seqs.fa
 
 #Print status message
 echo "Analysis complete!"
