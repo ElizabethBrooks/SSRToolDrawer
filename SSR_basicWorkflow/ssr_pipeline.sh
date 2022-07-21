@@ -28,6 +28,8 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 #Retrieve input argument of a inputs file
 inputsFile=$1
 
+#Retrieve the project ID 
+projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 #Retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 #Retrieve adapter absolute path for alignment
@@ -36,7 +38,6 @@ infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 #Make a new directory for project analysis
-projectDir=$(basename $readPath)
 outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
 mkdir $outputsPath
 #Check if the folder already exists
@@ -72,6 +73,7 @@ inputsPath=$outputsPath"/aligned"
 
 #Move to directory with SSR analysis scripts
 cd ../SSR_basicWorkflow
+
 #Copy pipeline scripts to inputs directory
 cp GapGenes.v3.py $inputsPath
 cp SnipMatrix.py $inputsPath
@@ -80,15 +82,18 @@ cp Format_Matrix.py $inputsPath
 #Move to the inputs directory
 cd $inputsPath
 
+#Copy SSR info file to inputs directory
+cp $infoPath tmp_info.txt
+
 #Loop through all filtered sam files
 for f1 in "$inputsPath"/*.sam; do
 	#Print status message
 	echo "Processing $f1"
 	#Run SSR pipeline
-	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
+	python2 GapGenes.v3.py -sam $f1 -C tmp_info.txt -P "unpaired"
 	python2 SnipMatrix.py $f1".Matrix.txt"
 	#Write inputs out to summary file
-	echo "python2 GapGenes.v3.py -sam $f1 -C $infoPath -P unpaired" >> $inputOutFile
+	echo "python2 GapGenes.v3.py -sam $f1 -C tmp_info.txt -P unpaired" >> $inputOutFile
 	echo "python2 SnipMatrix.py "$f1".Matrix.txt" >> $inputOutFile
 	#Status message
 	echo "Processed!"
@@ -108,6 +113,7 @@ echo "python2 Format_Matrix.py" >> $inputOutFile
 rm $inputsPath"/GapGenes.v3.py"
 rm $inputsPath"/SnipMatrix.py"
 rm $inputsPath"/Format_Matrix.py"
+rm tmp_info.txt
 
 #Print status message
 echo "Analysis complete!"

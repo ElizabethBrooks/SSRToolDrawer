@@ -9,13 +9,14 @@
 #Retrieve input argument of a inputs file
 inputsFile=$1
 
+#Retrieve the project ID 
+projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 #Retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 #Retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 #Directory for project analysis
-projectDir=$(basename $readPath)
 outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
 
 #Name of output file of inputs
@@ -46,8 +47,10 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	echo "fastqc $f1 -o $qcOut --extract" >> $inputOutFile
 	echo "fastqc $f2 -o $qcOut --extract" >> $inputOutFile
 	#Clean up
-	rm "$curSample"*fastqc.zip
-	rm "$curSample"*fastqc/
+	rm -r $curSample"_R1_001_fastqc.zip"
+	rm -r $curSample"_R1_001_fastqc/"
+	rm -r $curSample"_R2_001_fastqc.zip"
+	rm -r $curSample"_R2_001_fastqc/"
 	#Print status message
 	echo "Processed!"
 done
