@@ -45,13 +45,12 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	#Output run inputs
 	echo "fastqc $f1 -o $qcOut --extract" >> $inputOutFile
 	echo "fastqc $f2 -o $qcOut --extract" >> $inputOutFile
+	#Clean up
+	rm "$curSample"*fastqc.zip
+	rm "$curSample"*fastqc/
 	#Print status message
 	echo "Processed!"
 done
-
-#Clean up
-rm -r "$qcOut"/*fastqc.zip
-rm -r "$qcOut"/*fastqc/
 
 #Print status message
 echo "Analysis complete!"
