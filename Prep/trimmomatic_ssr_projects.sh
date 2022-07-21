@@ -45,6 +45,15 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	#Print status message
 	echo "Processing $sampleTag"
 	#Determine phred score for trimming
+	if grep -iF "Illumina 1.5" $outputsPath"/qc/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"; then
+		score=64
+	elif grep -iF "Illumina 1.9" $outputsPath"/qc/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"; then
+		score=33
+	else
+		echo "ERROR: Illumina encoding not found... exiting"
+		#echo "ERROR: Illumina encoding not found for $curSample" >> $inputOutFile
+		exit 1
+	fi
 	echo $outputsPath"/qc/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"
 	#Perform adapter trimming on paired reads using 8 threads
 	trimmomatic PE -threads 8 -phred"$score" $f1 $f2 $sampleTag"_pForward.fq.gz" $sampleTag"_uForward.fq.gz" $sampleTag"_pReverse.fq.gz" $sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
