@@ -1,15 +1,10 @@
 #!/bin/bash
-#$ -M ebrooks5@nd.edu
-#$ -m abe
-#$ -r n
-#$ -N bwa_ssr_projects_jobOutput
-#$ -pe smp 8
 #Script to perform bwa alignment of trimmed paired end reads
-#Usage: qsub bwa_ssr_projects.sh inputsFile
-#Usage Ex: qsub bwa_ssr_projects.sh inputPaths_romero_test_run1.txt
+#Usage: bash bwa_ssr_projects.sh inputsFile
+#Usage Ex: bash bwa_ssr_projects.sh inputPaths_romero_test_run1.txt
 
 #Required modules for ND CRC servers
-module load bio
+#module load bio
 
 #Retrieve input argument of a inputs file
 inputsFile=$1
@@ -21,25 +16,24 @@ readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/p
 #Retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
-#Make a new directory for project analysis
+#Directory for project analysis
 projectDir=$(basename $readPath)
-outputsPath=$outputsPath"/"$projectDir
+outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
+
+#Name of output file of inputs
+inputOutFile=$outputsPath"/pipeline_summary.txt"
+versionFile=$outputsPath"/software_summary.txt"
+#Add software versions to outputs
+bwa &> tmp.txt
+cat tmp.txt | head -3 >> $versionFile
+rm tmp.txt
 
 #Make an outputs directory for analysis
 anOut=$outputsPath"/aligned"
 mkdir $anOut
-#Check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $anOut directory already exsists... please remove before proceeding."
-	exit 1
-fi
+
 #Move to the outputs directory
 cd $anOut
-
-#Name output file of inputs
-inputOutFile="summary.txt"
-#Add software versions to outputs
-echo "bwa outputs: $outputsPath" > $inputOutFile
 
 #Set trimmed reads absolute path
 trimmedFolder=$outputsPath"/trimmed"
