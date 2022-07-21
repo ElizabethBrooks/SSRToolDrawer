@@ -32,6 +32,8 @@ inputsFile=$1
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 #Retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
+#Retrieve genome reference absolute path for alignment
+ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
 #Retrieve adapter absolute path for alignment
 infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 #Retrieve analysis outputs absolute path
@@ -54,7 +56,10 @@ echo -e "SSR pipline inputs for $projectDir \n" > $inputOutFile
 echo -e "SSR pipeline software versions for $projectDir \n" > $versionFile
 
 
-#Read Prep Stage
+#Analysis Prep Stage
+
+#Make sure the reference genome has been indexed
+#bwa index $ref
 
 #Move to directory with analysis prep scripts
 cd ../Prep
