@@ -24,7 +24,9 @@ outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
 #Name of output file of inputs
 inputOutFile=$outputsPath"/pipeline_summary.txt"
 versionFile=$outputsPath"/software_summary.txt"
+
 #Add software version to outputs
+echo "Trimmomatic:" >> $versionFile
 trimmomatic -version >> $versionFile
 
 #Make a new directory for analysis

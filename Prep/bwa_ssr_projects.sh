@@ -24,6 +24,7 @@ outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
 #Name of output file of inputs
 inputOutFile=$outputsPath"/pipeline_summary.txt"
 versionFile=$outputsPath"/software_summary.txt"
+
 #Add software versions to outputs
 bwa &> tmp.txt
 cat tmp.txt | head -3 >> $versionFile
