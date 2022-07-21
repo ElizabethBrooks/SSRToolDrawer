@@ -1,0 +1,5 @@
+pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220408_JB-998_ChestnutSSR_Round4
+adapter: /afs/crc.nd.edu/x86_64_linux/bio/Trimmomatic/0.32/adapters/TruSeq3-PE.fa:2:30:10
+info: /scratch365/ebrooks5/romero_July2022/JRS-chestnut_02-2022_miseq/SSR_info.txt
+genomeReference: /scratch365/ebrooks5/romero_July2022/JRS-chestnut_02-2022_miseq/finalset-2.fa
+outputs: /scratch365/ebrooks5

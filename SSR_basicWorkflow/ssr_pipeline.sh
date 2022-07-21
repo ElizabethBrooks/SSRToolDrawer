@@ -5,7 +5,7 @@
 #$ -N ssr_pipeline_jobOutput
 #Script to run the SSR pipeline
 #Usage: qsub ssr_pipeline.sh inputsFile
-#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_July2022.txt
+#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_run1.txt
 
 #Required modules for ND CRC servers
 module load bio
@@ -22,6 +22,12 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
 #Retrieve input argument of a inputs file
 inputsFile=$1
+
+#Prepare reads for SSR analysis
+cd ../Prep
+bash fastqc_ssr_projects.sh $1
+bash trimmomatic_ssr_projects.sh $1
+bash bwa_ssr_projects.sh $1
 
 #Retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
@@ -47,6 +53,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #Copy pipeline scripts to outputs directory
+cd ../SSR_basicWorkflow
 cp GapGenes.v3.py $inputsPath
 cp SnipMatrix.py $inputsPath
 cp Format_Matrix.py $inputsPath
@@ -79,6 +86,9 @@ done
 #Format matrix
 python2 Format_Matrix.py
 echo python2 Format_Matrix.py >> $inputOutFile
+
+#Clean up
+rm "$inputsPath"/*.py
 
 #Print status message
 echo "Analysis complete!"

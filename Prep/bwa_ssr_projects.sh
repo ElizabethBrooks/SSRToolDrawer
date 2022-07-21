@@ -6,7 +6,7 @@
 #$ -pe smp 8
 #Script to perform bwa alignment of trimmed paired end reads
 #Usage: qsub bwa_ssr_projects.sh inputsFile
-#Usage Ex: qsub bwa_ssr_projects.sh inputPaths_romero_test_July2022.txt
+#Usage Ex: qsub bwa_ssr_projects.sh inputPaths_romero_test_run1.txt
 
 #Required modules for ND CRC servers
 module load bio
@@ -63,5 +63,9 @@ for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 	echo "bwa mem -t 8 $ref $f1 $curSample\_pReverse.fq.gz > $curSampleNoPath.sam" >> "$inputOutFile"
 	echo "Processed!"
 done
+
+#Clean up
+rm -r "$trimmedFolder"
+
 #Print status message
 echo "Analysis complete!"

@@ -6,7 +6,7 @@
 #$ -pe smp 8
 #Script to perform fastqc quality control of paired end reads
 #Usage: qsub fastqc_ssr_projects.sh inputsFile
-#Usage Ex: qsub fastqc_ssr_projects.sh inputPaths_romero_test_July2022.txt
+#Usage Ex: qsub fastqc_ssr_projects.sh inputPaths_romero_test_run1.txt
 
 #Required modules for ND CRC servers
 module load bio
@@ -51,5 +51,10 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	#Print status message
 	echo "Processed!"
 done
+
+#Clean up
+rm "$qcOut"/*fastqc.gz
+rm -r "$qcOut"/*fastqc/
+
 #Print status message
 echo "Analysis complete!"

@@ -6,7 +6,7 @@
 #$ -pe smp 8
 #Script to perform trimming of paired end reads
 #Usage: qsub trimmomatic_ssr_projects.sh inputsFile
-#Usage Ex: qsub trimmomatic_ssr_projects.sh inputPaths_romero_test_July2022.txt
+#Usage Ex: qsub trimmomatic_ssr_projects.sh inputPaths_romero_test_run1.txt
 
 #Required modules for ND CRC servers
 module load bio
@@ -72,5 +72,6 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	#Print status message
 	echo "Processed!"
 done
+
 #Print status message
 echo "Analysis complete!"
