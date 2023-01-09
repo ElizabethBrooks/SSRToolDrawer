@@ -40,10 +40,10 @@ infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 # setup the inputs path
-inputsPath=$outputsPath"/"$projectDir"_SSR_workflow_prep"
+inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
 #Make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_workflow_basic"
+outputsPath=$outputsPath"/"$projectDir"_SSR_basic"
 mkdir $outputsPath
 #Check if the folder already exists
 if [ $? -ne 0 ]; then

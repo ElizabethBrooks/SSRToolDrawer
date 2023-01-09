@@ -36,7 +36,7 @@ ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ge
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 #Make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_workflow_prep"
+outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 mkdir $outputsPath
 #Check if the folder already exists
 if [ $? -ne 0 ]; then

@@ -19,7 +19,7 @@ adapterPath=$(grep "adapter:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ad
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 #Directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_workflow_prep"
+outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
 #Name of output file of inputs
 inputOutFile=$outputsPath"/pipeline_prep_summary.txt"
