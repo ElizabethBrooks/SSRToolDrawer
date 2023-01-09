@@ -3,7 +3,6 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_SNP_jobOutput
-#$ -pe smp 8
 #Script to run the SSR pipeline
 #Usage: qsub ssr_pipeline_SNP.sh inputsFile
 #Usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run1.txt
