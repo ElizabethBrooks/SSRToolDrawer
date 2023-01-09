@@ -2,15 +2,15 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
-#$ -N ssr_pipeline_jobOutput
+#$ -N ssr_basic_jobOutput
 #$ -pe smp 8
 #Script to run the SSR pipeline
-#Usage: qsub ssr_pipeline.sh inputsFile
-#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_run1.txt
-#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_run2.txt
-#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_run3.txt
-#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_run4.txt
-#Usage Ex: qsub ssr_pipeline.sh inputPaths_romero_run5.txt
+#Usage: qsub ssr_pipeline_basic.sh inputsFile
+#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run1.txt
+#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run2.txt
+#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run3.txt
+#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run4.txt
+#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run5.txt
 
 #Required modules for ND CRC servers
 module load bio
@@ -39,8 +39,11 @@ infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g
 #Retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
+# setup the inputs path
+inputsPath=$outputsPath"/"$projectDir"_SSR_workflow_prep"
+
 #Make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
+outputsPath=$outputsPath"/"$projectDir"_SSR_workflow_basic"
 mkdir $outputsPath
 #Check if the folder already exists
 if [ $? -ne 0 ]; then
@@ -49,11 +52,11 @@ if [ $? -ne 0 ]; then
 fi
 
 #Name output file of inputs
-inputOutFile=$outputsPath"/pipeline_summary.txt"
-versionFile=$outputsPath"/software_summary.txt"
+inputOutFile=$outputsPath"/pipeline_basic_summary.txt"
+versionFile=$outputsPath"/software_basic_summary.txt"
 #Add pipeline info to outputs
-echo -e "SSR pipline inputs for $projectDir \n" > $inputOutFile
-echo -e "SSR pipeline software versions for $projectDir \n" > $versionFile
+echo -e "SSR pipline basic inputs for $projectDir \n" > $inputOutFile
+echo -e "SSR pipeline basic software versions for $projectDir \n" > $versionFile
 
 
 #Analysis Prep Stage
@@ -62,16 +65,16 @@ echo -e "SSR pipeline software versions for $projectDir \n" > $versionFile
 #bwa index $ref
 
 #Move to directory with analysis prep scripts
-cd ../Prep
+#cd ../Prep
 #Quality control with fastqc
-bash fastqc_ssr_projects.sh $1
+#bash fastqc_ssr_projects.sh $1
 #Trimming with trimmomatic
-bash trimmomatic_ssr_projects.sh $1
+#bash trimmomatic_ssr_projects.sh $1
 #Mapping with bwa
-bash bwa_ssr_projects.sh $1
+#bash bwa_ssr_projects.sh $1
 
 
-#SSR Analysis Stage
+#SSR Analysis Stage - Basic Workflow
 
 #Set input paths
 inputsPath=$outputsPath"/aligned"

@@ -19,11 +19,11 @@ adapterPath=$(grep "adapter:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ad
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 #Directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_basicWorkflow"
+outputsPath=$outputsPath"/"$projectDir"_SSR_workflow_prep"
 
 #Name of output file of inputs
-inputOutFile=$outputsPath"/pipeline_summary.txt"
-versionFile=$outputsPath"/software_summary.txt"
+inputOutFile=$outputsPath"/pipeline_prep_summary.txt"
+versionFile=$outputsPath"/software_prep_summary.txt"
 
 #Add software version to outputs
 echo "Trimmomatic:" >> $versionFile
