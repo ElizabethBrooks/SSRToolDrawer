@@ -57,7 +57,7 @@ inputsPath=$inputsPath"/aligned"
 
 #Copy pipeline scripts to inputs directory
 cp SamIAm.py $inputsPath
-cp Format_VCF-Matrix.py $inputsPath
+#cp Format_VCF-Matrix.py $inputsPath
 
 #Move to the inputs directory
 cd $inputsPath
@@ -75,22 +75,22 @@ for f1 in "$inputsPath"/*.sam; do
 done
 
 #Retrieve and format sample tag list
-sampleTags=$(for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done)
-sampleTags=$(echo $sampleTags | sed 's/.$//')
+#sampleTags=$(for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done)
+#sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 #Find and replace the sample list
-sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
+#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 
 #Format matrix
-python2 Format_VCF-Matrix.py
-echo "python2 Format_VCF-Matrix.py" >> $inputOutFile
+#python2 Format_VCF-Matrix.py
+#echo "python2 Format_VCF-Matrix.py" >> $inputOutFile
 
 #Clean up
 rm $inputsPath"/SamIAm.py"
-rm $inputsPath"/Format_VCF-Matrix.py"
+#rm $inputsPath"/Format_VCF-Matrix.py"
 
 #Re-name and move output matrix
-mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
+#mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 #Print status message
 echo "Analysis complete!"
