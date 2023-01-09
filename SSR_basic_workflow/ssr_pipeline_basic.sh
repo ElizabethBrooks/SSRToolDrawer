@@ -30,10 +30,6 @@ inputsFile=$1
 
 #Retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-#Retrieve paired reads absolute path for alignment
-readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
-#Retrieve genome reference absolute path for alignment
-ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
 #Retrieve adapter absolute path for alignment
 infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 #Retrieve analysis outputs absolute path
@@ -53,34 +49,14 @@ fi
 
 #Name output file of inputs
 inputOutFile=$outputsPath"/pipeline_basic_summary.txt"
-versionFile=$outputsPath"/software_basic_summary.txt"
 #Add pipeline info to outputs
 echo -e "SSR pipline basic inputs for $projectDir \n" > $inputOutFile
-echo -e "SSR pipeline basic software versions for $projectDir \n" > $versionFile
-
-
-#Analysis Prep Stage
-
-#Make sure the reference genome has been indexed
-#bwa index $ref
-
-#Move to directory with analysis prep scripts
-#cd ../Prep
-#Quality control with fastqc
-#bash fastqc_ssr_projects.sh $1
-#Trimming with trimmomatic
-#bash trimmomatic_ssr_projects.sh $1
-#Mapping with bwa
-#bash bwa_ssr_projects.sh $1
 
 
 #SSR Analysis Stage - Basic Workflow
 
 #Set input paths
-inputsPath=$outputsPath"/aligned"
-
-#Move to directory with SSR analysis scripts
-cd ../SSR_basicWorkflow
+inputsPath=$inputsPath"/aligned"
 
 #Copy pipeline scripts to inputs directory
 cp GapGenes.v3.py $inputsPath
@@ -120,8 +96,8 @@ rm $inputsPath"/GapGenes.v3.py"
 rm $inputsPath"/SnipMatrix.py"
 rm $inputsPath"/Format_Matrix.py"
 
-#Re-name and copy output matrix
-cp SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
+#Re-name and move output matrix
+mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
 
 #Print status message
 echo "Analysis complete!"

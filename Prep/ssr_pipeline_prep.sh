@@ -15,16 +15,6 @@
 #Required modules for ND CRC servers
 module load bio
 
-#Activate the python2 environment for local run
-source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
-conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
-
-#Activate the python2 environment for job run
-#conda activate python2
-
-#Make sure numpy is installed
-#pip install numpy
-
 #Retrieve input argument of a inputs file
 inputsFile=$1
 
@@ -57,8 +47,6 @@ echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 #Make sure the reference genome has been indexed
 bwa index $ref
 
-#Move to directory with analysis prep scripts
-cd ../Prep
 #Quality control with fastqc
 bash fastqc_ssr_projects.sh $1
 #Trimming with trimmomatic

@@ -30,12 +30,6 @@ inputsFile=$1
 
 #Retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-#Retrieve paired reads absolute path for alignment
-readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
-#Retrieve genome reference absolute path for alignment
-ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
-#Retrieve adapter absolute path for alignment
-infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 #Retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
@@ -53,39 +47,18 @@ fi
 
 #Name output file of inputs
 inputOutFile=$outputsPath"/pipeline_SNP_summary.txt"
-versionFile=$outputsPath"/software_SNP_summary.txt"
 #Add pipeline info to outputs
 echo -e "SSR pipline SNP inputs for $projectDir \n" > $inputOutFile
-echo -e "SSR pipeline SNP software versions for $projectDir \n" > $versionFile
-
-
-#Analysis Prep Stage
-
-#Make sure the reference genome has been indexed
-#bwa index $ref
-
-#Move to directory with analysis prep scripts
-#cd ../Prep
-#Quality control with fastqc
-#bash fastqc_ssr_projects.sh $1
-#Trimming with trimmomatic
-#bash trimmomatic_ssr_projects.sh $1
-#Mapping with bwa
-#bash bwa_ssr_projects.sh $1
 
 
 #SSR Analysis Stage - SNP Calling Workflow
 
 #Set input paths
-inputsPath=$outputsPath"/aligned"
-
-#Move to directory with SSR analysis scripts
-cd ../SSR_basicWorkflow
+inputsPath=$inputsPath"/aligned"
 
 #Copy pipeline scripts to inputs directory
-cp GapGenes.v3.py $inputsPath
-cp SnipMatrix.py $inputsPath
-cp Format_Matrix.py $inputsPath
+cp SamIAm.py $inputsPath
+cp Format_VCF-Matrix.py $inputsPath
 
 #Move to the inputs directory
 cd $inputsPath
@@ -95,11 +68,9 @@ for f1 in "$inputsPath"/*.sam; do
 	#Print status message
 	echo "Processing $f1"
 	#Run SSR pipeline
-	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
-	python2 SnipMatrix.py $f1".Matrix.txt"
+	python2 SamIAm.py -sam $f1 -p "yes"
 	#Write inputs out to summary file
-	echo "python2 GapGenes.v3.py -sam $f1 -C $infoPath -P unpaired" >> $inputOutFile
-	echo "python2 SnipMatrix.py "$f1".Matrix.txt" >> $inputOutFile
+	echo "python2 SamIAm.py -sam $f1 -p yes" >> $inputOutFile
 	#Status message
 	echo "Processed!"
 done
@@ -109,19 +80,18 @@ sampleTags=$(for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed
 sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 #Find and replace the sample list
-sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
+sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 
 #Format matrix
-python2 Format_Matrix.py
-echo "python2 Format_Matrix.py" >> $inputOutFile
+python2 Format_VCF-Matrix.py
+echo "python2 Format_VCF-Matrix.py" >> $inputOutFile
 
 #Clean up
-rm $inputsPath"/GapGenes.v3.py"
-rm $inputsPath"/SnipMatrix.py"
-rm $inputsPath"/Format_Matrix.py"
+rm $inputsPath"/SamIAm.py"
+rm $inputsPath"/Format_VCF-Matrix.py"
 
-#Re-name and copy output matrix
-cp SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
+#Re-name and move output matrix
+mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 #Print status message
 echo "Analysis complete!"

@@ -40,8 +40,8 @@ cd $anOut
 #Set trimmed reads absolute path
 trimmedFolder=$outputsPath"/trimmed"
 
-#Loop through all forward and reverse paired reads and run Hisat2 on each pair
-# using 8 threads and samtools to convert output sam files to bam
+#Loop through all forward and reverse paired reads and run bwa on each pair
+# using 8 threads
 for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 	#Trim extension from current file name
 	curSample=$(echo $f1 | sed 's/.pForward\.fq\.gz//')
