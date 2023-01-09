@@ -13,6 +13,7 @@ SP = 1
 samplename =' '
 parser = argparse.ArgumentParser(description='Filters a SAM file with reads that span an SSR at least 50bp in each direction.')
 parser.add_argument('-sam', type=str,help='Enter a SAM file')
+parser.add_argument('-C', type=str, required=True, help='Enter a coordinates file')
 parser.add_argument('-p', dest='pairs',type=str,default='no',help='Enter yes if these are paired reads (Defualt=no)')
 args = parser.parse_args()
 if args.pairs == 'yes':
@@ -30,7 +31,6 @@ hitrightcount=0
 hitleftcount=0
 hitnonecount=0
 whatcount=0
-datafile = file('SSR_info.txt')
 #Are the reads aired for single end?
 if SP ==2:
 	#print "hola"
@@ -65,6 +65,7 @@ if SP ==2:
 					#A file containing adresses of all SSRs, datafile needs to be changed to your file name.  Will mark as a hit if the read spands 50 bp to the left and right of the SRR.  
 					#Files containing the length of the sequence, number of bp spanning left of the SSR, and right of the SSR, will be printed to appropriate output files. 
 					#datafile = file('Cumulative_Bait_Info.txt')
+					datafile = file(args.C)
 					for line in datafile:
 						#print line                     
 						if contig in line:
@@ -107,6 +108,7 @@ else:
 				#A file containing adresses of all SSRs, datafile needs to be changed to your file name.  Will mark as a hit if the read spands 50 bp to the left and right of the SRR.  
 				#Files containing the length of the sequence, number of bp spanning left of the SSR, and right of the SSR, will be printed to appropriate output files. 
 				#datafile = file('Cumulative_Bait_Info.txt')
+				datafile = file(args.C)
 				for line in datafile:
 					#print line			
 					if contig in line:

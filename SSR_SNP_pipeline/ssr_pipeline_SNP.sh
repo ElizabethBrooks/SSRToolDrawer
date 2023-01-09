@@ -29,6 +29,8 @@ inputsFile=$1
 
 #Retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
+#Retrieve adapter absolute path for alignment
+infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
 #Retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
@@ -67,9 +69,9 @@ for f1 in "$inputsPath"/*.sam; do
 	#Print status message
 	echo "Processing $f1"
 	#Run SSR pipeline
-	python2 SamIAm.py -sam $f1 -p "yes"
+	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	#Write inputs out to summary file
-	echo "python2 SamIAm.py -sam $f1 -p yes" >> $inputOutFile
+	echo "python2 SamIAm.py -sam $f1 -C $infoPath -p yes" >> $inputOutFile
 	#Status message
 	echo "Processed!"
 done
