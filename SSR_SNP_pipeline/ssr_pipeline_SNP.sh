@@ -90,6 +90,7 @@ done
 #Clean up
 rm $inputsPath"/SamIAm.py"
 #rm $inputsPath"/Format_VCF-Matrix.py"
+#rm -r $inputsPath
 
 #Re-name and move output matrix
 #mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"

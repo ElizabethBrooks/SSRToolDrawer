@@ -2,72 +2,82 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
+#$ -N ssr_VC_jobOutput
 #$ -pe smp 8
-#$ -N variantCalling_jobOutput
-#Script to perform variant calling
-#Usage: qsub variantCalling_bcftools.sh sortedNameFolder analysisTarget
-#Usage Ex: qsub variantCalling_bcftools.sh sortedCoordinate_samtoolsHisat2_run1 genome filteredMapQ
-#Usage Ex: qsub variantCalling_bcftools.sh sortedCoordinate_samtoolsHisat2_run3 genome filteredMapQ
-#Usage Ex: qsub variantCalling_bcftools.sh sortedCoordinate_samtoolsHisat2_run3 genome filteredZS
+#Script to run the SSR pipeline
+#Usage: qsub ssr_pipeline_VC.sh inputsFile
+#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run1.txt
+#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run2.txt
+#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run3.txt
+#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run4.txt
+#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run5.txt
 
 #Required modules for ND CRC servers
 module load bio
 
-#Check for input arguments of folder names
-if [ $# -eq 0 ]; then
-   	echo "ERROR: No folder name(s) supplied... exiting"
-   	exit 1
-fi
-#Retrieve genome features absolute path for alignment
-genomeFile=$(grep "genomeReference" ../InputData/inputPaths.txt | tr -d " " | sed "s/genomeReference://g")
-#Determine what analysis method was used for the input folder of data
-if [[ "$2" == *assemblyTrinity* || "$2" == *assemblyStringtie* ]]; then
-	#Retrieve reads input absolute path
-	inputsPath=$(grep "assemblingFree:" ../InputData/outputPaths.txt | tr -d " " | sed "s/assemblingFree://g")
-	inputsDir="$inputsPath"/"$2"/"$1"
-	outputsPath="$inputsPath"/"$2"
-elif [[ "$2" == *assembly*Trinity* || "$2" == *assembly*Stringtie* ]]; then
-	#Retrieve reads input absolute path
-	inputsPath=$(grep "assemblingGenome:" ../InputData/outputPaths.txt | tr -d " " | sed "s/assemblingGenome://g")
-	inputsDir="$inputsPath"/"$2"/"$1"
-	outputsPath="$inputsPath"/"$2"
-elif [[ "$2" == genome ]]; then
-	#Retrieve sorted reads input absolute path
-	inputsPath=$(grep "aligningGenome:" ../InputData/outputPaths.txt | tr -d " " | sed "s/aligningGenome://g")
-	inputsDir="$inputsPath"/"$1"
-	outputsPath="$inputsPath"
-else
-	echo "ERROR: Invalid sorted folder of bam files entered... exiting"
+#Activate the python2 environment for local run
+source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
+conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
+
+#Activate the python2 environment for job run
+#conda activate python2
+
+#Make sure numpy is installed
+#pip install numpy
+
+#Retrieve input argument of a inputs file
+inputsFile=$1
+
+#Retrieve the project ID 
+projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
+#Retrieve genome reference absolute path for alignment
+ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
+#Retrieve analysis outputs absolute path
+outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
+
+# setup the inputs path
+inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
+
+#Make a new directory for project analysis
+outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
+mkdir $outputsPath
+#Check if the folder already exists
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
 	exit 1
 fi
+
 #Name output file of inputs
-inputOutFile="$inputsDir"/variantCalling_summary.txt
+inputOutFile=$outputsPath"/pipeline_SNP_summary.txt"
+#Add pipeline info to outputs
+echo -e "SSR pipline SNP inputs for $projectDir \n" > $inputOutFile
 
-#Add version to output file of inputs
-bcftools --version > "$inputOutFile"
 
-#Retrieve input bam file type
-type="$3"
-#Loop over MapQ filtered bam files
-for f in "$inputsDir"/*/"$type".bam; do
+#Variant Calling Stage - SNP Calling Workflow
+
+#Set input paths
+inputsPath=$inputsPath"/aligned"
+
+#Loop through all filtered sam files
+for f1 in "$inputsPath"/*filter50.sam; do
 	echo "Processing file $f"
-	path=$(dirname $f)
+	path=$(cat $f | sed 's/\.sam//g')
 	#Calculate the read coverage of positions in the genome
-	bcftools mpileup --threads 8 -d 8000 -Q 20 -Ob -o "$path"/"$type"_raw.bcf -f "$genomeFile" "$f" 
-	echo bcftools mpileup --threads 8 -d 8000 -Q 20 -Ob -o "$path"/"$type"_raw.bcf -f "$genomeFile" "$f" >> "$inputOutFile"
+	bcftools mpileup --threads 8 -d 8000 -Q 20 -Ob -o "$path"_raw.bcf -f "$ref" "$f" 
+	echo bcftools mpileup --threads 8 -d 8000 -Q 20 -Ob -o "$path"_raw.bcf -f "$ref" "$f" >> "$inputOutFile"
 	#Detect the single nucleotide polymorphisms 
-	bcftools call --threads 8 -mv -Oz -o "$path"/"$type"_calls.vcf.gz "$path"/"$type"_raw.bcf 
-	echo bcftools call --threads 8 -mv -Oz -o "$path"/"$type"_calls.vcf.gz "$path"/"$type"_raw.bcf >> "$inputOutFile"
+	bcftools call --threads 8 -mv -Oz -o "$path"_calls.vcf.gz "$path"_raw.bcf 
+	echo bcftools call --threads 8 -mv -Oz -o "$path"_calls.vcf.gz "$path"_raw.bcf >> "$inputOutFile"
 	#Index vcf file
-	bcftools index --threads 8 "$path"/"$type"_calls.vcf.gz
-	echo bcftools index --threads 8 "$path"/"$type"_calls.vcf.gz >> "$inputOutFile"
+	bcftools index --threads 8 "$path"_calls.vcf.gz
+	echo bcftools index --threads 8 "$path"_calls.vcf.gz >> "$inputOutFile"
 	#Normalize indels
-	bcftools norm --threads 8 -f "$genomeFile" "$path"/"$type"_calls.vcf.gz -Ob -o "$path"/"$type"_calls.norm.bcf
-	echo bcftools norm --threads 8 -f "$genomeFile" "$path"/"$type"_calls.vcf.gz -Ob -o "$path"/"$type"_calls.norm.bcf >> "$inputOutFile"
+	bcftools norm --threads 8 -f "$ref" "$path"_calls.vcf.gz -Ob -o "$path"_calls.norm.bcf
+	echo bcftools norm --threads 8 -f "$ref" "$path"_calls.vcf.gz -Ob -o "$path"_calls.norm.bcf >> "$inputOutFile"
 	#Filter adjacent indels within 5bp
-	bcftools filter --threads 8 --IndelGap 5 "$path"/"$type"_calls.norm.bcf -Ob -o "$path"/"$type"_calls.norm.flt-indels.bcf
-	echo bcftools filter --threads 8 --IndelGap 5 "$path"/"$type"_calls.norm.bcf -Ob -o "$path"/"$type"_calls.norm.flt-indels.bcf >> "$inputOutFile"
+	bcftools filter --threads 8 --IndelGap 5 "$path"_calls.norm.bcf -Ob -o "$path"_calls.norm.flt-indels.bcf
+	echo bcftools filter --threads 8 --IndelGap 5 "$path"_calls.norm.bcf -Ob -o "$path"_calls.norm.flt-indels.bcf >> "$inputOutFile"
 	#Include sites where FILTER is true
-	#bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"/"$type"_calls.norm.flt-indels.bcf > "$path"/"$type"_filtered.bcf
-	#echo bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"/"$type"_calls.norm.flt-indels.bcf ">" "$path"/"$type"_filtered.bcf >> "$inputOutFile"
+	#bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"_calls.norm.flt-indels.bcf > "$path"_filtered.bcf
+	#echo bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"_calls.norm.flt-indels.bcf ">" "$path"_filtered.bcf >> "$inputOutFile"
 done

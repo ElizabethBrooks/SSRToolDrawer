@@ -91,9 +91,10 @@ python2 Format_Matrix.py
 echo "python2 Format_Matrix.py" >> $inputOutFile
 
 #Clean up
-rm $inputsPath"/GapGenes.v3.py"
-rm $inputsPath"/SnipMatrix.py"
-rm $inputsPath"/Format_Matrix.py"
+#rm $inputsPath"/GapGenes.v3.py"
+#rm $inputsPath"/SnipMatrix.py"
+#rm $inputsPath"/Format_Matrix.py"
+rm -r $inputsPath
 
 #Re-name and move output matrix
 mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
