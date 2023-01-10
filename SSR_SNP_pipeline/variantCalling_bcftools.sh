@@ -68,30 +68,21 @@ bcftools --version >> $versionFile
 inputsPath=$inputsPath"/sorted"
 
 #Loop through all filtered sam files
-for f in "$inputsPath"/*filter50.sam; do
-	# remove two file extensions
-	pathSam=$(echo $f | sed 's/\.filter50\.sam$//g')
-	# remove the path from the file name
-	fileName=$(basename $f)
-	# add the sam header to the input file
-	grep "^@" $pathSam > $dataPath"/"$fileName
-	cat $f >> $dataPath"/"$fileName
+for f in "$inputsPath"/*sortedCoordinate.bam; do
 	# remove the file extension
-	path=$(echo $dataPath"/"$fileName | sed 's/\.sam$//g')
+	path=$(echo $dataPath"/"$fileName | sed 's/\.bam$//g')
 	# status message
-	echo "Processing file "$path".sam ..."
+	echo "Processing file "$path".bam ..."
 	#Calculate the read coverage of positions in the genome
-	bcftools mpileup --threads 8 -d 8000 -Ob -o $path"_raw.bcf" -f $ref $dataPath"/"$fileName 
+	bcftools mpileup --threads 8 -d 8000 -Ob -o $path"_raw.bcf" -f $ref $f 
 	#Detect the single nucleotide polymorphisms 
-	bcftools call --threads 8 -mv -Oz -o "$path"_calls.vcf.gz "$path"_raw.bcf 
+	bcftools call --threads 8 -mv -Oz -o $path"_calls.vcf.gz" $path"_raw.bcf" 
 	#Index vcf file
-	bcftools index --threads 8 "$path"_calls.vcf.gz
+	bcftools index --threads 8 $path"_calls.vcf.gz"
 	#Normalize indels
-	bcftools norm --threads 8 -f "$ref" "$path"_calls.vcf.gz -Ob -o "$path"_calls.norm.bcf
+	bcftools norm --threads 8 -f $ref $path"_calls.vcf.gz" -Ob -o $path"_calls.norm.bcf"
 	#Filter adjacent indels within 5bp
-	bcftools filter --threads 8 --IndelGap 5 "$path"_calls.norm.bcf -Ob -o "$path"_calls.norm.flt-indels.bcf
-	#Include sites where FILTER is true
-	#bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"_calls.norm.flt-indels.bcf > "$path"_filtered.bcf
+	bcftools filter --threads 8 --IndelGap 5 $path"_calls.norm.bcf" -Ob -o $path"_calls.norm.flt-indels.bcf"
 	# status message
 	echo "Processed!"
 done

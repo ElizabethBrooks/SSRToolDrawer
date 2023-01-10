@@ -2,7 +2,7 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
-#$ -N ssr_VC_jobOutput
+#$ -N ssr_sort_jobOutput
 #$ -pe smp 8
 #Script to run the SSR pipeline
 #Usage: qsub sorting_samtools.sh inputsFile
