@@ -54,8 +54,8 @@ inputsPath=$inputsPath"/aligned"
 
 #Loop through all filtered sam files
 for f in "$inputsPath"/*filter50.sam; do
-	echo "Processing file $f"
-	path=$(cat $f | sed 's/\.sam//g')
+	path=$(cat $f | sed 's/\.sam$//g')
+	echo "Processing file $path"
 	#Calculate the read coverage of positions in the genome
 	bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" 
 	echo bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" >> "$inputOutFile"
