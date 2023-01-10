@@ -5,12 +5,12 @@
 #$ -N ssr_VC_jobOutput
 #$ -pe smp 8
 #Script to run the SSR pipeline
-#Usage: qsub ssr_pipeline_VC.sh inputsFile
-#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run1.txt
-#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run2.txt
-#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run3.txt
-#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run4.txt
-#Usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run5.txt
+#Usage: qsub variantCalling_bcftools.sh inputsFile
+#Usage Ex: qsub variantCalling_bcftools.sh inputPaths_romero_run1.txt
+#Usage Ex: qsub variantCalling_bcftools.sh inputPaths_romero_run2.txt
+#Usage Ex: qsub variantCalling_bcftools.sh inputPaths_romero_run3.txt
+#Usage Ex: qsub variantCalling_bcftools.sh inputPaths_romero_run4.txt
+#Usage Ex: qsub variantCalling_bcftools.sh inputPaths_romero_run5.txt
 
 #Required modules for ND CRC servers
 module load bio
@@ -38,19 +38,10 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
-#Make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
-mkdir $outputsPath
-#Check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
-
 #Name output file of inputs
-inputOutFile=$outputsPath"/pipeline_SNP_summary.txt"
+inputOutFile=$inputsPath"/pipeline_VC_summary.txt"
 #Add pipeline info to outputs
-echo -e "SSR pipline SNP inputs for $projectDir \n" > $inputOutFile
+echo -e "SSR pipline variant calling inputs for $projectDir \n" > $inputOutFile
 
 
 #Variant Calling Stage - SNP Calling Workflow
