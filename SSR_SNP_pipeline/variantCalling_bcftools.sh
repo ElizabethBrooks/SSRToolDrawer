@@ -57,8 +57,8 @@ for f in "$inputsPath"/*filter50.sam; do
 	echo "Processing file $f"
 	path=$(cat $f | sed 's/\.sam//g')
 	#Calculate the read coverage of positions in the genome
-	bcftools mpileup --threads 8 -d 8000 -Q 20 -Ob -o "$path"_raw.bcf -f "$ref" "$f" 
-	echo bcftools mpileup --threads 8 -d 8000 -Q 20 -Ob -o "$path"_raw.bcf -f "$ref" "$f" >> "$inputOutFile"
+	bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" 
+	echo bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" >> "$inputOutFile"
 	#Detect the single nucleotide polymorphisms 
 	bcftools call --threads 8 -mv -Oz -o "$path"_calls.vcf.gz "$path"_raw.bcf 
 	echo bcftools call --threads 8 -mv -Oz -o "$path"_calls.vcf.gz "$path"_raw.bcf >> "$inputOutFile"
