@@ -38,8 +38,11 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
+#Outputs directory for project analysis
+outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
+
 #Name output file of inputs
-inputOutFile=$inputsPath"/pipeline_VC_summary.txt"
+inputOutFile=$outputsPath"/pipeline_VC_summary.txt"
 #Add pipeline info to outputs
 echo -e "SSR pipline variant calling inputs for $projectDir \n" > $inputOutFile
 
