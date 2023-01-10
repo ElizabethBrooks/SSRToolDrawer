@@ -38,6 +38,11 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
+# setup the variant calling directory
+dataPath=$inputsPath"/variants"
+# create the directory
+mkdir $dataPath
+
 #Outputs directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 
@@ -54,8 +59,17 @@ inputsPath=$inputsPath"/aligned"
 
 #Loop through all filtered sam files
 for f in "$inputsPath"/*filter50.sam; do
-	path=$(echo $f | sed 's/\.sam$//g')
-	echo "Processing file $path"
+	# remove two file extensions
+	pathSam=$(echo $f | sed 's/\.filter50\.sam$//g')
+	# remove the path from the file name
+	fileName=$(basename $f)
+	# add the sam header to the input file
+	grep "^@" $pathSam > $dataPath"/"$fileName
+	cat $f >> $dataPath"/"$fileName
+	# remove the file extension
+	path=$(echo $dataPath"/"$fileName | sed 's/\.sam$//g')
+	# status message
+	echo "Processing file "$path".sam ..."
 	#Calculate the read coverage of positions in the genome
 	bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" 
 	echo bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" >> "$inputOutFile"
@@ -74,4 +88,9 @@ for f in "$inputsPath"/*filter50.sam; do
 	#Include sites where FILTER is true
 	#bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"_calls.norm.flt-indels.bcf > "$path"_filtered.bcf
 	#echo bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"_calls.norm.flt-indels.bcf ">" "$path"_filtered.bcf >> "$inputOutFile"
+	# status message
+	echo "Processed!"
 done
+
+# status message
+echo "Analysis conplete!"
