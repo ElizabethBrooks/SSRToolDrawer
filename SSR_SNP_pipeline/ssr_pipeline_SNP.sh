@@ -46,11 +46,6 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-#Name output file of inputs
-inputOutFile=$outputsPath"/pipeline_SNP_summary.txt"
-#Add pipeline info to outputs
-echo -e "SSR pipline SNP inputs for $projectDir \n" > $inputOutFile
-
 
 #SSR Analysis Stage - SNP Calling Workflow
 
@@ -70,8 +65,6 @@ for f1 in "$inputsPath"/*.sam; do
 	echo "Processing $f1"
 	#Run SSR pipeline
 	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
-	#Write inputs out to summary file
-	echo "python2 SamIAm.py -sam $f1 -C $infoPath -p yes" >> $inputOutFile
 	#Status message
 	echo "Processed!"
 done
@@ -85,7 +78,6 @@ done
 
 #Format matrix
 #python2 Format_VCF-Matrix.py
-#echo "python2 Format_VCF-Matrix.py" >> $inputOutFile
 
 #Clean up
 rm $inputsPath"/SamIAm.py"

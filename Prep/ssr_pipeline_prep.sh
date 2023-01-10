@@ -35,10 +35,8 @@ if [ $? -ne 0 ]; then
 fi
 
 #Name output file of inputs
-inputOutFile=$outputsPath"/pipeline_prep_summary.txt"
 versionFile=$outputsPath"/software_prep_summary.txt"
 #Add pipeline info to outputs
-echo -e "SSR pipline prep inputs for $projectDir \n" > $inputOutFile
 echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 
 

@@ -22,7 +22,6 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
 #Name of output file of inputs
-inputOutFile=$outputsPath"/pipeline_prep_summary.txt"
 versionFile=$outputsPath"/software_prep_summary.txt"
 
 #Add software version to outputs
@@ -53,14 +52,11 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 		score=33
 	else
 		echo "ERROR: Illumina encoding not found... exiting"
-		#echo "ERROR: Illumina encoding not found for $curSample" >> $inputOutFile
 		exit 1
 	fi
 	echo $outputsPath"/qc/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"
 	#Perform adapter trimming on paired reads using 8 threads
 	trimmomatic PE -threads 8 -phred"$score" $f1 $f2 $sampleTag"_pForward.fq.gz" $sampleTag"_uForward.fq.gz" $sampleTag"_pReverse.fq.gz" $sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-	#Add run inputs to output summary file
-	echo trimmomatic PE -threads 8 -phred"$score" $f1 $f2 $sampleTag"_pForward.fq.gz" $sampleTag"_uForward.fq.gz" $sampleTag"_pReverse.fq.gz" $sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36 >> $inputOutFile
 	#Clean up
 	rm -r $noPath"_R1_001_fastqc.zip"
 	rm -r $noPath"_R1_001_fastqc/"

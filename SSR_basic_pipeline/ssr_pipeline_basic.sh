@@ -46,11 +46,6 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-#Name output file of inputs
-inputOutFile=$outputsPath"/pipeline_basic_summary.txt"
-#Add pipeline info to outputs
-echo -e "SSR pipline basic inputs for $projectDir \n" > $inputOutFile
-
 
 #SSR Analysis Stage - Basic Workflow
 
@@ -72,9 +67,6 @@ for f1 in "$inputsPath"/*.sam; do
 	#Run SSR pipeline
 	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
 	python2 SnipMatrix.py $f1".Matrix.txt"
-	#Write inputs out to summary file
-	echo "python2 GapGenes.v3.py -sam $f1 -C $infoPath -P unpaired" >> $inputOutFile
-	echo "python2 SnipMatrix.py "$f1".Matrix.txt" >> $inputOutFile
 	#Status message
 	echo "Processed!"
 done
@@ -88,7 +80,6 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
 
 #Format matrix
 python2 Format_Matrix.py
-echo "python2 Format_Matrix.py" >> $inputOutFile
 
 #Clean up
 #rm $inputsPath"/GapGenes.v3.py"

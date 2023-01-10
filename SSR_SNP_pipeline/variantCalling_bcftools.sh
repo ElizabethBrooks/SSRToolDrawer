@@ -42,15 +42,21 @@ inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 dataPath=$inputsPath"/variants"
 # create the directory
 mkdir $dataPath
+#Check if the folder already exists
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 #Outputs directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 
 #Name output file of inputs
-inputOutFile=$outputsPath"/pipeline_VC_summary.txt"
+versionFile=$outputsPath"/software_prep_summary.txt"
 #Add pipeline info to outputs
-echo -e "SSR pipline variant calling inputs for $projectDir \n" > $inputOutFile
-
+echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
+# retrieve software version
+bcftools --version >> $versionFile
 
 #Variant Calling Stage - SNP Calling Workflow
 
@@ -71,23 +77,17 @@ for f in "$inputsPath"/*filter50.sam; do
 	# status message
 	echo "Processing file "$path".sam ..."
 	#Calculate the read coverage of positions in the genome
-	bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" 
-	echo bcftools mpileup --threads 8 -d 8000 -Ob -o "$path"_raw.bcf -f "$ref" "$f" >> "$inputOutFile"
+	bcftools mpileup --threads 8 -d 8000 -Ob -o $path"_raw.bcf" -f $ref $dataPath"/"$fileName 
 	#Detect the single nucleotide polymorphisms 
 	bcftools call --threads 8 -mv -Oz -o "$path"_calls.vcf.gz "$path"_raw.bcf 
-	echo bcftools call --threads 8 -mv -Oz -o "$path"_calls.vcf.gz "$path"_raw.bcf >> "$inputOutFile"
 	#Index vcf file
 	bcftools index --threads 8 "$path"_calls.vcf.gz
-	echo bcftools index --threads 8 "$path"_calls.vcf.gz >> "$inputOutFile"
 	#Normalize indels
 	bcftools norm --threads 8 -f "$ref" "$path"_calls.vcf.gz -Ob -o "$path"_calls.norm.bcf
-	echo bcftools norm --threads 8 -f "$ref" "$path"_calls.vcf.gz -Ob -o "$path"_calls.norm.bcf >> "$inputOutFile"
 	#Filter adjacent indels within 5bp
 	bcftools filter --threads 8 --IndelGap 5 "$path"_calls.norm.bcf -Ob -o "$path"_calls.norm.flt-indels.bcf
-	echo bcftools filter --threads 8 --IndelGap 5 "$path"_calls.norm.bcf -Ob -o "$path"_calls.norm.flt-indels.bcf >> "$inputOutFile"
 	#Include sites where FILTER is true
 	#bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"_calls.norm.flt-indels.bcf > "$path"_filtered.bcf
-	#echo bcftools query -i'FILTER="."' -f'%CHROM %POS %FILTER\n' "$path"_calls.norm.flt-indels.bcf ">" "$path"_filtered.bcf >> "$inputOutFile"
 	# status message
 	echo "Processed!"
 done

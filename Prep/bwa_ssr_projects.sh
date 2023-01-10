@@ -22,7 +22,6 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
 #Name of output file of inputs
-inputOutFile=$outputsPath"/pipeline_prep_summary.txt"
 versionFile=$outputsPath"/software_prep_summary.txt"
 
 #Add software versions to outputs
@@ -54,9 +53,7 @@ for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 	echo "Processing $curSampleNoPath"
 	#Run bwa with default settings
 	bwa mem -t 8 $ref $f1 $curSample"_pReverse.fq.gz" > $curSampleNoPath".sam"
-	#Add sample and hisat2 run inputs to output summary file
-	echo $curSampleNoPath >> $inputOutFile
-	echo "bwa mem -t 8 $ref $f1 $curSample\_pReverse.fq.gz > $curSampleNoPath.sam" >> "$inputOutFile"
+	# status message
 	echo "Processed!"
 done
 

@@ -20,7 +20,6 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
 #Name of output file of inputs
-inputOutFile=$outputsPath"/pipeline_prep_summary.txt"
 versionFile=$outputsPath"/software_prep_summary.txt"
 
 #Report software version
@@ -46,9 +45,6 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	#Perform QC on both paired end reads for the current sample
 	fastqc $f1 -o $qcOut --extract
 	fastqc $f2 -o $qcOut --extract
-	#Output run inputs
-	echo "fastqc $f1 -o $qcOut --extract" >> $inputOutFile
-	echo "fastqc $f2 -o $qcOut --extract" >> $inputOutFile
 	#Print status message
 	echo "Processed!"
 done
