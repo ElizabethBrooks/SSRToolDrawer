@@ -46,6 +46,9 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+# copy software prep summary
+cp $inputsPath"/software_prep_summary.txt" $outputsPath
+
 
 #SSR Analysis Stage - Basic Workflow
 
