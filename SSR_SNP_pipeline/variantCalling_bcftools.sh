@@ -50,7 +50,7 @@ echo -e "SSR pipline variant calling inputs for $projectDir \n" > $inputOutFile
 inputsPath=$inputsPath"/aligned"
 
 #Loop through all filtered sam files
-for f1 in "$inputsPath"/*filter50.sam; do
+for f in "$inputsPath"/*filter50.sam; do
 	echo "Processing file $f"
 	path=$(cat $f | sed 's/\.sam//g')
 	#Calculate the read coverage of positions in the genome
