@@ -20,11 +20,11 @@ module load bio
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
 conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
-# activate the python2 environment for job run
-#conda activate python2
-
-# make sure numpy is installed
-#pip install numpy
+## if necessary
+## activate the python2 environment for job run
+##conda activate python2
+## make sure numpy is installed
+##pip install numpy
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -38,25 +38,25 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_VC"
-#mkdir $outputsPath
+mkdir $outputsPath
 # check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $outputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-#mkdir $inputsPath
+mkdir $inputsPath
 # check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $inputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+if [ $? -ne 0 ]; then
+	echo "The $inputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 # prepare data for analysis
-#cd ../Prep
-#bash ssr_pipeline_prep.sh $inputsFile $outputsPath
+cd ../Prep
+bash ssr_pipeline_prep.sh $inputsFile $outputsPath
 
 
 # SSR Analysis Stage - SNP Calling Workflow
@@ -65,28 +65,28 @@ inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 echo "SSR SNP analysis started..."
 
 # copy pipeline scripts to inputs directory
-#cd ../VC
-#cp SamIAm.py $inputsPath"/aligned"
-#cp sorting_samtools.sh $inputsPath"/aligned"
-#cp variantCalling_bcftools.sh $inputsPath"/aligned"
+cd ../VC
+cp SamIAm.py $inputsPath"/aligned"
+cp sorting_samtools.sh $inputsPath"/aligned"
+cp variantCalling_bcftools.sh $inputsPath"/aligned"
 cp Format_VCF-Matrix.py $inputsPath"/variants"
 
 # move to the inputs directory
-#cd $inputsPath"/aligned"
+cd $inputsPath"/aligned"
 
 # loop through all filtered sam files
-#for f1 in $inputsPath"/aligned/"*".sam"; do
+for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
-#	echo "Processing $f1"
+	echo "Processing $f1"
 	# run SSR pipeline
-#	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# status message
-#	echo "Processed!"
-#done
+	echo "Processed!"
+done
 
 # perform variant calling
-#bash sorting_samtools.sh $inputsFile $inputsPath
-#bash variantCalling_bcftools.sh $inputsFile $inputsPath
+bash sorting_samtools.sh $inputsFile $inputsPath
+bash variantCalling_bcftools.sh $inputsFile $inputsPath
 
 # move to the inputs directory
 cd $inputsPath"/variants"
@@ -117,9 +117,8 @@ python2 Format_VCF-Matrix.py
 mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 # clean up
-rm $inputsPath"/variants/Format_VCF-Matrix.py"
-#inputsPath=$(dirname $inputsPath)
-#rm -r $inputsPath
+inputsPath=$(dirname $inputsPath)
+rm -r $inputsPath
 
 # status message
-echo "SSR SNP analysis complete!"
+echo "SSR VC analysis complete!"

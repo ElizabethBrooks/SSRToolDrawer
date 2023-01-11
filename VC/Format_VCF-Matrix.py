@@ -27,7 +27,6 @@ for i in sample_list:
 		ta = open(i+".noHeader.vcf", 'r')
 		#print ta
 		for lines in ta:
-			print lines
 			fields = lines.split("	")
 			contig=fields[0]
 		#	print contig
