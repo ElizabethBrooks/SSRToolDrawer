@@ -45,15 +45,15 @@ fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $outputsPath
+mkdir $inputsPath
 #Check if the folder already exists
 if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	echo "The $inputsPath directory already exsists... please remove before proceeding."
 	exit 1
 fi
 
 # prepare data for analysis
-bash ssr_pipeline_prep.sh $inputsFile $outputsPath
+bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 
 #SSR Analysis Stage - Basic Workflow

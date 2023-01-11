@@ -9,17 +9,15 @@
 #Retrieve input argument of a inputs file
 inputsFile=$1
 
+# retrieve input outputs path
+outputsPath=$2
+
 #Retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 #Retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 #Retrieve adapter absolute path for alignment
 adapterPath=$(grep "adapter:" ../"InputData/"$inputsFile | tr -d " " | sed "s/adapter://g")
-#Retrieve analysis outputs absolute path
-outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
-
-#Directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
 #Name of output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
