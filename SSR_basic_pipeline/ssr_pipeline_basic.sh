@@ -99,5 +99,5 @@ rm -r $inputsPath
 #Re-name and move output matrix
 mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
 
-#Print status message
+# status message
 echo "Analysis complete!"

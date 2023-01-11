@@ -3,8 +3,8 @@
 #Script to run the SSR pipeline
 #Usage: bash ssr_pipeline_prep.sh inputsFile outputsPath
 
-#Required modules for ND CRC servers
-module load bio
+# status message
+echo "Prep started..."
 
 #Retrieve input argument of a inputs file
 inputsFile=$1
@@ -34,3 +34,6 @@ bash fastqc_ssr_projects.sh $inputsFile
 bash trimmomatic_ssr_projects.sh $inputsFile
 #Mapping with bwa
 bash bwa_ssr_projects.sh $inputsFile
+
+# status message
+echo "Prep complete!"

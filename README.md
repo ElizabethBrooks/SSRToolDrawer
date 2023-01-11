@@ -16,7 +16,7 @@ The sequence capture data should first be assessed for quality with fastqc, trim
 The sequence capture data should first be assessed for quality with fastqc, trimmed with trimmomatic, and mapped with bwa. A python2 script can then be run to print out sequences that flank SSRs at least 50bp in both directions. Next, the aligned data can be filtered to only include reads mapped within 50bp of a SSR before SNPs are called and VCF files generated with bcftools. Finally, a data matrix consisting of SSR information can be generated using the following set of python2 scripts and workflow.
     
 - \<QC with fastqc, trim with trimmomatic, and map with bwa\>
-- python2 SamIAm.py -sam \<SAM file\> -p \<yes/no\>
+- python2 SamIAm.py -sam \<SAM file\> -C \<SSR info file\> -p \<yes/no\>
 - \<Call SNPs with bcftools\>
 - python2 Format_VCF-Matrix.py
 
