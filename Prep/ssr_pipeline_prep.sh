@@ -26,7 +26,7 @@ echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 echo "Prep started..."
 
 #Make sure the reference genome has been indexed
-bwa index $ref
+#bwa index $ref
 
 #Quality control with fastqc
 bash fastqc_ssr_projects.sh $inputsFile $outputsPath

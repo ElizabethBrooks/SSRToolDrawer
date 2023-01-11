@@ -103,12 +103,12 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 #Format matrix
 python2 Format_VCF-Matrix.py
 
+#Re-name and move output matrix
+mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
+
 # clean up
 #inputsPath=$(dirname $inputsPath)
 #rm -r $inputsPath
-
-#Re-name and move output matrix
-mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 # status message
 echo "SSR SNP analysis complete!"
