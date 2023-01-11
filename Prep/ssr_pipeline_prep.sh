@@ -3,9 +3,6 @@
 #Script to run the SSR pipeline
 #Usage: bash ssr_pipeline_prep.sh inputsFile outputsPath
 
-# status message
-echo "Prep started..."
-
 #Retrieve input argument of a inputs file
 inputsFile=$1
 
@@ -24,6 +21,9 @@ echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 
 
 #Analysis Prep Stage
+
+# status message
+echo "Prep started..."
 
 #Make sure the reference genome has been indexed
 bwa index $ref

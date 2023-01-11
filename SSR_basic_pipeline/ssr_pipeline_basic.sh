@@ -59,11 +59,14 @@ bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 #SSR Analysis Stage - Basic Workflow
 
+# status message
+echo "SSR basic analysis started..."
+
 #Set input paths
 inputsPath=$inputsPath"/aligned"
 
 #Copy pipeline scripts to inputs directory
-cd ../SSR_SNP_pipeline
+cd ../SSR_basic_pipeline
 cp GapGenes.v3.py $inputsPath
 cp SnipMatrix.py $inputsPath
 cp Format_Matrix.py $inputsPath
@@ -93,13 +96,10 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
 python2 Format_Matrix.py
 
 #Clean up
-#rm $inputsPath"/GapGenes.v3.py"
-#rm $inputsPath"/SnipMatrix.py"
-#rm $inputsPath"/Format_Matrix.py"
 rm -r $inputsPath
 
 #Re-name and move output matrix
 mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
 
 # status message
-echo "Analysis complete!"
+echo "SSR SNP analysis complete!"

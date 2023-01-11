@@ -57,12 +57,17 @@ outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 #fi
 
 # prepare data for analysis
+#cd ../Prep
 #bash ssr_pipeline_prep.sh $inputsFile $outputsPath
 
 
 #SSR Analysis Stage - SNP Calling Workflow
 
+# status message
+echo "SSR SNP analysis started..."
+
 #Copy pipeline scripts to inputs directory
+#cd ../SSR_SNP_pipeline
 #cp SamIAm.py $inputsPath"/aligned"
 #cp sorting_samtools.sh $inputsPath"/aligned"
 #cp variantCalling_bcftools.sh $inputsPath"/aligned"
@@ -108,5 +113,5 @@ rm $inputsPath"/variants/Format_VCF-Matrix.py"
 #Re-name and move output matrix
 mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
-#Print status message
-echo "Analysis complete!"
+# status message
+echo "SSR SNP analysis complete!"

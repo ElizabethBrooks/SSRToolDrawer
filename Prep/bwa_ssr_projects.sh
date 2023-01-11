@@ -1,6 +1,6 @@
 #!/bin/bash
 #Script to perform bwa alignment of trimmed paired end reads
-#Usage: bash bwa_ssr_projects.sh inputsFile
+#Usage: bash bwa_ssr_projects.sh inputsFile outputsPath
 #Usage Ex: bash bwa_ssr_projects.sh inputPaths_romero_test_run1.txt
 
 #Required modules for ND CRC servers
@@ -56,7 +56,7 @@ for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 done
 
 #Clean up
-rm -r "$trimmedFolder"
+#rm -r "$trimmedFolder"
 
 #Print status message
 echo "Analysis complete!"

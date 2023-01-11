@@ -1,6 +1,6 @@
 #!/bin/bash
 #Script to perform trimming of paired end reads
-#Usage: bash trimmomatic_ssr_projects.sh inputsFile
+#Usage: bash trimmomatic_ssr_projects.sh inputsFile outputsPath
 #Usage Ex: bash trimmomatic_ssr_projects.sh inputPaths_romero_test_run1.txt
 
 #Required modules for ND CRC servers

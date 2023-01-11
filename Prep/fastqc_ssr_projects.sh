@@ -1,6 +1,6 @@
 #!/bin/bash
 #Script to perform fastqc quality control of paired end reads
-#Usage: bash fastqc_ssr_projects.sh inputsFile
+#Usage: bash fastqc_ssr_projects.sh inputsFile outputsPath
 #Usage Ex: bash fastqc_ssr_projects.sh inputPaths_romero_run1.txt
 
 #Required modules for ND CRC servers
