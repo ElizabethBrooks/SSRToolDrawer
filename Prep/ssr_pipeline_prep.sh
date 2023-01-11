@@ -29,11 +29,11 @@ echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 bwa index $ref
 
 #Quality control with fastqc
-bash fastqc_ssr_projects.sh $inputsFile
+bash fastqc_ssr_projects.sh $inputsFile $outputsPath
 #Trimming with trimmomatic
-bash trimmomatic_ssr_projects.sh $inputsFile
+bash trimmomatic_ssr_projects.sh $inputsFile $outputsPath
 #Mapping with bwa
-bash bwa_ssr_projects.sh $inputsFile
+bash bwa_ssr_projects.sh $inputsFile $outputsPath
 
 # status message
 echo "Prep complete!"
