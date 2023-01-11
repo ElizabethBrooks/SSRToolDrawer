@@ -29,9 +29,9 @@ echo "Prep started..."
 #bwa index $ref
 
 #Quality control with fastqc
-bash fastqc_ssr_projects.sh $inputsFile $outputsPath
+#bash fastqc_ssr_projects.sh $inputsFile $outputsPath
 #Trimming with trimmomatic
-bash trimmomatic_ssr_projects.sh $inputsFile $outputsPath
+#bash trimmomatic_ssr_projects.sh $inputsFile $outputsPath
 #Mapping with bwa
 bash bwa_ssr_projects.sh $inputsFile $outputsPath
 
