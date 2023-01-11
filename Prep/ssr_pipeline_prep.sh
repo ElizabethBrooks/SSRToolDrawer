@@ -1,39 +1,39 @@
 #!/bin/bash
 
-#Script to run the SSR pipeline
-#Usage: bash ssr_pipeline_prep.sh inputsFile outputsPath
+# script to run the SSR pipeline
+# usage: bash ssr_pipeline_prep.sh inputsFile inputsPath
 
-#Retrieve input argument of a inputs file
+# retrieve input argument of a inputs file
 inputsFile=$1
 
 # retrieve input outputs path
-outputsPath=$2
+inputsPath=$2
 
-#Retrieve the project ID 
+# retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-#Retrieve genome reference absolute path for alignment
+# retrieve genome reference absolute path for alignment
 ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
 
-#Name output file of inputs
-versionFile=$outputsPath"/software_prep_summary.txt"
-#Add pipeline info to outputs
+# name output file of inputs
+versionFile=$inputsPath"/software_prep_summary.txt"
+# add pipeline info to outputs
 echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 
 
-#Analysis Prep Stage
+# Analysis Prep Stage
 
 # status message
 echo "Prep started..."
 
-#Make sure the reference genome has been indexed
+# make sure the reference genome has been indexed
 #bwa index $ref
 
-#Quality control with fastqc
-bash fastqc_ssr_projects.sh $inputsFile $outputsPath
-#Trimming with trimmomatic
-bash trimmomatic_ssr_projects.sh $inputsFile $outputsPath
-#Mapping with bwa
-bash bwa_ssr_projects.sh $inputsFile $outputsPath
+# quality control with fastqc
+bash qc_fastqc.sh $inputsFile $inputsPath
+# trimming with trimmomatic
+bash trimming_trimmomatic.sh $inputsFile $inputsPath
+# mapping with bwa
+bash alignment_bwa.sh $inputsFile $inputsPath
 
 # status message
 echo "Prep complete!"

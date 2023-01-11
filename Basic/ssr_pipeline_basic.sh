@@ -3,104 +3,106 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_basic_jobOutput
-#Script to run the SSR pipeline
-#Usage: qsub ssr_pipeline_basic.sh inputsFile
-#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run1.txt
-#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run2.txt
-#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run3.txt
-#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run4.txt
-#Usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run5.txt
+#$ -pe smp 8
 
-#Required modules for ND CRC servers
+# script to run the SSR pipeline
+# usage: qsub ssr_pipeline_basic.sh inputsFile
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run1.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run2.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run3.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run4.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run5.txt
+
+# required modules for ND CRC servers
 module load bio
 
-#Activate the python2 environment for local run
+# activate the python2 environment for local run
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
 conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
-#Activate the python2 environment for job run
-#conda activate python2
+## if necessary
+## activate the python2 environment for job run
+##conda activate python2
+## make sure numpy is installed
+##pip install numpy
 
-#Make sure numpy is installed
-#pip install numpy
-
-#Retrieve input argument of a inputs file
+# retrieve input argument of a inputs file
 inputsFile=$1
 
-#Retrieve the project ID 
+# retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-#Retrieve adapter absolute path for alignment
+# retrieve adapter absolute path for alignment
 infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
-#Retrieve analysis outputs absolute path
+# retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
-#Make a new directory for project analysis
+# make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_basic"
 mkdir $outputsPath
-#Check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $outputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+# check if the folder already exists
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 mkdir $inputsPath
-#Check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $inputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+# check if the folder already exists
+if [ $? -ne 0 ]; then
+	echo "The $inputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 # prepare data for analysis
-#cd ../Prep
-#bash ssr_pipeline_prep.sh $inputsFile $inputsPath
+cd ../Prep
+bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 
-#SSR Analysis Stage - Basic Workflow
+# SSR Analysis Stage - Basic Workflow
 
 # status message
 echo "SSR basic analysis started..."
 
-#Set input paths
+# set input paths
 inputsPath=$inputsPath"/aligned"
 
-#Copy pipeline scripts to inputs directory
+# copy pipeline scripts to inputs directory
 cd ../Basic
 cp GapGenes.v3.py $inputsPath
 cp SnipMatrix.py $inputsPath
 cp Format_Matrix.py $inputsPath
 
-#Move to the inputs directory
+# move to the inputs directory
 cd $inputsPath
 
-#Loop through all filtered sam files
-for f1 in "$inputsPath"/*.sam; do
-	#Print status message
+# loop through all filtered sam files
+for f1 in $inputsPath"/"*".sam"; do
+	# print status message
 	echo "Processing $f1"
-	#Run SSR pipeline
+	# run SSR pipeline
 	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "unpaired"
 	python2 SnipMatrix.py $f1".Matrix.txt"
-	#Status message
+	# status message
 	echo "Processed!"
 done
 
-#Retrieve and format sample tag list
+# retrieve and format sample tag list
 sampleTags=$(for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done)
 sampleTags=$(echo $sampleTags | sed 's/.$//')
 
-#Find and replace the sample list
+# find and replace the sample list
 sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
 
-#Format matrix
+# format matrix
 python2 Format_Matrix.py
 
-#Re-name and move output matrix
+# re-name and move output matrix
 mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
 
 # clean up
-#inputsPath=$(dirname $inputsPath)
-#rm -r $inputsPath
+inputsPath=$(dirname $inputsPath)
+rm -r $inputsPath
 
 # status message
 echo "SSR SNP analysis complete!"
