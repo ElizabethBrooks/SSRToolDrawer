@@ -37,7 +37,7 @@ infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_VC"
+outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 mkdir $outputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then
