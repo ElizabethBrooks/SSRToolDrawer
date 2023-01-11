@@ -103,11 +103,8 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 #Format matrix
 python2 Format_VCF-Matrix.py
 
-#Clean up
-#rm $inputsPath"/aligned/SamIAm.py"
-#rm $inputsPath"/aligned/sorting_samtools.sh"
-#rm $inputsPath"/aligned/variantCalling_bcftools.sh"
-rm $inputsPath"/variants/Format_VCF-Matrix.py"
+# clean up
+#inputsPath=$(dirname $inputsPath)
 #rm -r $inputsPath
 
 #Re-name and move output matrix

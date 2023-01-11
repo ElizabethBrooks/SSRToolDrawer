@@ -95,8 +95,9 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
 #Format matrix
 python2 Format_Matrix.py
 
-#Clean up
-rm -r $inputsPath
+# clean up
+#inputsPath=$(dirname $inputsPath)
+#rm -r $inputsPath
 
 #Re-name and move output matrix
 mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
