@@ -47,6 +47,18 @@ outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 #	exit 1
 #fi
 
+# setup the inputs path
+#inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
+#mkdir $outputsPath
+#Check if the folder already exists
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
+
+# prepare data for analysis
+#bash ssr_pipeline_prep.sh $inputsFile $outputsPath
+
 
 #SSR Analysis Stage - SNP Calling Workflow
 
@@ -70,8 +82,8 @@ cp Format_VCF-Matrix.py $inputsPath"/variants"
 #done
 
 # perform variant calling
-#bash sorting_samtools.sh $inputsFile
-#bash variantCalling_bcftools.sh $inputsFile
+#bash sorting_samtools.sh $inputsFile $outputsPath
+#bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
 #Move to the inputs directory
 cd $inputsPath"/variants"

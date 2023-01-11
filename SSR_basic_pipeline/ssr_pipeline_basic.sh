@@ -34,9 +34,6 @@ infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g
 #Retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
 
-# setup the inputs path
-inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-
 #Make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_basic"
 mkdir $outputsPath
@@ -46,8 +43,17 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-# copy software prep summary
-cp $inputsPath"/software_prep_summary.txt" $outputsPath
+# setup the inputs path
+inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
+mkdir $outputsPath
+#Check if the folder already exists
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
+
+# prepare data for analysis
+bash ssr_pipeline_prep.sh $inputsFile $outputsPath
 
 
 #SSR Analysis Stage - Basic Workflow
