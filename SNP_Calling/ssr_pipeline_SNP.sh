@@ -6,12 +6,12 @@
 #$ -pe smp 8
 
 # script to run the SSR pipeline
-# usage: qsub ssr_pipeline_VC.sh inputsFile
-# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run1.txt
-# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run2.txt
-# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run3.txt
-# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run4.txt
-# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run5.txt
+# usage: qsub ssr_pipeline_SNP.sh inputsFile
+# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run1.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run2.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run3.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run4.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run5.txt
 
 # required modules for ND CRC servers
 module load bio
@@ -117,7 +117,6 @@ python2 Format_VCF-Matrix.py
 mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 # clean up
-inputsPath=$(dirname $inputsPath)
 rm -r $inputsPath
 
 # status message

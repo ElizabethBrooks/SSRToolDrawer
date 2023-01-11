@@ -64,20 +64,17 @@ bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 # status message
 echo "SSR basic analysis started..."
 
-# set input paths
-inputsPath=$inputsPath"/aligned"
-
 # copy pipeline scripts to inputs directory
 cd ../Basic
-cp GapGenes.v3.py $inputsPath
-cp SnipMatrix.py $inputsPath
-cp Format_Matrix.py $inputsPath
+cp GapGenes.v3.py $inputsPath"/aligned"
+cp SnipMatrix.py $inputsPath"/aligned"
+cp Format_Matrix.py $inputsPath"/aligned"
 
 # move to the inputs directory
-cd $inputsPath
+cd $inputsPath"/aligned"
 
 # loop through all filtered sam files
-for f1 in $inputsPath"/"*".sam"; do
+for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
@@ -88,7 +85,7 @@ for f1 in $inputsPath"/"*".sam"; do
 done
 
 # retrieve and format sample tag list
-sampleTags=$(for i in "$inputsPath"/*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done)
+sampleTags=$(for i in $inputsPath"/aligned/"*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done)
 sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
@@ -101,7 +98,6 @@ python2 Format_Matrix.py
 mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
 
 # clean up
-inputsPath=$(dirname $inputsPath)
 rm -r $inputsPath
 
 # status message
