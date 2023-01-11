@@ -3,6 +3,7 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_SNP_jobOutput
+#$ -pe smp 8
 #Script to run the SSR pipeline
 #Usage: qsub ssr_pipeline_SNP.sh inputsFile
 #Usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run1.txt
@@ -39,12 +40,12 @@ inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 
 #Make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
-mkdir $outputsPath
+#mkdir $outputsPath
 #Check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
 
 
 #SSR Analysis Stage - SNP Calling Workflow
