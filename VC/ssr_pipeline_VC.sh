@@ -117,7 +117,7 @@ python2 Format_VCF-Matrix.py
 mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 # clean up
-rm Format_VCF-Matrix.py
+rm $inputsPath"/variants/Format_VCF-Matrix.py"
 #inputsPath=$(dirname $inputsPath)
 #rm -r $inputsPath
 
