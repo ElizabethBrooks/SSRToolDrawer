@@ -53,6 +53,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # prepare data for analysis
+cd ../Prep
 bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 
@@ -62,6 +63,7 @@ bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 inputsPath=$inputsPath"/aligned"
 
 #Copy pipeline scripts to inputs directory
+cd ../SSR_SNP_pipeline
 cp GapGenes.v3.py $inputsPath
 cp SnipMatrix.py $inputsPath
 cp Format_Matrix.py $inputsPath
