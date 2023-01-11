@@ -49,28 +49,34 @@ fi
 
 #SSR Analysis Stage - SNP Calling Workflow
 
-#Set input paths
-inputsPath=$inputsPath"/aligned"
-
 #Copy pipeline scripts to inputs directory
-cp SamIAm.py $inputsPath
-cp Format_VCF-Matrix.py $inputsPath
+#cp SamIAm.py $inputsPath"/aligned"
+#cp sorting_samtools.sh $inputsPath"/aligned"
+#cp variantCalling_bcftools.sh $inputsPath"/aligned"
+cp Format_VCF-Matrix.py $inputsPath"/variants"
 
 #Move to the inputs directory
-cd $inputsPath
+#cd $inputsPath"/aligned"
 
 #Loop through all filtered sam files
-for f1 in "$inputsPath"/*.sam; do
+#for f in $inputsPath"/aligned/"*".sam"; do
 	#Print status message
-	echo "Processing $f1"
+#	echo "Processing $f"
 	#Run SSR pipeline
-	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+#	python2 SamIAm.py -sam $f -C $infoPath -p "yes"
 	#Status message
-	echo "Processed!"
-done
+#	echo "Processed!"
+#done
+
+# perform variant calling
+#bash sorting_samtools.sh $inputsFile
+#bash variantCalling_bcftools.sh $inputsFile
+
+#Move to the inputs directory
+cd $inputsPath"/variants"
 
 #Retrieve and format sample tag list
-sampleTags=$(for i in "$inputsPath"/*.sam.filter50.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam\.filter50\.sam$/\",/g" | tr '\n' ' '; done)
+sampleTags=$(for i in $inputsPath"/variants/"*".sam.filter50.sortedCoordinate_calls.norm.flt-indels.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.vcf$/\",/g" | tr '\n' ' '; done)
 sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 #Find and replace the sample list
@@ -80,8 +86,10 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 python2 Format_VCF-Matrix.py
 
 #Clean up
-rm $inputsPath"/SamIAm.py"
-rm $inputsPath"/Format_VCF-Matrix.py"
+#rm $inputsPath"/aligned/SamIAm.py"
+#rm $inputsPath"/aligned/sorting_samtools.sh"
+#rm $inputsPath"/aligned/variantCalling_bcftools.sh"
+rm $inputsPath"/variants/Format_VCF-Matrix.py"
 #rm -r $inputsPath
 
 #Re-name and move output matrix

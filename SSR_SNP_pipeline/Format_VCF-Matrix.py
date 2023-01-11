@@ -28,7 +28,8 @@ for i in sample_list:
 	for j in contig_list:
 		found= False
 		prev="NA"
-		ta = open(i+".NH.vcf", 'r')
+		#ta = open(i+".NH.vcf", 'r')
+		ta = open(i+".vcf", 'r')
 		#print ta
 		for lines in ta:
 			fields = lines.split("	")

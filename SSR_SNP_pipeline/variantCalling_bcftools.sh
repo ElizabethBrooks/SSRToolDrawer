@@ -43,10 +43,10 @@ dataPath=$inputsPath"/variants"
 # create the directory
 mkdir $dataPath
 #Check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $outputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 #Outputs directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
@@ -76,15 +76,15 @@ for f in "$inputsPath"/*sortedCoordinate.bam; do
 	# status message
 	echo "Processing file "$path".bam ..."
 	#Calculate the read coverage of positions in the genome
-	#bcftools mpileup --threads 8 -d 8000 -f $ref -Ob -o $dataPath"/"$noPath"_raw.bcf" $f 
+	bcftools mpileup --threads 8 -d 8000 -f $ref -Ob -o $dataPath"/"$noPath"_raw.bcf" $f 
 	#Detect the single nucleotide polymorphisms 
-	#bcftools call --threads 8 -mv -Oz -o $dataPath"/"$noPath"_calls.vcf.gz" $dataPath"/"$noPath"_raw.bcf" 
+	bcftools call --threads 8 -mv -Oz -o $dataPath"/"$noPath"_calls.vcf.gz" $dataPath"/"$noPath"_raw.bcf" 
 	#Index vcf file
-	#bcftools index --threads 8 $dataPath"/"$noPath"_calls.vcf.gz"
+	bcftools index --threads 8 $dataPath"/"$noPath"_calls.vcf.gz"
 	#Normalize indels
-	#bcftools norm --threads 8 -f $ref -o $dataPath"/"$noPath"_calls.norm.bcf" $dataPath"/"$noPath"_calls.vcf.gz"
+	bcftools norm --threads 8 -f $ref -o $dataPath"/"$noPath"_calls.norm.bcf" $dataPath"/"$noPath"_calls.vcf.gz"
 	#Filter adjacent indels within 5bp
-	#bcftools filter --threads 8 --IndelGap 5 -Ob -o $dataPath"/"$noPath"_calls.norm.flt-indels.bcf" $dataPath"/"$noPath"_calls.norm.bcf"
+	bcftools filter --threads 8 --IndelGap 5 -Ob -o $dataPath"/"$noPath"_calls.norm.flt-indels.bcf" $dataPath"/"$noPath"_calls.norm.bcf"
 	# convert from BCF to VCF
 	bcftools view --threads 8 -Ov -o $dataPath"/"$noPath"_calls.norm.flt-indels.vcf" $dataPath"/"$noPath"_calls.norm.flt-indels.bcf"
 	# status message
