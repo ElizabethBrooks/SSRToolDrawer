@@ -17,7 +17,7 @@ ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ge
 #Name output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
 #Add pipeline info to outputs
-echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
+#echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 
 
 #Analysis Prep Stage
