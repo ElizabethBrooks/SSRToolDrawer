@@ -43,10 +43,10 @@ dataPath=$inputsPath"/variants"
 # create the directory
 mkdir $dataPath
 #Check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
 
 #Outputs directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
