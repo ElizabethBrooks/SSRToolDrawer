@@ -92,16 +92,16 @@ cp Format_VCF-Matrix.py $inputsPath"/variants"
 cd $inputsPath"/variants"
 
 # remove headers from the vcf files
-for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
+#for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
 	# print status message
-	echo "Removing header from $f2"
+#	echo "Removing header from $f2"
 	# create new file name
-	newName=$(echo $f2 | sed 's/\.sam\.filter50\.sortedCoordinate\_calls\.norm\.flt\-indels\.vcf/\.noHeader\.vcf/g')
+#	newName=$(echo $f2 | sed 's/\.sam\.filter50\.sortedCoordinate\_calls\.norm\.flt\-indels\.vcf/\.noHeader\.vcf/g')
 	# remove header
-	grep -v "#" $f2 > $newName
+#	grep -v "#" $f2 > $newName
 	# status message
-	echo "Processed!"
-done
+#	echo "Processed!"
+#done
 
 # retrieve and format sample tag list
 sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.vcf$/\",/g" | tr '\n' ' '; done)
