@@ -90,7 +90,7 @@ python2 Format_VCF-Matrix.py
 #rm $inputsPath"/aligned/SamIAm.py"
 #rm $inputsPath"/aligned/sorting_samtools.sh"
 #rm $inputsPath"/aligned/variantCalling_bcftools.sh"
-#rm $inputsPath"/variants/Format_VCF-Matrix.py"
+rm $inputsPath"/variants/Format_VCF-Matrix.py"
 #rm -r $inputsPath
 
 #Re-name and move output matrix
