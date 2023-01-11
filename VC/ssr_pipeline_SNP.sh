@@ -67,7 +67,7 @@ outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 echo "SSR SNP analysis started..."
 
 #Copy pipeline scripts to inputs directory
-#cd ../SSR_SNP_pipeline
+#cd ../VC
 #cp SamIAm.py $inputsPath"/aligned"
 #cp sorting_samtools.sh $inputsPath"/aligned"
 #cp variantCalling_bcftools.sh $inputsPath"/aligned"

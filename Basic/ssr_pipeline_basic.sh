@@ -53,8 +53,8 @@ mkdir $inputsPath
 #fi
 
 # prepare data for analysis
-cd ../Prep
-bash ssr_pipeline_prep.sh $inputsFile $inputsPath
+#cd ../Prep
+#bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 
 #SSR Analysis Stage - Basic Workflow
@@ -66,7 +66,7 @@ echo "SSR basic analysis started..."
 inputsPath=$inputsPath"/aligned"
 
 #Copy pipeline scripts to inputs directory
-cd ../SSR_basic_pipeline
+cd ../Basic
 cp GapGenes.v3.py $inputsPath
 cp SnipMatrix.py $inputsPath
 cp Format_Matrix.py $inputsPath

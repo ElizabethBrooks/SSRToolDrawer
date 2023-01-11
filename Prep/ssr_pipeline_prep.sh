@@ -17,7 +17,7 @@ ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ge
 #Name output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
 #Add pipeline info to outputs
-#echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
+echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 
 
 #Analysis Prep Stage
@@ -29,9 +29,9 @@ echo "Prep started..."
 #bwa index $ref
 
 #Quality control with fastqc
-#bash fastqc_ssr_projects.sh $inputsFile $outputsPath
+bash fastqc_ssr_projects.sh $inputsFile $outputsPath
 #Trimming with trimmomatic
-#bash trimmomatic_ssr_projects.sh $inputsFile $outputsPath
+bash trimmomatic_ssr_projects.sh $inputsFile $outputsPath
 #Mapping with bwa
 bash bwa_ssr_projects.sh $inputsFile $outputsPath
 
