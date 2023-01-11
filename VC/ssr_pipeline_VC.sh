@@ -6,12 +6,12 @@
 #$ -pe smp 8
 
 # script to run the SSR pipeline
-# usage: qsub ssr_pipeline_SNP.sh inputsFile
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run1.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run2.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run3.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run4.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run5.txt
+# usage: qsub ssr_pipeline_VC.sh inputsFile
+# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run1.txt
+# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run2.txt
+# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run3.txt
+# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run4.txt
+# usage Ex: qsub ssr_pipeline_VC.sh inputPaths_romero_run5.txt
 
 # required modules for ND CRC servers
 module load bio
@@ -46,7 +46,7 @@ outputsPath=$outputsPath"/"$projectDir"_SSR_VC"
 #fi
 
 # setup the inputs path
-#inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
+inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 #mkdir $inputsPath
 # check if the folder already exists
 #if [ $? -ne 0 ]; then
