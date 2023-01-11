@@ -65,7 +65,7 @@ bash ssr_pipeline_prep.sh $inputsFile $outputsPath
 echo "SSR SNP analysis started..."
 
 # copy pipeline scripts to inputs directory
-cd ../VC
+cd ../SNP_Calling
 cp SamIAm.py $inputsPath"/aligned"
 cp sorting_samtools.sh $inputsPath"/aligned"
 cp variantCalling_bcftools.sh $inputsPath"/aligned"
