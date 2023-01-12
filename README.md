@@ -17,6 +17,7 @@ The sequence capture data should first be assessed for quality with fastqc, trim
     
 - \<QC with fastqc, trim with trimmomatic, and map with bwa\>
 - python2 SamIAm.py -sam \<SAM file\> -C \<SSR info file\> -p \<yes/no\>
+- \<Filter to only include reads mapped within 50bp of a SSR\>
 - \<Call SNPs with bcftools\>
 - python2 Format_VCF-Matrix.py
 
