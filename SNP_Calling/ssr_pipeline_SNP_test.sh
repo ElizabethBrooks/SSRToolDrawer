@@ -3,7 +3,7 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_SNP_jobOutput
-#$ -pe smp 8
+#$ -pe smp 4
 
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP_test.sh inputsFile
