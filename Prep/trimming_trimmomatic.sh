@@ -57,10 +57,10 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	# perform adapter trimming on paired reads using 8 threads
 	trimmomatic PE -threads 8 -phred"$score" $f1 $f2 $sampleTag"_pForward.fq.gz" $sampleTag"_uForward.fq.gz" $sampleTag"_pReverse.fq.gz" $sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 	# clean up
-	rm -r $noPath"_R1_001_fastqc.zip"
-	rm -r $noPath"_R1_001_fastqc/"
-	rm -r $noPath"_R2_001_fastqc.zip"
-	rm -r $noPath"_R2_001_fastqc/"
+	#rm -r $noPath"_R1_001_fastqc.zip"
+	#rm -r $noPath"_R1_001_fastqc/"
+	#rm -r $noPath"_R2_001_fastqc.zip"
+	#rm -r $noPath"_R2_001_fastqc/"
 	# print status message
 	echo "Processed!"
 done

@@ -6,12 +6,12 @@
 #$ -pe smp 8
 
 # script to run the SSR pipeline
-# usage: qsub ssr_pipeline_SNP.sh inputsFile
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run1.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run2.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run3.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run4.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run5.txt
+# usage: qsub ssr_pipeline_SNP_test.sh inputsFile
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputPaths_romero_run1.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputPaths_romero_run2.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputPaths_romero_run3.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputPaths_romero_run4.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputPaths_romero_run5.txt
 
 # required modules for ND CRC servers
 module load bio
@@ -84,7 +84,7 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	echo "Processed!"
 done
 
-# perform variant calling
+# perform sorting and variant calling
 bash sorting_samtools.sh $inputsFile $inputsPath
 bash variantCalling_bcftools.sh $inputsFile $inputsPath
 
