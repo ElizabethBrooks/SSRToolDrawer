@@ -52,17 +52,17 @@ for f in "$inputsPath"/*filter50.sam; do
 	# status message
 	echo "Processing file "$path".sam ..."
 	# convert output sam files to bam format for downstream analysis
-	samtools view -@ 8 -bS $dataPath"/"$fileName > $path".bam"
+	samtools view -@ 4 -bS $dataPath"/"$fileName > $path".bam"
 	# run samtools to prepare mapped reads for sorting
 	# using 8 threads
-	samtools sort -@ 8 -n -o $path".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $path".bam"
+	samtools sort -@ 4 -n -o $path".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $path".bam"
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $path".sortedName.bam" $path".sortedFixed.bam"
 	# clean up
 	rm $path".sortedName.bam"
 	# run samtools to prepare mapped reads for sorting by coordinate
 	# using 8 threads
-	samtools sort -@ 8 -o $path".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $path".sortedFixed.bam"
+	samtools sort -@ 4 -o $path".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $path".sortedFixed.bam"
 	# clean up
 	rm $path".sortedFixed.bam"
 	# remove duplicate reads
