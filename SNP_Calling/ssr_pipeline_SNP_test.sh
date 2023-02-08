@@ -85,36 +85,36 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 done
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsFile $inputsPath
-bash variantCalling_bcftools.sh $inputsFile $inputsPath
+#bash sorting_samtools.sh $inputsFile $inputsPath
+#bash variantCalling_bcftools.sh $inputsFile $inputsPath
 
 # move to the inputs directory
-cd $inputsPath"/variants"
+#cd $inputsPath"/variants"
 
 # remove headers from the vcf files
-for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
+#for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
 	# print status message
-	echo "Removing header from $f2"
+#	echo "Removing header from $f2"
 	# create new file name
-	newName=$(echo $f2 | sed 's/\.sam\.filter50\.sortedCoordinate\_calls\.norm\.flt\-indels\.vcf/\.noHeader\.vcf/g')
+#	newName=$(echo $f2 | sed 's/\.sam\.filter50\.sortedCoordinate\_calls\.norm\.flt\-indels\.vcf/\.noHeader\.vcf/g')
 	# remove header
-	grep -v "#" $f2 > $newName
+#	grep -v "#" $f2 > $newName
 	# status message
-	echo "Processed!"
-done
+#	echo "Processed!"
+#done
 
 # retrieve and format sample tag list
-sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
-sampleTags=$(echo $sampleTags | sed 's/.$//')
+#sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
+#sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
-sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
+#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 
 # format matrix
-python2 Format_VCF-Matrix.py
+#python2 Format_VCF-Matrix.py
 
 # re-name and move output matrix
-mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
+#mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 # clean up
 #rm -r $inputsPath
