@@ -37,7 +37,7 @@ samtools --version >> $versionFile
 inputsPath=$inputsPath"/aligned"
 
 # loop through all filtered sam files
-for f in "$inputsPath"/*filter50.sam; do
+for f in $inputsPath"/"*"filter50.sam"; do
 	# remove two file extensions
 	pathSam=$(echo $f | sed 's/\.filter50\.sam$//g')
 	# remove the path from the file name

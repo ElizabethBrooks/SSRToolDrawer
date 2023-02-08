@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash ssr_pipeline_prep.sh inputsFile inputsPath
+# usage: bash ssr_pipeline_prep.sh inputsFile outputsPath
 
 # retrieve input argument of a inputs file
 inputsFile=$1
 
 # retrieve input outputs path
-inputsPath=$2
+outputsPath=$2
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
@@ -15,7 +15,7 @@ projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
 
 # name output file of inputs
-versionFile=$inputsPath"/software_prep_summary.txt"
+versionFile=$outputsPath"/software_prep_summary.txt"
 # add pipeline info to outputs
 echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 
@@ -29,11 +29,11 @@ echo "Prep started..."
 #bwa index $ref
 
 # quality control with fastqc
-bash qc_fastqc.sh $inputsFile $inputsPath
+bash qc_fastqc.sh $inputsFile $outputsPath
 # trimming with trimmomatic
-bash trimming_trimmomatic.sh $inputsFile $inputsPath
+bash trimming_trimmomatic.sh $inputsFile $outputsPath
 # mapping with bwa
-bash alignment_bwa.sh $inputsFile $inputsPath
+bash alignment_bwa.sh $inputsFile $outputsPath
 
 # status message
 echo "Prep complete!"

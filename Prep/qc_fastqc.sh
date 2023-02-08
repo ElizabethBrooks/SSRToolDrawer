@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # script to perform fastqc quality control of paired end reads
-# usage: bash fastqc_ssr_projects.sh inputsFile inputsPath
-# usage Ex: bash fastqc_ssr_projects.sh inputPaths_romero_run1.txt
+# usage: bash fastqc_ssr_projects.sh inputsFile outputsPath
 
 # required modules for ND CRC servers
 # module load bio
@@ -11,7 +10,7 @@
 inputsFile=$1
 
 # retrieve input outputs path
-inputsPath=$2
+outputsPath=$2
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
@@ -19,13 +18,13 @@ projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 
 # name of output file of inputs
-versionFile=$inputsPath"/software_prep_summary.txt"
+versionFile=$outputsPath"/software_prep_summary.txt"
 
 # report software version
 fastqc -version >> $versionFile
 
 # make a new directory for analysis
-qcOut=$inputsPath"/qc"
+qcOut=$outputsPath"/qc"
 mkdir $qcOut
 
 # move to the new directory

@@ -45,12 +45,12 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-# setup the inputs path
-inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $inputsPath
+# setup the downstream inputs path
+outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
+mkdir $outputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then
-	echo "The $inputsPath directory already exsists... please remove before proceeding."
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
 	exit 1
 fi
 
@@ -66,16 +66,13 @@ echo "SSR SNP analysis started..."
 
 # copy pipeline scripts to inputs directory
 cd ../SNP_Calling
-cp SamIAm.py $inputsPath"/aligned"
-cp sorting_samtools.sh $inputsPath"/aligned"
-cp variantCalling_bcftools.sh $inputsPath"/aligned"
-cp Format_VCF-Matrix.py $inputsPath"/variants"
+cp SamIAm.py $outputsPath"/aligned"
+cp sorting_samtools.sh $outputsPath"/aligned"
+cp variantCalling_bcftools.sh $outputsPath"/aligned"
+cp Format_VCF-Matrix.py $outputsPath"/variants"
 
-# move to the inputs directory
-cd $inputsPath"/aligned"
-
-# loop through all filtered sam files
-for f1 in $inputsPath"/aligned/"*".sam"; do
+# loop through all aligned sam files
+for f1 in $outputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
@@ -85,14 +82,11 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 done
 
 # perform sorting and variant calling
-#bash sorting_samtools.sh $inputsFile $inputsPath
-#bash variantCalling_bcftools.sh $inputsFile $inputsPath
-
-# move to the inputs directory
-#cd $inputsPath"/variants"
+#bash sorting_samtools.sh $inputsFile $outputsPath
+#bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
 # remove headers from the vcf files
-#for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
+#for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
 	# print status message
 #	echo "Removing header from $f2"
 	# create new file name
@@ -104,7 +98,7 @@ done
 #done
 
 # retrieve and format sample tag list
-#sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
+#sampleTags=$(for i in $outputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
 #sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
@@ -117,7 +111,7 @@ done
 #mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 # clean up
-#rm -r $inputsPath
+#rm -r $outputsPath
 
 # status message
 echo "SSR VC analysis complete!"

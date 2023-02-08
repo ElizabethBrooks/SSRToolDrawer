@@ -37,7 +37,7 @@ bcftools --version >> $versionFile
 inputsPath=$inputsPath"/sorted"
 
 # loop through all filtered sam files
-for f in "$inputsPath"/*sortedCoordinate.bam; do
+for f in $inputsPath"/"*"sortedCoordinate.bam"; do
 	# remove the file extension
 	path=$(echo $f | sed 's/\.bam$//g')
 	# remove the file path
