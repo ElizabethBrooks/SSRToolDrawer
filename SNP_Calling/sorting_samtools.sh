@@ -16,11 +16,6 @@ projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 dataPath=$inputsPath"/sorted"
 # create the directory
 mkdir $dataPath
-# check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $inputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
@@ -37,22 +32,15 @@ samtools --version >> $versionFile
 inputsPath=$inputsPath"/aligned"
 
 # loop through all filtered sam files
-for f in $inputsPath"/"*"filter50.sam"; do
-	# remove two file extensions
-	pathSam=$(echo $f | sed 's/\.filter50\.sam$//g')
-	# remove the path from the file name
-	fileName=$(basename $f)
-	# add the sam header to the input file
-	grep "^@" $pathSam > $dataPath"/"$fileName
-	cat $f >> $dataPath"/"$fileName
+for f in $inputsPath"/"*".header.filter50.sam"; do
 	# remove the file extension
-	path=$(echo $dataPath"/"$fileName | sed 's/\.sam$//g')
+	path=$(echo $f | sed 's/\.sam$//g')
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f" | sed 's/\.sam$//g')
 	# status message
 	echo "Processing file "$path".sam ..."
 	# convert output sam files to bam format for downstream analysis
-	samtools view -@ 4 -bS $dataPath"/"$fileName > $path".bam"
+	samtools view -@ 4 -bS $f > $path".bam"
 	# run samtools to prepare mapped reads for sorting
 	# using 8 threads
 	samtools sort -@ 4 -n -o $path".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $path".bam"

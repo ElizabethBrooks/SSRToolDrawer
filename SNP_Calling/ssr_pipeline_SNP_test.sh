@@ -38,25 +38,20 @@ outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ou
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP_test"
-mkdir $outputsPath
+#mkdir $outputsPath
 # check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
 
 # setup the downstream inputs path
 outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $outputsPath
-# check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#mkdir $outputsPath
 
 # prepare data for analysis
-cd ../Prep
-bash ssr_pipeline_prep.sh $inputsFile $outputsPath
+#cd ../Prep
+#bash ssr_pipeline_prep.sh $inputsFile $outputsPath
 
 
 # SSR Analysis Stage - SNP Calling Workflow
@@ -64,12 +59,8 @@ bash ssr_pipeline_prep.sh $inputsFile $outputsPath
 # status message
 echo "SSR SNP analysis started..."
 
-# copy pipeline scripts to inputs directory
+# move to pipeline scripts directory
 cd ../SNP_Calling
-cp SamIAm.py $outputsPath"/aligned"
-cp sorting_samtools.sh $outputsPath"/aligned"
-cp variantCalling_bcftools.sh $outputsPath"/aligned"
-cp Format_VCF-Matrix.py $outputsPath"/variants"
 
 # loop through all aligned sam files
 for f1 in $outputsPath"/aligned/"*".sam"; do
@@ -77,12 +68,16 @@ for f1 in $outputsPath"/aligned/"*".sam"; do
 	echo "Processing $f1"
 	# run SSR pipeline
 	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+	# replace SAM header
+	grep "^@" $f1 > $f1".header.filter50.sam"
+	# append filtered sequences
+	cat $f1".filter50.sam" >> $f1".header.filter50.sam"
 	# status message
 	echo "Processed!"
 done
 
 # perform sorting and variant calling
-#bash sorting_samtools.sh $inputsFile $outputsPath
+bash sorting_samtools.sh $inputsFile $outputsPath
 #bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
 # remove headers from the vcf files
