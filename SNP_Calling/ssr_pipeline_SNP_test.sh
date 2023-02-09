@@ -2,7 +2,7 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
-#$ -N ssr_SNP_jobOutput
+#$ -N ssr_SNP_test_jobOutput
 #$ -pe smp 4
 
 # script to run the SSR pipeline
@@ -63,22 +63,26 @@ echo "SSR SNP analysis started..."
 cd ../SNP_Calling
 
 # loop through all aligned sam files
-for f1 in $outputsPath"/aligned/"*".sam"; do
+#for f1 in $outputsPath"/aligned/"*".sam"; do
 	# print status message
-	echo "Processing $f1"
+#	echo "Processing $f1"
 	# run SSR pipeline
-	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+#	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-	grep "^@" $f1 > $f1".header.filter50.sam"
+#	grep "^@" $f1 > $f1".header.filter50.sam"
 	# append filtered sequences
-	cat $f1".filter50.sam" >> $f1".header.filter50.sam"
+#	cat $f1".filter50.sam" >> $f1".header.filter50.sam"
 	# status message
-	echo "Processed!"
-done
+#	echo "Processed!"
+#done
+
+# TO-DO
+# remove SSRs from filtered sequences
+# and bases outside 50 bp of SSRs?
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsFile $outputsPath
-#bash variantCalling_bcftools.sh $inputsFile $outputsPath
+#bash sorting_samtools.sh $inputsFile $outputsPath
+bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
 # remove headers from the vcf files
 #for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
@@ -106,7 +110,7 @@ bash sorting_samtools.sh $inputsFile $outputsPath
 #mv VCF_Matrix.txt $outputsPath"/"$projectDir"_VCF_Matrix.txt"
 
 # clean up
-#rm -r $outputsPath
+#rm -r $outputsPath"/"$projectDir"_SSR_prep"
 
 # status message
 echo "SSR VC analysis complete!"
