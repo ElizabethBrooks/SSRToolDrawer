@@ -46,15 +46,16 @@ for f in $inputsPath"/"*".header.filter50.sam"; do
 	samtools sort -@ 4 -n -o $path".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $path".bam"
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $path".sortedName.bam" $path".sortedFixed.bam"
-	# clean up
-	rm $path".sortedName.bam"
 	# run samtools to prepare mapped reads for sorting by coordinate
 	# using 8 threads
 	samtools sort -@ 4 -o $path".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $path".sortedFixed.bam"
-	# clean up
-	rm $path".sortedFixed.bam"
 	# remove duplicate reads
 	samtools markdup -r $path".sortedCoordinate.bam" $path".noDups.bam"
+	# clean up
+	rm $f
+	rm $path".sortedName.bam"
+	rm $path".sortedFixed.bam"
+	rm $path".sortedCoordinate.bam"
 	# status message
 	echo "Processed!"
 done
