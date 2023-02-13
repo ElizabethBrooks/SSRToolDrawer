@@ -76,9 +76,9 @@ for f1 in $outputsPath"/aligned/"*".sam"; do
 	echo "Processed!"
 done
 
-# TO-DO
-# remove SSRs from filtered sequences
-# and bases outside 50 bp of SSRs?
+# TO-DO (BAMClipper or bedtools)
+# remove primers form aligned filtered sequences
+# remove SSRs from aligned filtered sequences
 
 # perform sorting and variant calling
 bash sorting_samtools.sh $inputsFile $outputsPath

@@ -76,13 +76,13 @@ cd ../SNP_Calling
 #	echo "Processed!"
 #done
 
-# TO-DO
-# remove SSRs from filtered sequences
-# and bases outside 50 bp of SSRs?
+# TO-DO (BAMClipper or bedtools)
+# remove primers form aligned filtered sequences
+# remove SSRs from aligned filtered sequences
 
 # perform sorting and variant calling
-#bash sorting_samtools.sh $inputsFile $outputsPath
-bash variantCalling_bcftools.sh $inputsFile $outputsPath
+bash sorting_samtools.sh $inputsFile $outputsPath
+#bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
 # remove headers from the vcf files
 #for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
