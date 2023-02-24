@@ -78,6 +78,7 @@ done
 
 # TO-DO (BAMClipper or bedtools)
 # remove primers form aligned filtered sequences
+## consider removing using trimmomatic along with adapter seqs
 # remove SSRs from aligned filtered sequences
 
 # perform sorting and variant calling
