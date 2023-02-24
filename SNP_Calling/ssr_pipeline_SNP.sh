@@ -80,11 +80,14 @@ done
 # remove primers form aligned filtered sequences
 ## consider removing using trimmomatic along with adapter seqs
 # remove SSRs from aligned filtered sequences
+# add read groups, then merge BAM files before calling
 
 # perform sorting and variant calling
 bash sorting_samtools.sh $inputsFile $outputsPath
 bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
+# TO-DO
+# modify/remove this section after merging
 # remove headers from the vcf files
 for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
 	# print status message
@@ -97,6 +100,8 @@ for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
 	echo "Processed!"
 done
 
+# TO-DO
+# modify/remove the noHeader tags after merging
 # retrieve and format sample tag list
 sampleTags=$(for i in $outputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
 sampleTags=$(echo $sampleTags | sed 's/.$//')
