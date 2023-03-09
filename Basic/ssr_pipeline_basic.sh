@@ -12,6 +12,7 @@
 # usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run3.txt
 # usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run4.txt
 # usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run5.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run6.txt
 
 # required modules for ND CRC servers
 module load bio

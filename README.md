@@ -59,7 +59,7 @@ Formats the output of SNPMatrix.py into a format that can be read by JoinMap.
 - run5: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
 
 
-## Previous Analysis
+## Analysis Data Sets
 
 Original test: 
 - /afs/crc.nd.edu/group/genomics/yoda/JRS_MiSeq_7-27-17
@@ -75,3 +75,7 @@ Walnut:
 Last chestnut:
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_2021_miseq
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq
+
+Plate 6 runs:
+- /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230130_JRS-ChestnutSSR-Set6
+- /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207_JRS-ChestnutSSR-Set6

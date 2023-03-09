@@ -1,0 +1,8 @@
+ID: JRS-ChestnutSSR-Set6
+ID1: 230130_JRS-ChestnutSSR-Set6
+ID2: 230207_JRS-ChestnutSSR-Set6
+pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/JRS-ChestnutSSR-Set6_combined
+adapter: /afs/crc.nd.edu/x86_64_linux/bio/Trimmomatic/0.32/adapters/TruSeq3-PE.fa:2:30:10
+info: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/SSR_info.txt
+genomeReference: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/finalset-2.fa
+outputs: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
