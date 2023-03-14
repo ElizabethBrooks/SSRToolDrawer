@@ -30,6 +30,8 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 # retrieve input argument of a inputs file
 inputsFile=$1
 
+# retrieve the run number 
+runNum=$(grep "run:" ../"InputData/"$inputsFile | tr -d " " | sed "s/run://g")
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve ssr info path
@@ -95,7 +97,7 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
 python2 Format_Matrix.py
 
 # re-name and move output matrix
-mv SNP_Matrix.txt $outputsPath"/"$projectDir"_SNP_Matrix.txt"
+mv SNP_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # clean up
 rm -r $inputsPath
