@@ -2,6 +2,12 @@
 
 # script to run the SSR pipeline
 # usage: bash ssr_pipeline_prep.sh runInputs outputsPath
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run1.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run2.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run3.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run4.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run5.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run6.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
 
 # retrieve input argument of a inputs file
 inputsFile=$1
