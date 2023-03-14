@@ -66,10 +66,9 @@ bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 echo "SSR basic analysis started..."
 
 # copy pipeline scripts to inputs directory
-cd ../Basic
-cp GapGenes.v3.py $inputsPath"/aligned"
-cp SnipMatrix.py $inputsPath"/aligned"
-cp Format_Matrix.py $inputsPath"/aligned"
+cp ../Basic/Scripts/GapGenes.v3.py $inputsPath"/aligned"
+cp ../Basic/Scripts/SnipMatrix.py $inputsPath"/aligned"
+cp ../Basic/Scripts/Format_Matrix.py $inputsPath"/aligned"
 
 # move to the inputs directory
 cd $inputsPath"/aligned"

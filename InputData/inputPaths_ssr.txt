@@ -1,0 +1,2 @@
+info: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/Data/SSRinfo-2023.csv
+primers: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/Data/SSRprimer-info2-2023.csv

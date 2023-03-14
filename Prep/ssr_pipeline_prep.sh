@@ -25,8 +25,14 @@ echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 # status message
 echo "Prep started..."
 
+# make sure the ssr info file has been converted from csv to txt
+#bash ssr_info_prep.sh inputPaths_ssr.txt
+
 # make sure the reference genome has been indexed
 #bwa index $ref
+
+# move to scripts directory
+cd Scripts
 
 # quality control with fastqc
 bash qc_fastqc.sh $inputsFile $outputsPath

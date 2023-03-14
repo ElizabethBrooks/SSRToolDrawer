@@ -60,7 +60,7 @@ bash ssr_pipeline_prep.sh $inputsFile $outputsPath
 echo "SSR SNP analysis started..."
 
 # move to pipeline scripts directory
-cd ../SNP_Calling
+cd ../SNP_Calling/Scripts
 
 # loop through all aligned sam files
 for f1 in $outputsPath"/aligned/"*".sam"; do
