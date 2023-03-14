@@ -23,11 +23,14 @@ cat $infoInput | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -
 # retrieve the marker ssr info
 cat $infoOutput".tmp.txt" | cut -f1-3 > $infoOutput".tmpcol1.txt"
 
+# retrieve the 62 marker sequences and exclude the final empty line
+cat $infoOutput".tmp.txt" | cut -f4 | sed '$ s/$/'"$markerSeq"'/' | head -62 > $infoOutput".tmpcol2.txt"
+
 # retrieve the missing marker sequence
 markerSeq=$(cat $referenceInput | grep -A 1 "054-CM_015" | tail -1)
 
-# retrieve the marker sequences and add the missing marker sequence
-cat $infoOutput".tmp.txt" | cut -f4 | sed '$ s/$/'"$markerSeq"'/' | sed '/^$/d' > $infoOutput".tmpcol2.txt"
+# add the missing marker sequence
+echo $markerSeq >> $infoOutput".tmpcol2.txt"
 
 # combine the marker ssr info and sequences columns
 paste $infoOutput".tmpcol1.txt" $infoOutput".tmpcol2.txt" > $infoOutput
