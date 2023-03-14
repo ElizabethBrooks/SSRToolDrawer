@@ -20,11 +20,8 @@ infoOutput=$(echo $infoInput | sed 's/\.csv/\.txt/g')
 # Marker name, start repeat, end repeat, Sequence showing primer sequences and repeat in BOLD
 cat $infoInput | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoOutput
 
-# retrieve line with SSR info
-markerSSRInfo=$(cat $infoOutput | grep "054-CM_015")
-
 # retrieve the missing sequence for marker 054-CM_015
 markerSeqInfo=$(cat $referenceInput | grep -A 1 "054-CM_015" | tail -1)
 
 # add the missing marker sequence info
-echo $markerSSRInfo"\t"$markerSeqInfo >> $infoOutput
+echo -n $markerSeqInfo >> $infoOutput
