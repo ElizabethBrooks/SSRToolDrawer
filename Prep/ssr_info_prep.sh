@@ -15,4 +15,4 @@ infoOutput=$(echo $infoInput | sed 's/\.csv/\.txt/g')
 
 # retrieve the following fields for the SSR info csv file:
 # Marker name, start repeat, end repeat, Sequence showing primer sequences and repeat in BOLD
-cat $infoInput | cut -d"," -f1-3,9 | sed 's/,/\t/g' > $infoOutput
+cat $infoInput | tail -n+2 | cut -d"," -f1-3,9 | sed 's/,/\t/g' > $infoOutput
