@@ -18,13 +18,20 @@ infoOutput=$(echo $infoInput | sed 's/\.csv/\.txt/g')
 # and convert the delimeter from commas to tabs
 # and retrieve the following fields:
 # Marker name, start repeat, end repeat, Sequence showing primer sequences and repeat in BOLD
-cat $infoInput | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 | sed 's/$/NEWLINE/g' > $infoOutput".tmp.txt"
+cat $infoInput | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoOutput
+
+# retrieve the marker ssr info
+cat $infoOutput | cut -f1-3 > $infoOutput".tmpcol1.txt"
+
+# retrieve the marker sequence info
+cat $infoOutput | cut -f9 > $infoOutput".tmpcol2.txt"
 
 # add the missing marker sequence info
-cat $referenceInput | grep -A 1 "054-CM_015" | tail -1 >> $infoOutput".tmp.txt"
+cat $referenceInput | grep -A 1 "054-CM_015" | tail -1 >> $infoOutput".tmpcol2.txt"
 
-# combine the final two lines with the marker info
-cat $infoOutput".tmp.txt" | sed 's/\n//g' | sed 's/NEWLINE/\n/g' > $infoOutput
+# combine the marker ssr and sequence info columns
+paste $infoOutput".tmpcol1.txt" $infoOutput".tmpcol2.txt" > $infoOutput
 
 # clean up
-rm $infoOutput".tmp.txt"
+rm $infoOutput".tmpcol1.txt"
+rm $infoOutput".tmpcol2.txt"
