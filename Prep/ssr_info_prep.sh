@@ -28,4 +28,4 @@ markerInfo=$markerSSRInfo","$markerSeqInfo
 # and exclude the lines beginning with empty cells that contain notes
 # and fix 054-CM_015 marker tag by removing excess > symbol
 # and convert the delimeter from commas to tabs
-cat $infoInput | tail -n+2 | sed '/^,/d' | sed '$s/$/'"$$markerInfo"'/' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoOutput
+cat $infoInput | tail -n+2 | sed '/^,/d' | sed '$s/$/'"$markerInfo"'/' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoOutput
