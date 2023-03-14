@@ -22,7 +22,7 @@ markerSSRInfo=$(cat $infoInput | grep "054-CM_015")
 # and retrieve the following fields for the SSR info csv file:
 # Marker name, start repeat, end repeat, Sequence showing primer sequences and repeat in BOLD
 # and exclude the header 
-# and exclude the final three lines with notes by reversing the order of the file
+# and exclude the lines beginning with empty cells that contain notes
 # and fix 054-CM_015 marker tag by removing excess > symbol
 # and convert the delimeter from commas to tabs
-cat $infoInput | sed "s/$markerSSRInfo/$markerSSRInfo,$markerSeqInfo/g" | cut -d"," -f1-3,9 | tail -n+2 | tail -r | tail -n+4 | tail -r | sed 's/>//g' | sed 's/,/\t/g' > $infoOutput
+cat $infoInput | sed "s/$markerSSRInfo/$markerSSRInfo,$markerSeqInfo/g" | cut -d"," -f1-3,9 | sed '/^,/d'| sed 's/>//g' | sed 's/,/\t/g' > $infoOutput
