@@ -1,5 +1,5 @@
 run: run6
 ID: JRS-ChestnutSSR-Set6
-ID1: 230130_JRS-ChestnutSSR-Set6
-ID2: 230207_JRS-ChestnutSSR-Set6
+alternate1: 230130_JRS-ChestnutSSR-Set6
+alternate2: 230207_JRS-ChestnutSSR-Set6
 pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/JRS-ChestnutSSR-Set6_combined
