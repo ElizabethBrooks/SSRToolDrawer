@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash ssr_pipeline_prep.sh inputsFile outputsPath
+# usage: bash ssr_pipeline_prep.sh runInputs outputsPath
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -12,7 +12,7 @@ outputsPath=$2
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve genome reference absolute path for alignment
-ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
+ref=$(grep "genomeReference:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/genomeReference://g")
 
 # name output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
@@ -26,7 +26,7 @@ echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 echo "Prep started..."
 
 # make sure the ssr info file has been converted from csv to txt
-#bash ssr_info_prep.sh inputPaths_ssr.txt
+#bash ssr_info_prep.sh
 
 # make sure the reference genome has been indexed
 #bwa index $ref

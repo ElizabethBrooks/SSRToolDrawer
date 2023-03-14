@@ -1,0 +1,3 @@
+run: run2
+ID: 211111_JB-688_Romero-Severson-Chestnut
+pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/211111_JB-688_Romero-Severson-Chestnut

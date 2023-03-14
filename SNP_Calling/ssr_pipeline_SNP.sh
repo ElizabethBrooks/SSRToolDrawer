@@ -6,7 +6,7 @@
 #$ -pe smp 4
 
 # script to run the SSR pipeline
-# usage: qsub ssr_pipeline_SNP.sh inputsFile
+# usage: qsub ssr_pipeline_SNP.sh runInputs
 # usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run1.txt
 # usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run2.txt
 # usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run3.txt
@@ -31,10 +31,10 @@ inputsFile=$1
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-# retrieve adapter absolute path for alignment
-infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
+# retrieve ssr info path
+infoPath=$(grep "info:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/info://g")
 # retrieve analysis outputs absolute path
-outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
+outputsPath=$(grep "outputs:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP_test"

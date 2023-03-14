@@ -1,7 +1,0 @@
-ID: 220706_ChestnutSSR_Round5
-pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
-adapter: /afs/crc.nd.edu/x86_64_linux/bio/Trimmomatic/0.32/adapters/TruSeq3-PE.fa:2:30:10
-info: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/Data/SSRinfo-2023.txt
-primers: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/Data/SSRprimer-info2-2023.csv
-genomeReference: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/Data/finalset-2.fa
-outputs: /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR

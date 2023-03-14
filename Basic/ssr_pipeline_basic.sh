@@ -3,16 +3,16 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_basic_jobOutput
-#$ -pe smp 8
+#$ -pe smp 4
 
 # script to run the SSR pipeline
-# usage: qsub ssr_pipeline_basic.sh inputsFile
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run1.txt
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run2.txt
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run3.txt
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run4.txt
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run5.txt
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_romero_run6.txt
+# usage: qsub ssr_pipeline_basic.sh runInputs
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run1.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run2.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run3.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run4.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run5.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run6.txt
 
 # required modules for ND CRC servers
 module load bio
@@ -32,10 +32,10 @@ inputsFile=$1
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-# retrieve adapter absolute path for alignment
-infoPath=$(grep "info:" ../"InputData/"$inputsFile | tr -d " " | sed "s/info://g")
+# retrieve ssr info path
+infoPath=$(grep "info:" ../"InputData/inputPaths_ssr_pipeline.txt"| tr -d " " | sed "s/info://g")
 # retrieve analysis outputs absolute path
-outputsPath=$(grep "outputs:" ../"InputData/"$inputsFile | tr -d " " | sed "s/outputs://g")
+outputsPath=$(grep "outputs:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_basic"

@@ -1,0 +1,3 @@
+run: run5
+ID: 220706_ChestnutSSR_Round5
+pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
