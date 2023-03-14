@@ -39,21 +39,21 @@ infoPath=$(grep "info:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " |
 outputsPath=$(grep "outputs:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_SNP_test"
-mkdir $outputsPath
+inputsPath=$outputsPath"/"$projectDir"_SSR_SNP_test"
+mkdir $inputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	echo "The $inputsPath directory already exsists... please remove before proceeding."
 	exit 1
 fi
 
 # setup the downstream inputs path
-outputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $outputsPath
+inputsPath=$inputsPath"/"$projectDir"_SSR_prep"
+mkdir $inputsPath
 
 # prepare data for analysis
 cd ../Prep
-bash ssr_pipeline_prep.sh $inputsFile $outputsPath
+bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 
 # SSR Analysis Stage - SNP Calling Workflow
@@ -65,7 +65,7 @@ echo "SSR SNP analysis started..."
 cd ../SNP_Calling/Scripts
 
 # loop through all aligned sam files
-for f1 in $outputsPath"/aligned/"*".sam"; do
+for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline

@@ -12,12 +12,10 @@ inputsFile=$1
 # retrieve input outputs path
 outputsPath=$2
 
-# retrieve the project ID 
-projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve paired reads absolute path for alignment
-readPath=$(grep "pairedReads:" ../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
+readPath=$(grep "pairedReads:" ../../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 # retrieve adapter absolute path for alignment
-adapterPath=$(grep "adapter:" ../"InputData/"$inputsFile | tr -d " " | sed "s/adapter://g")
+adapterPath=$(grep "adapter:" ../../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/adapter://g")
 
 # name of output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
