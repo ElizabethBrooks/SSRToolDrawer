@@ -17,8 +17,8 @@ outputsPath=$2
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-# retrieve genome reference absolute path for alignment
-ref=$(grep "genomeReference:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/genomeReference://g")
+# retrieve reference absolute path for alignment
+ref=$(grep "reference:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 
 # name output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
@@ -34,7 +34,7 @@ echo "Prep started..."
 # make sure the ssr info file has been converted from csv to txt
 #bash ssr_info_prep.sh
 
-# make sure the reference genome has been indexed
+# make sure the reference has been indexed
 #bwa index $ref
 
 # move to scripts directory
