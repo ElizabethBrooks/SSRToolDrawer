@@ -12,9 +12,6 @@ referenceInput=$(grep "reference:" ../"InputData/inputPaths_ssr_pipeline.txt" | 
 # remove txt extension from input info file
 infoOutput=$(echo $infoInput | sed 's/\.csv/\.txt/g')
 
-# retrieve the missing sequence for marker 054-CM_015
-markerSeqInfo=$(cat $referenceInput | grep -A 1 "054-CM_015" | tail -1)
-
 # exclude the header of the ssr info file
 # and exclude the lines beginning with empty cells that contain notes
 # and fix any marker tags by removing excess > symbols
@@ -23,6 +20,11 @@ markerSeqInfo=$(cat $referenceInput | grep -A 1 "054-CM_015" | tail -1)
 # Marker name, start repeat, end repeat, Sequence showing primer sequences and repeat in BOLD
 cat $infoInput | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoOutput
 
+# retrieve line with SSR info
+markerSSRInfo=$(cat $infoOutput | grep "054-CM_015")
+
+# retrieve the missing sequence for marker 054-CM_015
+markerSeqInfo=$(cat $referenceInput | grep -A 1 "054-CM_015" | tail -1)
+
 # add the missing marker sequence info
-truncate -s-1 $infoOutput 
-echo -n $markerSeqInfo >> $infoOutput
+echo $markerSSRInfo"\t"$markerSeqInfo >> $infoOutput
