@@ -15,17 +15,14 @@ infoOutput=$(echo $infoInput | sed 's/\.csv/\.txt/g')
 # retrieve the missing sequence for marker 054-CM_015
 markerSeqInfo=$(cat $referenceInput | grep -A 1 "054-CM_015" | tail -1)
 
-# retrieve line with SSR info
-markerSSRInfo=$(cat $infoInput | grep "054-CM_015")
-
-# create the complete line of marker info
-markerInfo=$markerSSRInfo","$markerSeqInfo
-
-# and exclude the header of the ssr info file
+# exclude the header of the ssr info file
 # and exclude the lines beginning with empty cells that contain notes
-# and add the missing marker sequence info
 # and fix any marker tags by removing excess > symbols
 # and convert the delimeter from commas to tabs
 # and retrieve the following fields:
 # Marker name, start repeat, end repeat, Sequence showing primer sequences and repeat in BOLD
-cat $infoInput | tail -n+2 | sed '/^,/d' | sed '$s/$/'"$markerInfo"'/' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoOutput
+cat $infoInput | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoOutput
+
+# add the missing marker sequence info
+truncate -s-1 $infoOutput 
+echo -n $markerSeqInfo >> $infoOutput
