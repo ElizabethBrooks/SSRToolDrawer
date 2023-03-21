@@ -39,8 +39,10 @@ infoPath=$(grep "ssrInfo:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | 
 regionsPath=$(grep "ssrRegions:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 # retrieve primers path
 primerPath=$(grep "primers:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
-# retrieve analysis outputs absolute path
+# retrieve analysis outputs path
 outputsPath=$(grep "outputs:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+# bamclipper tool path
+clipperPath=$(grep "bamclipperTool:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
 
 # make a new directory for project analysis
 inputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
@@ -82,17 +84,17 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
-	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+	#python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-	grep "^@" $f1 > $noExt".header.sam"
+	#grep "^@" $f1 > $noExt".header.sam"
 	# append filtered sequences
-	cat $noExt".filter50.sam" >> $noExt".header.sam"
+	#cat $noExt".filter50.sam" >> $noExt".header.sam"
 	#rm $noExt".filter50.sam"
 	# convert sam to bam
-	samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
+	#samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
 	#rm $noExt".header.sam"
 	# remove primers sequences
-	#./bamclipper.sh -b $noExt".header.bam" -p $primerPath -n 4
+	bash $clipperPath"/bamclipper.sh" -b $noExt".header.bam" -p $primerPath -n 4
 	#rm $noExt".header.bam"
 	# remove SSR sequences
 	#samtools view -@ 4 -bo $noExt".overlap.bam" -U $noExt".noOverlap.bam" -L $regionsPath $noExt".header.primerclipped.bam"
