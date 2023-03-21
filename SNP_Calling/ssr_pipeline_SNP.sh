@@ -55,6 +55,9 @@ mkdir $inputsPath
 cd ../Prep
 bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
+# TO-DO
+# make sure to check mapping efficiency after mapping since we did not remove primers in advance
+
 
 # SSR Analysis Stage - SNP Calling Workflow
 
@@ -82,7 +85,7 @@ done
 # remove primers form aligned filtered sequences
 ## consider removing using trimmomatic along with adapter seqs
 # remove SSRs from aligned filtered sequences
-# add read groups, then merge BAM files before calling
+# and add read groups, then merge BAM files before calling
 
 # perform sorting and variant calling
 bash sorting_samtools.sh $inputsFile $outputsPath
