@@ -13,9 +13,9 @@ projectDir=$2
 ref=$3
 
 # setup the variant calling directory
-dataPath=$inputsPath"/variants"
+outputsPath=$inputsPath"/variants"
 # create the directory
-mkdir $dataPath
+mkdir $outputsPath
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
@@ -39,18 +39,18 @@ noPath=$(echo $inputsFile | sed 's/\.txt$//g' | sed 's/inputPaths_//g')
 echo "Performing variant calling for "$noPath"..."
 
 # calculate the read coverage of positions in the genome
-bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $dataPath"/"$noPath"_raw.bcf" -b "inputBAMList.txt"
+bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$noPath"_raw.bcf" -b "inputBAMList.txt"
 # detect the single nucleotide polymorphisms 
-bcftools call --threads 4 -mv -Oz -o $dataPath"/"$noPath"_calls.vcf.gz" $dataPath"/"$noPath"_raw.bcf" 
-#rm $dataPath"/"$noPath"_raw.bcf"
+bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$noPath"_calls.vcf.gz" $outputsPath"/"$noPath"_raw.bcf" 
+#rm $outputsPath"/"$noPath"_raw.bcf"
 # index vcf file
-bcftools index --threads 4 $dataPath"/"$noPath"_calls.vcf.gz"
+bcftools index --threads 4 $outputsPath"/"$noPath"_calls.vcf.gz"
 # normalize indels
-bcftools norm --threads 4 -f $ref -o $dataPath"/"$noPath"_calls.norm.bcf" $dataPath"/"$noPath"_calls.vcf.gz"
-#rm $dataPath"/"$noPath"_calls.vcf.gz"*
+bcftools norm --threads 4 -f $ref -o $outputsPath"/"$noPath"_calls.norm.bcf" $outputsPath"/"$noPath"_calls.vcf.gz"
+#rm $outputsPath"/"$noPath"_calls.vcf.gz"*
 # convert from BCF to VCF
-bcftools view --threads 4 -Ov -o $dataPath"/"$noPath"_calls.norm.vcf" $dataPath"/"$noPath"_calls.norm.bcf"
-#rm $dataPath"/"$noPath"_calls.norm.vcf"
+bcftools view --threads 4 -Ov -o $outputsPath"/"$noPath"_calls.norm.vcf" $outputsPath"/"$noPath"_calls.norm.bcf"
+#rm $outputsPath"/"$noPath"_calls.norm.vcf"
 
 # status message
 echo "Analysis conplete!"
