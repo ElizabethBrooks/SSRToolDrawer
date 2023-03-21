@@ -30,7 +30,7 @@ bcftools --version >> $versionFile
 inputsPath=$inputsPath"/sorted"
 
 # loop through all filtered sam files
-ls $inputsPath"/"*"sortedCoordinate.bam" > "inputBAMList.txt"
+ls $inputsPath"/"*"noDups.bam" > "inputBAMList.txt"
 
 # remove the file path
 noPath=$(echo $inputsFile | sed 's/\.txt$//g' | sed 's/inputPaths_//g')

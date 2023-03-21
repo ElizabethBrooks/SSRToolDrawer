@@ -47,7 +47,7 @@ for f in $inputsPath"/"*".readGroups.bam"; do
 	# remove duplicate reads
 	samtools markdup -r $path".sortedCoordinate.bam" $path".noDups.bam"
 	# clean up
-	#rm $f
+	rm $f
 	rm $path".sortedName.bam"
 	rm $path".sortedFixed.bam"
 	rm $path".sortedCoordinate.bam"

@@ -6,12 +6,12 @@
 #$ -pe smp 4
 
 # script to run the SSR pipeline
-# usage: qsub ssr_pipeline_SNP.sh runInputs
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run1.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run2.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run3.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run4.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run5.txt
+# usage: qsub ssr_pipeline_SNP_test.sh runInputs
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run1.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run2.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run3.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run4.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run5.txt
 
 # required modules for ND CRC servers
 module load bio
@@ -74,8 +74,8 @@ cd $inputsPath"/aligned"
 # consider merging BAM files before variant calling
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsPath $projectDir
-#bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
+#bash sorting_samtools.sh $inputsPath $projectDir
+bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
 
 # remove header lines from the vcf file
 #for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
