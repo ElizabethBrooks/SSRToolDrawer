@@ -47,10 +47,10 @@ bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$noPath"_calls.vcf.gz" $outp
 bcftools index --threads 4 $outputsPath"/"$noPath"_calls.vcf.gz"
 # normalize indels
 bcftools norm --threads 4 -f $ref -o $outputsPath"/"$noPath"_calls.norm.bcf" $outputsPath"/"$noPath"_calls.vcf.gz"
-#rm $outputsPath"/"$noPath"_calls.vcf.gz"*
+rm $outputsPath"/"$noPath"_calls.vcf.gz"*
 # convert from BCF to VCF
 bcftools view --threads 4 -Ov -o $outputsPath"/"$noPath"_calls.norm.vcf" $outputsPath"/"$noPath"_calls.norm.bcf"
-#rm $outputsPath"/"$noPath"_calls.norm.vcf"
+rm $outputsPath"/"$noPath"_calls.norm.vcf"
 
 # status message
 echo "Analysis conplete!"

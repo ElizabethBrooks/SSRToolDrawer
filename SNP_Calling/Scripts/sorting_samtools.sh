@@ -20,16 +20,13 @@ samtools --version >> $versionFile
 
 # Sorting Stage - SNP Calling Workflow
 
-# set input paths
-inputsPath=$inputsPath"/aligned"
-
 # set outputs path
 outputsPath=$inputsPath"/sorted"
 # create the directory
 mkdir $dataPath
 
 # loop through all filtered sam files
-for f in $inputsPath"/"*".readGroups.bam"; do
+for f in $inputsPath"/aligned/"*".readGroups.bam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f" | sed 's/\.readGroups\.bam$//g')
 	# status message
@@ -39,15 +36,13 @@ for f in $inputsPath"/"*".readGroups.bam"; do
 	samtools sort -@ 4 -n -o $outputsPath"/"$curSampleNoPath".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $f
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $outputsPath"/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
+	rm $outputsPath"/"$curSampleNoPath".sortedName.bam"
 	# run samtools to prepare mapped reads for sorting by coordinate
 	# using 8 threads
 	samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
+	rm $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	# remove duplicate reads
 	samtools markdup -r $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".noDups.bam"
-	# clean up
-	#rm $f
-	rm $outputsPath"/"$curSampleNoPath".sortedName.bam"
-	rm $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam"
 	# status message
 	echo "Processed!"

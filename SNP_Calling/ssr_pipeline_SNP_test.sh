@@ -74,7 +74,7 @@ cd $inputsPath"/aligned"
 # consider merging BAM files before variant calling
 
 # perform sorting and variant calling
-#bash sorting_samtools.sh $inputsPath $projectDir
+bash sorting_samtools.sh $inputsPath $projectDir
 bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
 
 # remove header lines from the vcf file
