@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # script to convert SSR info csv files to tab delimeted text files
-# usage: bash ssr_regions_prep.sh
-# usage Ex: bash ssr_regions_prep.sh
+# usage: bash ssr_regions_formatting.sh
+# usage Ex: bash ssr_regions_formatting.sh
 
 # retrieve ssr info path
 infoInput=$(grep "ssrInfo:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")

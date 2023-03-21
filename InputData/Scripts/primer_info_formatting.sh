@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # script to convert primer info csv files to tab delimeted text files
-# usage: bash primer_info_prep.sh
-# usage Ex: bash primer_info_prep.sh
+# usage: bash primer_info_formatting.sh
+# usage Ex: bash primer_info_formatting.sh
 
 # retrieve ssr primers path
 outFile=$(grep "primers:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")

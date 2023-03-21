@@ -7,11 +7,11 @@
 
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runInputs
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run1.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run2.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run3.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run4.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputPaths_romero_run5.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run1.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run2.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run3.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run4.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run5.txt
 
 # required modules for ND CRC servers
 module load bio
@@ -34,13 +34,13 @@ runNum=$(grep "run:" ../"InputData/"$inputsFile | tr -d " " | sed "s/run://g")
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve ssr info path
-infoPath=$(grep "ssrInfo:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
+infoPath=$(grep "ssrInfo:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
 # retrieve ssr regions path
-regionsPath=$(grep "ssrRegions:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+regionsPath=$(grep "ssrRegions:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 # retrieve primers path
-primerPath=$(grep "primers:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
+primerPath=$(grep "primers:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 # retrieve analysis outputs absolute path
-outputsPath=$(grep "outputs:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+outputsPath=$(grep "outputs:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
 inputsPath=$outputsPath"/"$projectDir"_SSR_SNP"

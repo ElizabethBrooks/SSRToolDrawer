@@ -1,24 +1,18 @@
 #!/bin/bash
 
-# script to run the SSR pipeline
-# usage: bash ssr_pipeline_prep.sh runInputs outputsPath
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run1.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run2.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run3.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run4.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run5.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
-# usage Ex: qsub ssr_pipeline_basic.sh inputPaths_run6.txt /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR
+# script to prep input data for the SSR pipelines
+# usage: bash ssr_pipeline_prep.sh inputsFile outputsPath
 
 # retrieve input argument of a inputs file
 inputsFile=$1
 
-# retrieve input outputs path
+# retrieve analysis outputs absolute path
 outputsPath=$2
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve reference absolute path for alignment
-ref=$(grep "reference:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+ref=$(grep "reference:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 
 # name output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
