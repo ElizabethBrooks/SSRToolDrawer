@@ -34,7 +34,11 @@ runNum=$(grep "run:" ../"InputData/"$inputsFile | tr -d " " | sed "s/run://g")
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve ssr info path
-infoPath=$(grep "info:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/info://g")
+infoPath=$(grep "ssrInfo:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
+# retrieve ssr regions path
+regionsPath=$(grep "ssrRegions:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+# retrieve primers path
+primerPath=$(grep "primers:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 # retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
@@ -56,7 +60,9 @@ cd ../Prep
 bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 # TO-DO
-# make sure to check mapping efficiency after mapping since we did not remove primers in advance
+# make sure to check mapping efficiency
+# note that we did not remove primers in advance
+# consider removing using trimmomatic along with adapter seqs
 
 
 # SSR Analysis Stage - SNP Calling Workflow
@@ -69,59 +75,72 @@ cd ../SNP_Calling/Scripts
 
 # loop through all aligned sam files
 for f1 in $inputsPath"/aligned/"*".sam"; do
+	# remove file extension
+	noExt=$(echo $f1 | sed 's/\.sam//g')
+	# remove file path
+	sample=$(basename $f1 | sed 's/\.sam//g')
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
 	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-	grep "^@" $f1 > $f1".header.filter50.sam"
+	grep "^@" $f1 > $noExt".header.sam"
 	# append filtered sequences
-	cat $f1".filter50.sam" >> $f1".header.filter50.sam"
+	cat $noExt".filter50.sam" >> $noExt".header.sam"
+	#rm $noExt".filter50.sam"
+	# convert sam to bam
+	samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
+	#rm $noExt".header.sam"
+	# remove primers sequences
+	#./bamclipper.sh -b $noExt".header.bam" -p $primerPath -n 4
+	#rm $noExt".header.bam"
+	# remove SSR sequences
+	#samtools view -@ 4 -bo $noExt".overlap.bam" -U $noExt".noOverlap.bam" -L $regionsPath $noExt".header.primerclipped.bam"
+	#rm $noExt".header.primerclipped.bam"
+	#rm $noExt".overlap.bam"
+	# add read groups
+	#samtools addreplacerg -@ 4 -r ID:SSR_$runNum_$sample -r SM:$sample -o $noExt".RG.bam" $noExt".noOverlap.bam"
+	#rm $noExt".noOverlap.bam"
 	# status message
 	echo "Processed!"
 done
 
-# TO-DO (BAMClipper or bedtools)
-# remove primers form aligned filtered sequences
-## consider removing using trimmomatic along with adapter seqs
-# remove SSRs from aligned filtered sequences
-# and add read groups, then merge BAM files before calling
+# TO-DO
+# merge BAM files before calling
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsFile $outputsPath
-bash variantCalling_bcftools.sh $inputsFile $outputsPath
+#bash sorting_samtools.sh $inputsFile $outputsPath
+#bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
 # TO-DO
 # modify/remove this section after merging
 # remove headers from the vcf files
-for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
+#for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
 	# print status message
-	echo "Removing header from $f2"
+#	echo "Removing header from $f2"
 	# create new file name
-	newName=$(echo $f2 | sed 's/\.sam\.filter50\.sortedCoordinate\_calls\.norm\.flt\-indels\.vcf/\.noHeader\.vcf/g')
+#	newName=$(echo $f2 | sed 's/\.sam\.filter50\.sortedCoordinate\_calls\.norm\.flt\-indels\.vcf/\.RG\.vcf/g')
 	# remove header
-	grep -v "#" $f2 > $newName
+#	grep -v "#" $f2 > $newName
 	# status message
-	echo "Processed!"
-done
+#	echo "Processed!"
+#done
 
-# TO-DO
-# modify/remove the noHeader tags after merging
 # retrieve and format sample tag list
-sampleTags=$(for i in $outputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
-sampleTags=$(echo $sampleTags | sed 's/.$//')
+#sampleTags=$(for i in $outputsPath"/variants/"*".RG.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.RG\.vcf$/\",/g" | tr '\n' ' '; done)
+#sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
-sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
+#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 
 # format matrix
-python2 Format_VCF-Matrix.py
+#python2 Format_VCF-Matrix.py
 
 # re-name and move output matrix
-mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
+#mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # clean up
-rm -r $outputsPath"/"$projectDir"_SSR_prep"
+#rm -r $outputsPath"/"$projectDir"_SSR_prep"
 
 # status message
 echo "SSR VC analysis complete!"

@@ -6,19 +6,22 @@
 
 # retrieve ssr info path
 infoOutput=$(grep "info:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/info://g")
+#infoOutput="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/SSRinfo-2023.txt"
 # retrieve sequence info path
 referenceInput=$(grep "reference:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+#referenceInput="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/finalset-2.fa"
 
-# remove txt extension from input info file
+# remove extension from input info file
 infoInput=$(echo $infoOutput | sed 's/\.txt//g')
 
-# exclude the header of the ssr info file
+# remove hidden carriage return characters
+# and exclude the header of the ssr info file
 # and exclude the lines beginning with empty cells that contain notes
 # and fix any marker tags by removing excess > symbols
 # and convert the delimeter from commas to tabs
 # and retrieve the following fields:
 # Marker name, start repeat, end repeat, Sequence showing primer sequences and repeat in BOLD
-cat $infoInput".csv" | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoInput".tmp.txt"
+cat $infoInput".csv" |  tr -d $'\r' | tail -n+2 | sed '/^,/d' | sed 's/>//g' | sed 's/,/\t/g' | cut -f1-3,9 > $infoInput".tmp.txt"
 
 # retrieve the marker ssr info
 cat $infoInput".tmp.txt" | cut -f1-3 > $infoInput".tmpcol1.txt"
