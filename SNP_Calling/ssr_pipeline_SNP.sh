@@ -66,7 +66,6 @@ fi
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 mkdir $inputsPath
 
-
 # prepare data for analysis
 cd $baseDir"/Prep"
 bash ssr_pipeline_prep.sh $inputsFile $inputsPath
@@ -83,8 +82,8 @@ bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 # status message
 echo "SSR SNP analysis started..."
 
-# copy pipeline inputs and scripts to alignment directory
-cp $baseDir"/SNP_Calling/Scripts/"* $inputsPath"/aligned"
+# copy pipeline scripts to alignment directory
+cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 cp -r $clipperPath"/"* $inputsPath"/aligned"
 
 # move to the alignment directory
@@ -127,9 +126,12 @@ done
 # TO-DO
 # consider merging BAM files before variant calling
 
+# move to pipeline scripts directory
+cd $currDir"/Scripts"
+
 # perform sorting and variant calling
 bash sorting_samtools.sh $inputsPath $projectDir
-bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
+bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
 
 # remove header lines from the vcf file
 for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do

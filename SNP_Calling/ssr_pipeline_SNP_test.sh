@@ -64,18 +64,12 @@ inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 # status message
 echo "SSR SNP analysis started..."
 
-# copy pipeline scripts to inputs directory
-cp $baseDir"/SNP_Calling/Scripts/"* $inputsPath"/aligned"
-
 # move to the inputs directory
-cd $inputsPath"/aligned"
-
-# TO-DO
-# consider merging BAM files before variant calling
+cd $currDir"/Scripts"
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsPath $projectDir
-#bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
+#bash sorting_samtools.sh $inputsPath $projectDir
+bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
 
 # remove header lines from the vcf file
 #for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
