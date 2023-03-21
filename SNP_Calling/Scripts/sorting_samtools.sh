@@ -23,7 +23,7 @@ samtools --version >> $versionFile
 # set outputs path
 outputsPath=$inputsPath"/sorted"
 # create the directory
-mkdir $dataPath
+mkdir $outputsPath
 
 # loop through all filtered sam files
 for f in $inputsPath"/aligned/"*".readGroups.bam"; do

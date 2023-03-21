@@ -75,7 +75,7 @@ cd $inputsPath"/aligned"
 
 # perform sorting and variant calling
 bash sorting_samtools.sh $inputsPath $projectDir
-bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
+#bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
 
 # remove header lines from the vcf file
 #for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
