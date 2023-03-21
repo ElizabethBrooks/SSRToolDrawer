@@ -5,7 +5,7 @@
 # usage Ex: bash ssr_info_prep.sh
 
 # retrieve ssr info path
-infoOutput=$(grep "info:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/info://g")
+infoOutput=$(grep "ssrInfo:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
 #infoOutput="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/SSRinfo-2023.txt"
 # retrieve sequence info path
 referenceInput=$(grep "reference:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")

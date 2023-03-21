@@ -43,7 +43,7 @@ primerPath=$(grep "primers:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d 
 outputsPath=$(grep "outputs:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-inputsPath=$outputsPath"/"$projectDir"_SSR_SNP_test"
+inputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 mkdir $inputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then

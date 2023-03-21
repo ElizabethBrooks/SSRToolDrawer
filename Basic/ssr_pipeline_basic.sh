@@ -35,7 +35,7 @@ runNum=$(grep "run:" ../"InputData/"$inputsFile | tr -d " " | sed "s/run://g")
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve ssr info path
-infoPath=$(grep "info:" ../"InputData/inputPaths_ssr_pipeline.txt"| tr -d " " | sed "s/info://g")
+infoPath=$(grep "ssrInfo:" ../"InputData/inputPaths_ssr_pipeline.txt"| tr -d " " | sed "s/ssrInfo://g")
 # retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
