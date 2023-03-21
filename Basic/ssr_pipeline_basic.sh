@@ -57,11 +57,6 @@ fi
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 mkdir $inputsPath
-# check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $inputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
 
 # prepare data for analysis
 cd $baseDir"/Prep"

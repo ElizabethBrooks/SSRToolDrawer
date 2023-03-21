@@ -54,17 +54,18 @@ ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " "
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-inputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
-mkdir $inputsPath
+outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
+mkdir $outputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then
-	echo "The $inputsPath directory already exsists... please remove before proceeding."
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
 	exit 1
 fi
 
-# setup the downstream inputs path
-inputsPath=$inputsPath"/"$projectDir"_SSR_prep"
+# setup the inputs path
+inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 mkdir $inputsPath
+
 
 # prepare data for analysis
 cd $baseDir"/Prep"
@@ -127,11 +128,11 @@ done
 # consider merging BAM files before variant calling
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsFile $outputsPath $projectDir
-bash variantCalling_bcftools.sh $inputsFile $outputsPath $projectDir $ref
+bash sorting_samtools.sh $inputsPath $projectDir
+bash variantCalling_bcftools.sh $inputsPath $projectDir $ref
 
 # remove header lines from the vcf file
-for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
+for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
 	# print status message
 	echo "Removing header from $f2"
 	# create new file name
@@ -143,7 +144,7 @@ for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
 done
 
 # retrieve and format sample tag list
-sampleTags=$(for i in $outputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
+sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
 sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
@@ -156,7 +157,7 @@ python2 Format_VCF-Matrix.py
 mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # clean up
-rm -r $outputsPath"/"$projectDir"_SSR_prep"
+rm -r $inputsPath
 
 # status message
 echo "SSR VC analysis complete!"

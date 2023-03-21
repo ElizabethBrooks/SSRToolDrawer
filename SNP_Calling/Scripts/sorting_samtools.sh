@@ -1,19 +1,13 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash sorting_samtools.sh inputsFile inputsPath projectDir
+# usage: bash sorting_samtools.sh inputsPath projectDir
 
-# retrieve input argument of a inputs file
-inputsFile=$1
-
-# retrieve input outputs path
-inputsPath=$2
+# retrieve inputs path
+inputsPath=$1
 
 # retrieve the project ID 
-projectDir=$3
-
-# set the inputs path
-inputsPath=$inputsPath"/"$projectDir
+projectDir=$2
 
 # setup the variant calling directory
 dataPath=$inputsPath"/sorted"
@@ -53,7 +47,7 @@ for f in $inputsPath"/"*".readGroups.bam"; do
 	# remove duplicate reads
 	samtools markdup -r $path".sortedCoordinate.bam" $path".noDups.bam"
 	# clean up
-	rm $f
+	#rm $f
 	rm $path".sortedName.bam"
 	rm $path".sortedFixed.bam"
 	rm $path".sortedCoordinate.bam"

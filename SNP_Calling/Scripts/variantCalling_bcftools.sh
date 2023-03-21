@@ -1,19 +1,16 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantCalling_bcftools.sh inputsFile inputsPath projectDir reference
-
-# retrieve input argument of a inputs file
-inputsFile=$1
+# usage: bash variantCalling_bcftools.sh inputsPath projectDir reference
 
 # retrieve input outputs path
-inputsPath=$2
+inputsPath=$1
 
 # retrieve the project ID 
-projectDir=$3
+projectDir=$2
 
 # retrieve genome reference absolute path for alignment
-ref=$4
+ref=$3
 
 # setup the variant calling directory
 dataPath=$inputsPath"/variants"
@@ -45,12 +42,15 @@ echo "Performing variant calling for "$noPath"..."
 bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $dataPath"/"$noPath"_raw.bcf" -b "inputBAMList.txt"
 # detect the single nucleotide polymorphisms 
 bcftools call --threads 4 -mv -Oz -o $dataPath"/"$noPath"_calls.vcf.gz" $dataPath"/"$noPath"_raw.bcf" 
+#rm $dataPath"/"$noPath"_raw.bcf"
 # index vcf file
 bcftools index --threads 4 $dataPath"/"$noPath"_calls.vcf.gz"
 # normalize indels
 bcftools norm --threads 4 -f $ref -o $dataPath"/"$noPath"_calls.norm.bcf" $dataPath"/"$noPath"_calls.vcf.gz"
+#rm $dataPath"/"$noPath"_calls.vcf.gz"*
 # convert from BCF to VCF
 bcftools view --threads 4 -Ov -o $dataPath"/"$noPath"_calls.norm.vcf" $dataPath"/"$noPath"_calls.norm.bcf"
+#rm $dataPath"/"$noPath"_calls.norm.vcf"
 
 # status message
 echo "Analysis conplete!"
