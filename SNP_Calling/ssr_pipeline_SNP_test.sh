@@ -2,7 +2,7 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
-#$ -N ssr_SNP_jobOutput
+#$ -N test_ssr_SNP_jobOutput
 #$ -pe smp 4
 
 # script to run the SSR pipeline
@@ -30,26 +30,28 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 # retrieve input argument of a inputs file
 inputsFile=$1
 
-# retrieve the run number 
-runNum=$(grep "run:" ../"InputData/"$inputsFile | tr -d " " | sed "s/run://g")
-# retrieve the project ID 
-projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-# retrieve ssr info path
-infoPath=$(grep "ssrInfo:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
-# retrieve ssr regions path
-regionsPath=$(grep "ssrRegions:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
-# retrieve primers path
-primerPath=$(grep "primers:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
-# retrieve analysis outputs path
-outputsPath=$(grep "outputs:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-# bamclipper tool path
-clipperPath=$(grep "bamclipperTool:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
-
 # retrieve current working directory
 currDir=$(pwd)
 
 # retrieve base directory path
 baseDir=$(dirname $currDir)
+
+# retrieve the run number 
+runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
+# retrieve the project ID 
+projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
+# retrieve ssr info path
+infoPath=$(grep "ssrInfo:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
+# retrieve ssr regions path
+regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+# retrieve primers path
+primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
+# bamclipper tool path
+clipperPath=$(grep "bamclipperTool:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
+# retrieve reference path
+ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+# retrieve analysis outputs path
+outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
 inputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
@@ -64,6 +66,7 @@ inputsPath=$inputsPath"/"$projectDir"_SSR_prep"
 echo "SSR SNP analysis started..."
 
 # copy pipeline scripts to inputs directory
+cp $baseDir"/InputData/"$inputsFile
 cp $baseDir"/SNP_Calling/Scripts/"* $inputsPath"/aligned"
 
 # move to the inputs directory
@@ -73,8 +76,8 @@ cd $inputsPath"/aligned"
 # consider merging BAM files before variant calling
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsFile $outputsPath
-#bash variantCalling_bcftools.sh $inputsFile $outputsPath
+bash sorting_samtools.sh $inputsFile $outputsPath $projectDir
+#bash variantCalling_bcftools.sh $inputsFile $outputsPath $projectDir $ref
 
 # remove header lines from the vcf file
 #for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do

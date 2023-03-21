@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantCalling_bcftools.sh inputsFile inputsPath
+# usage: bash variantCalling_bcftools.sh inputsFile inputsPath projectDir reference
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -10,9 +10,10 @@ inputsFile=$1
 inputsPath=$2
 
 # retrieve the project ID 
-projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
+projectDir=$3
+
 # retrieve genome reference absolute path for alignment
-ref=$(grep "genomeReference:" ../"InputData/"$inputsFile | tr -d " " | sed "s/genomeReference://g")
+ref=$4
 
 # setup the variant calling directory
 dataPath=$inputsPath"/variants"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash sorting_samtools.sh inputsFile inputsPath
+# usage: bash sorting_samtools.sh inputsFile inputsPath projectDir
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -10,7 +10,10 @@ inputsFile=$1
 inputsPath=$2
 
 # retrieve the project ID 
-projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
+projectDir=$3
+
+# set the inputs path
+inputsPath=$inputsPath"/"$projectDir
 
 # setup the variant calling directory
 dataPath=$inputsPath"/sorted"
