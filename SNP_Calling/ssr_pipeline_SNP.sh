@@ -134,7 +134,7 @@ bash sorting_samtools.sh $inputsPath $projectDir
 bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
 
 # remove header lines from the vcf file
-for f2 in $inputsPath"/variants/"*".flt-indels.vcf"; do
+for f2 in $inputsPath"/variants/"*"_calls.norm.bcf"; do
 	# print status message
 	echo "Removing header from $f2"
 	# create new file name
