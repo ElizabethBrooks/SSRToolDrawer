@@ -48,10 +48,8 @@ bcftools call --threads 4 -mv -Oz -o $dataPath"/"$noPath"_calls.vcf.gz" $dataPat
 bcftools index --threads 4 $dataPath"/"$noPath"_calls.vcf.gz"
 # normalize indels
 bcftools norm --threads 4 -f $ref -o $dataPath"/"$noPath"_calls.norm.bcf" $dataPath"/"$noPath"_calls.vcf.gz"
-# filter adjacent indels within 5bp
-bcftools filter --threads 4 --IndelGap 5 -Ob -o $dataPath"/"$noPath"_calls.norm.flt-indels.bcf" $dataPath"/"$noPath"_calls.norm.bcf"
 # convert from BCF to VCF
-bcftools view --threads 4 -Ov -o $dataPath"/"$noPath"_calls.norm.flt-indels.vcf" $dataPath"/"$noPath"_calls.norm.flt-indels.bcf"
+bcftools view --threads 4 -Ov -o $dataPath"/"$noPath"_calls.norm.vcf" $dataPath"/"$noPath"_calls.norm.bcf"
 
 # status message
 echo "Analysis conplete!"

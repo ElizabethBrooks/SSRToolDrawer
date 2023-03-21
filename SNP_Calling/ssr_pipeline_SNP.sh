@@ -15,6 +15,7 @@
 
 # required modules for ND CRC servers
 module load bio
+module load parallel
 
 # activate the python2 environment for local run
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
@@ -52,25 +53,26 @@ baseDir=$(dirname $currDir)
 
 # make a new directory for project analysis
 inputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
-#mkdir $inputsPath
+mkdir $inputsPath
 # check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $inputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+if [ $? -ne 0 ]; then
+	echo "The $inputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 # setup the downstream inputs path
 inputsPath=$inputsPath"/"$projectDir"_SSR_prep"
-#mkdir $inputsPath
+mkdir $inputsPath
 
 # prepare data for analysis
-#cd ../Prep
-#bash ssr_pipeline_prep.sh $inputsFile $inputsPath
+cd ../Prep
+bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 # TO-DO
 # make sure to check mapping efficiency
 # note that we did not remove primers in advance
-# consider removing using trimmomatic along with adapter seqs
+# consider demultiplexing using primers
+# or removing primers using trimmomatic along with adapters
 
 
 # SSR Analysis Stage - SNP Calling Workflow
@@ -80,7 +82,7 @@ echo "SSR SNP analysis started..."
 
 # copy pipeline scripts to inputs directory
 cp $baseDir"/SNP_Calling/Scripts/"* $inputsPath"/aligned"
-cp $clipperPath"/"* $inputsPath"/aligned"
+cp -r $clipperPath"/"* $inputsPath"/aligned"
 
 # move to the inputs directory
 cd $inputsPath"/aligned"
@@ -94,67 +96,65 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
-	#python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-	#grep "^@" $f1 > $noExt".header.sam"
+	grep "^@" $f1 > $noExt".header.sam"
 	# append filtered sequences
-	#cat $noExt".filter50.sam" >> $noExt".header.sam"
-	#rm $noExt".filter50.sam"
+	cat $noExt".filter50.sam" >> $noExt".header.sam"
+	rm $noExt".filter50.sam"
 	# convert sam to bam
-	#samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
-	#rm $noExt".header.sam"
+	samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
+	rm $noExt".header.sam"
 	# index the bam file
-	#samtools index $noExt".header.bam" 
+	samtools index $noExt".header.bam" 
 	# remove primers sequences
 	./bamclipper.sh -b $noExt".header.bam" -p $primerPath -n 4
-	#rm $noExt".header.bam"
+	rm $noExt".header.bam"
 	# remove SSR sequences
-	#samtools view -@ 4 -bo $noExt".overlap.bam" -U $noExt".noOverlap.bam" -L $regionsPath $noExt".header.primerclipped.bam"
-	#rm $noExt".header.primerclipped.bam"
-	#rm $noExt".overlap.bam"
+	samtools view -@ 4 -bo $noExt".overlap.bam" -U $noExt".noOverlap.bam" -L $regionsPath $noExt".header.primerclipped.bam"
+	rm $noExt".header.primerclipped.bam"
+	rm $noExt".overlap.bam"
 	# add read groups
-	#samtools addreplacerg -@ 4 -r ID:SSR_$runNum_$sample -r SM:$sample -o $noExt".RG.bam" $noExt".noOverlap.bam"
-	#rm $noExt".noOverlap.bam"
+	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$sample -r SM:$sample -o $noExt".readGroups.bam" $noExt".noOverlap.bam"
+	rm $noExt".noOverlap.bam"
 	# status message
 	echo "Processed!"
 done
 
 # TO-DO
-# merge BAM files before calling
+# consider merging BAM files before variant calling
 
 # perform sorting and variant calling
-#bash sorting_samtools.sh $inputsFile $outputsPath
-#bash variantCalling_bcftools.sh $inputsFile $outputsPath
+bash sorting_samtools.sh $inputsFile $outputsPath
+bash variantCalling_bcftools.sh $inputsFile $outputsPath
 
-# TO-DO
-# modify/remove this section after merging
-# remove headers from the vcf files
-#for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
+# remove header lines from the vcf file
+for f2 in $outputsPath"/variants/"*".flt-indels.vcf"; do
 	# print status message
-#	echo "Removing header from $f2"
+	echo "Removing header from $f2"
 	# create new file name
-#	newName=$(echo $f2 | sed 's/\.sam\.filter50\.sortedCoordinate\_calls\.norm\.flt\-indels\.vcf/\.RG\.vcf/g')
-	# remove header
-#	grep -v "#" $f2 > $newName
+	newName=$(echo $f2 | sed 's/\.vcf/\.noHeader\.vcf/g')
+	# remove header lines
+	grep -v "#" $f2 > $newName
 	# status message
-#	echo "Processed!"
-#done
+	echo "Processed!"
+done
 
 # retrieve and format sample tag list
-#sampleTags=$(for i in $outputsPath"/variants/"*".RG.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.RG\.vcf$/\",/g" | tr '\n' ' '; done)
-#sampleTags=$(echo $sampleTags | sed 's/.$//')
+sampleTags=$(for i in $outputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
+sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
-#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
+sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 
 # format matrix
-#python2 Format_VCF-Matrix.py
+python2 Format_VCF-Matrix.py
 
 # re-name and move output matrix
-#mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
+mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # clean up
-#rm -r $outputsPath"/"$projectDir"_SSR_prep"
+rm -r $outputsPath"/"$projectDir"_SSR_prep"
 
 # status message
 echo "SSR VC analysis complete!"

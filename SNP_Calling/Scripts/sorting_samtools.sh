@@ -32,18 +32,16 @@ samtools --version >> $versionFile
 inputsPath=$inputsPath"/aligned"
 
 # loop through all filtered sam files
-for f in $inputsPath"/"*".header.filter50.sam"; do
+for f in $inputsPath"/"*".readGroups.bam"; do
 	# remove the file extension
-	path=$(echo $f | sed 's/\.sam$//g')
+	path=$(echo $f | sed 's/\.bam$//g')
 	# trim file path from current folder name
-	curSampleNoPath=$(basename "$f" | sed 's/\.sam$//g')
+	curSampleNoPath=$(basename "$f" | sed 's/\.bam$//g')
 	# status message
-	echo "Processing file "$path".sam ..."
-	# convert output sam files to bam format for downstream analysis
-	samtools view -@ 4 -bS $f > $path".bam"
+	echo "Sorting $f"
 	# run samtools to prepare mapped reads for sorting
 	# using 8 threads
-	samtools sort -@ 4 -n -o $path".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $path".bam"
+	samtools sort -@ 4 -n -o $path".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $f
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $path".sortedName.bam" $path".sortedFixed.bam"
 	# run samtools to prepare mapped reads for sorting by coordinate
