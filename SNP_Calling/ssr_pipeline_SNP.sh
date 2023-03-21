@@ -137,10 +137,12 @@ bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
 for f2 in $inputsPath"/variants/"*"_calls.norm.bcf"; do
 	# print status message
 	echo "Removing header from $f2"
-	# create new file name
-	newName=$(echo $f2 | sed 's/\.vcf/\.noHeader\.vcf/g')
+	# remove extension
+	newName=$(echo $f2 | sed 's/\.bcf//g')
+	# convert bcf to vcf
+	bcftools convert -Ov -o $newName".vcf" $f2
 	# remove header lines
-	grep -v "#" $f2 > $newName
+	egrep -v "^#" $newName".vcf" > $newName".noHeader.vcf"
 	# status message
 	echo "Processed!"
 done
