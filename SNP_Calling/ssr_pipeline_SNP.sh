@@ -44,6 +44,12 @@ outputsPath=$(grep "outputs:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " "
 # bamclipper tool path
 clipperPath=$(grep "bamclipperTool:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
 
+# retrieve current working directory
+currDir=$(pwd)
+
+# retrieve base directory path
+baseDir=$(dirname $currDir)
+
 # make a new directory for project analysis
 inputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 #mkdir $inputsPath
@@ -72,8 +78,12 @@ inputsPath=$inputsPath"/"$projectDir"_SSR_prep"
 # status message
 echo "SSR SNP analysis started..."
 
-# move to pipeline scripts directory
-cd ../SNP_Calling/Scripts
+# copy pipeline scripts to inputs directory
+cp $baseDir"/SNP_Calling/Scripts/"* $inputsPath"/aligned"
+cp $clipperPath"/"* $inputsPath"/aligned"
+
+# move to the inputs directory
+cd $inputsPath"/aligned"
 
 # loop through all aligned sam files
 for f1 in $inputsPath"/aligned/"*".sam"; do
@@ -93,8 +103,10 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	# convert sam to bam
 	#samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
 	#rm $noExt".header.sam"
+	# index the bam file
+	#samtools index $noExt".header.bam" 
 	# remove primers sequences
-	bash $clipperPath"/bamclipper.sh" -b $noExt".header.bam" -p $primerPath -n 4
+	./bamclipper.sh -b $noExt".header.bam" -p $primerPath -n 4
 	#rm $noExt".header.bam"
 	# remove SSR sequences
 	#samtools view -@ 4 -bo $noExt".overlap.bam" -U $noExt".noOverlap.bam" -L $regionsPath $noExt".header.primerclipped.bam"

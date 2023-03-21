@@ -39,6 +39,12 @@ infoPath=$(grep "ssrInfo:" ../"InputData/inputs_ssr_pipeline.txt"| tr -d " " | s
 # retrieve analysis outputs absolute path
 outputsPath=$(grep "outputs:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
+# retrieve current working directory
+currDir=$(pwd)
+
+# retrieve base directory path
+baseDir=$(dirname $currDir)
+
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_basic"
 mkdir $outputsPath
@@ -58,7 +64,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # prepare data for analysis
-cd ../Prep
+cd $baseDir"/Prep"
 bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 
@@ -68,9 +74,7 @@ bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 echo "SSR basic analysis started..."
 
 # copy pipeline scripts to inputs directory
-cp ../Basic/Scripts/GapGenes.v3.py $inputsPath"/aligned"
-cp ../Basic/Scripts/SnipMatrix.py $inputsPath"/aligned"
-cp ../Basic/Scripts/Format_Matrix.py $inputsPath"/aligned"
+cp $baseDir"/Basic/Scripts/"* $inputsPath"/aligned"
 
 # move to the inputs directory
 cd $inputsPath"/aligned"
