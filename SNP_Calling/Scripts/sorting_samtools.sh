@@ -11,8 +11,6 @@ projectDir=$2
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
-# add pipeline info to outputs
-echo -e "SSR pipeline variant calling software versions for $projectDir \n" > $versionFile
 
 # retrieve software version
 samtools --version >> $versionFile
@@ -35,13 +33,13 @@ for f in $inputsPath"/clipped/"*".readGroups.bam"; do
 	samtools sort -@ 4 -n -o $outputsPath"/"$curSampleNoPath".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $f
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $outputsPath"/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
-	rm $outputsPath"/"$curSampleNoPath".sortedName.bam"
+	#rm $outputsPath"/"$curSampleNoPath".sortedName.bam"
 	# run samtools to prepare mapped reads for sorting by coordinate
 	samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
-	rm $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
+	#rm $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	# remove duplicate reads
 	samtools markdup -r $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".noDups.bam"
-	rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam"
+	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam"
 	# status message
 	echo "Processed!"
 done
