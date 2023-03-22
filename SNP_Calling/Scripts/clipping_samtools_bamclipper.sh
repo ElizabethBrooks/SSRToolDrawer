@@ -18,6 +18,9 @@ samtools --version >> $versionFile
 # set outputs path
 outputsPath=$inputsPath"/clipped"
 
+# move to outputs path
+cd $outputsPath
+
 # loop through all aligned sam files
 for f1 in $inputsPath"/filtered/"*".header.sam"; do
 	# trim file path from current folder name

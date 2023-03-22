@@ -112,18 +112,21 @@ outputsDir=$inputsPath"/filtered"
 # consider merging BAM files before variant calling
 
 # set outputs path
-outputsDir=$inputsPath"/clipped"
+#outputsDir=$inputsPath"/clipped"
 # create the directory
 #mkdir $outputsDir
 
 # copy pipeline scripts to the clipped directory
-cp -r $clipperPath"/"* $inputsPath"/clipped"
+#cp -r $clipperPath"/"* $inputsPath"/clipped"
 
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
 
 # run script to clip primer and ssr sequences
 bash clipping_samtools_bamclipper.sh $inputsPath
+
+# move to pipeline scripts directory
+#cd $currDir"/Scripts"
 
 # run script to perform sorting 
 #bash sorting_samtools.sh $inputsPath $projectDir
