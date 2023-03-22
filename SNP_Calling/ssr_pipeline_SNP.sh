@@ -42,12 +42,6 @@ runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run:/
 projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve ssr info path
 infoPath=$(grep "ssrInfo:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
-# retrieve ssr regions path
-regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
-# retrieve primers path
-primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
-# bamclipper tool path
-clipperPath=$(grep "bamclipperTool:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve analysis outputs path
@@ -111,19 +105,11 @@ outputsDir=$inputsPath"/filtered"
 # TO-DO
 # consider merging BAM files before variant calling
 
-# set outputs path
-#outputsDir=$inputsPath"/clipped"
-# create the directory
-#mkdir $outputsDir
-
-# copy pipeline scripts to the clipped directory
-#cp -r $clipperPath"/"* $inputsPath"/clipped"
-
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
 
 # run script to clip primer and ssr sequences
-bash clipping_samtools_bamclipper.sh $inputsPath
+bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # move to pipeline scripts directory
 #cd $currDir"/Scripts"

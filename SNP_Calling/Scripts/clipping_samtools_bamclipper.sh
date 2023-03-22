@@ -1,10 +1,20 @@
 #!/bin/bash
 
 # script to clip primer and ssr sequences
-# usage: bash clipping_samtools_bamclipper.sh inputsPath
+# usage: bash clipping_samtools_bamclipper.sh inputsPath baseDir
 
 # retrieve inputs path
 inputsPath=$1
+
+# retrieve base of working directory
+baseDir=$2
+
+# retrieve ssr regions path
+regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+# retrieve primers path
+primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
+# bamclipper tool path
+clipperPath=$(grep "bamclipperTool:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
@@ -17,6 +27,9 @@ samtools --version >> $versionFile
 
 # set outputs path
 outputsPath=$inputsPath"/clipped"
+
+# copy pipeline scripts to the clipped directory
+#cp -r $clipperPath"/"* $outputsPath
 
 # move to outputs path
 cd $outputsPath
