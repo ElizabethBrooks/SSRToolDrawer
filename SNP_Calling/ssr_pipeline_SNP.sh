@@ -82,45 +82,31 @@ inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 # status message
 echo "SSR SNP analysis started..."
 
-# copy pipeline scripts to alignment directory
-#cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
-#cp -r $clipperPath"/"* $inputsPath"/aligned"
-
 # move to the alignment directory
 cd $inputsPath"/aligned"
 
+# set outputs path
+outputsPath=$inputsPath"/filtered"
+# create the directory
+mkdir $outputsPath
+
+# copy pipeline scripts to alignment and filtering directories
+#cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
+#cp -r $clipperPath"/"* $inputsPath"/filtered"
+
 # loop through all aligned sam files
 for f1 in $inputsPath"/aligned/"*".sam"; do
-	# remove file extension
-	noExt=$(echo $f1 | sed 's/\.sam//g')
-	# remove file path
-	sample=$(basename $f1 | sed 's/\.sam//g')
+	# trim file path from current folder name
+	curSampleNoPath=$(basename "$f1" | sed 's/\.sam$//g')
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
 	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-	grep "^@" $f1 > $noExt".header.sam"
+	grep "^@" $f1 > $outputsPath"/"$curSampleNoPath".header.sam"
 	# append filtered sequences
-	cat $noExt".filter50.sam" >> $noExt".header.sam"
-	#rm $noExt".filter50.sam"
-	# convert sam to bam
-	samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
-	#rm $noExt".header.sam"
-	# index the bam file
-	samtools index $noExt".header.bam" 
-	# remove primers sequences
-	./bamclipper.sh -b $noExt".header.bam" -p $primerPath -n 4
-	#rm $noExt".header.bam"
-	# remove SSR sequences
-	samtools view -@ 4 -bo $noExt".overlap.bam" -U $noExt".noOverlap.bam" -L $regionsPath $noExt".header.primerclipped.bam"
-	#rm $noExt".header.primerclipped.bam"
-	#rm $noExt".overlap.bam"
-	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$sample -r SM:$sample -o $noExt".readGroups.bam" $noExt".noOverlap.bam"
-	#rm $noExt".noOverlap.bam"
-	# status message
-	echo "Processed!"
+	cat $outputsPath"/"$curSampleNoPath".sam.filter50.sam" >> $outputsPath"/"$curSampleNoPath".header.sam"
+	#rm $outputsPath"/"$curSampleNoPath".sam.filter50.sam"
 done
 
 # TO-DO
@@ -129,15 +115,20 @@ done
 # move to pipeline scripts directory
 #cd $currDir"/Scripts"
 
-# perform sorting and variant calling
+# run script to clip primer and ssr sequences
+#bash clipping_samtools_bamclipper.sh $inputsPath
+
+# run script to perform sorting 
 #bash sorting_samtools.sh $inputsPath $projectDir
+
+# run script to perform variant calling
 #bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
 
-# copy pipeline script to the variants directory
-#cp $currDir"/Scripts/Format_VCF-Matrix.py"
-
 # move to variants directory
-#cd $inputsPath"/variants/"
+#cd $inputsPath"/variants"
+
+# copy pipeline scripts to variants directory
+#cp $currDir"/SNP_Calling/Scripts/Format_VCF-Matrix.py" $inputsPath"/variants"
 
 # subset vcf file by sample and remove header lines
 #for f2 in $inputsPath"/variants/"*"_calls.norm.bcf"; do

@@ -26,19 +26,17 @@ outputsPath=$inputsPath"/sorted"
 mkdir $outputsPath
 
 # loop through all filtered bam files
-for f in $inputsPath"/aligned/"*".readGroups.bam"; do
+for f in $inputsPath"/clipped/"*".readGroups.bam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f" | sed 's/\.readGroups\.bam$//g')
 	# status message
 	echo "Sorting $f"
 	# run samtools to prepare mapped reads for sorting
-	# using 8 threads
 	samtools sort -@ 4 -n -o $outputsPath"/"$curSampleNoPath".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $f
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $outputsPath"/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	rm $outputsPath"/"$curSampleNoPath".sortedName.bam"
 	# run samtools to prepare mapped reads for sorting by coordinate
-	# using 8 threads
 	samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	rm $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	# remove duplicate reads
