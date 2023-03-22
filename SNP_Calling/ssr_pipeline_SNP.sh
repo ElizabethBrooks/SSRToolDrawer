@@ -51,14 +51,14 @@ clipperPath=$(grep "bamclipperTool:" $baseDir"/InputData/inputs_ssr_pipeline.txt
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve analysis outputs path
-outputsDir=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsDir=$outputsDir"/"$projectDir"_SSR_SNP"
-#mkdir $outputsDir
+outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
+#mkdir $outputsPath
 # check if the folder already exists
 #if [ $? -ne 0 ]; then
-#	echo "The $outputsDir directory already exsists... please remove before proceeding."
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
 #	exit 1
 #fi
 
@@ -89,9 +89,9 @@ cd $inputsPath"/aligned"
 #cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 
 # set outputs path
-outputsPath=$inputsPath"/filtered"
+outputsDir=$inputsPath"/filtered"
 # create the directory
-#mkdir $outputsPath
+#mkdir $outputsDir
 
 # loop through all aligned sam files
 #for f1 in $inputsPath"/aligned/"*".sam"; do
@@ -102,9 +102,9 @@ outputsPath=$inputsPath"/filtered"
 	# run SSR pipeline
 #	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-#	grep "^@" $f1 > $outputsPath"/"$curSampleNoPath".header.sam"
+#	grep "^@" $f1 > $outputsDir"/"$curSampleNoPath".header.sam"
 	# append filtered sequences
-#	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsPath"/"$curSampleNoPath".header.sam"
+#	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsDir"/"$curSampleNoPath".header.sam"
 	#rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
 #done
 
@@ -112,9 +112,9 @@ outputsPath=$inputsPath"/filtered"
 # consider merging BAM files before variant calling
 
 # set outputs path
-outputsPath=$inputsPath"/clipped"
+outputsDir=$inputsPath"/clipped"
 # create the directory
-#mkdir $outputsPath
+#mkdir $outputsDir
 
 # copy pipeline scripts to the clipped directory
 cp -r $clipperPath"/"* $inputsPath"/clipped"
@@ -164,7 +164,7 @@ bash clipping_samtools_bamclipper.sh $inputsPath
 #python2 Format_VCF-Matrix.py
 
 # re-name and move output matrix
-#mv VCF_Matrix.txt $outputsDir"/"$runNum".txt"
+#mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # status message
 echo "SSR VC analysis complete!"
