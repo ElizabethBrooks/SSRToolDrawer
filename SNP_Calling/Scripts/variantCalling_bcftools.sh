@@ -29,18 +29,15 @@ bcftools --version >> $versionFile
 
 # Variant Calling Stage - SNP Calling Workflow
 
-# set input paths
-inputsPath=$inputsPath"/sorted"
-
 # loop through all filtered sam files
-ls $inputsPath"/clipped/"*".readGroups.bam" > "inputBAMList.txt"
+ls $inputsPath"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
 
 # status message
 echo "Performing variant calling for $runNum"
 
 # calculate the read coverage of positions in the genome
-bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$runNum"_raw.bcf" -b "inputBAMList.txt"
-#rm "inputBAMList.txt"
+bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$runNum"_raw.bcf" -b $outputsPath"/inputBAMList.txt"
+#rm $outputsPath"/inputBAMList.txt"
 # detect the single nucleotide polymorphisms 
 bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$runNum"_calls.vcf.gz" $outputsPath"/"$runNum"_raw.bcf" 
 #rm $outputsPath"/"$runNum"_raw.bcf"
