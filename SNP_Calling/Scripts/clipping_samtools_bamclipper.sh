@@ -27,8 +27,7 @@ for f1 in $inputsPath"/filtered/"*".header.sam"; do
 	# print status message
 	echo "Processing $f1"
 	# convert sam to bam
-	samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".header.bam" $outputsPath"/"$curSampleNoPath".header.sam"
-	#rm $outputsPath"/"$curSampleNoPath".header.sam"
+	samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".header.bam" $f1
 	# coordinate sort the filtered sequences
 	samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".header.bam"
 	#rm $outputsPath"/"$curSampleNoPath".header.bam"

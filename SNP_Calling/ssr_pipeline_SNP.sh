@@ -92,31 +92,31 @@ outputsPath=$inputsPath"/filtered"
 
 # copy pipeline scripts to alignment and filtering directories
 #cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
-#cp -r $clipperPath"/"* $inputsPath"/filtered"
+cp -r $clipperPath"/"* $inputsPath"/filtered"
 
 # loop through all aligned sam files
-for f1 in $inputsPath"/aligned/"*".sam"; do
+#for f1 in $inputsPath"/aligned/"*".sam"; do
 	# trim file path from current folder name
-	curSampleNoPath=$(basename "$f1" | sed 's/\.sam$//g')
+#	curSampleNoPath=$(basename "$f1" | sed 's/\.sam$//g')
 	# print status message
-	echo "Processing $f1"
+#	echo "Processing $f1"
 	# run SSR pipeline
-	#python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+#	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-	grep "^@" $f1 > $outputsPath"/"$curSampleNoPath".header.sam"
+#	grep "^@" $f1 > $outputsPath"/"$curSampleNoPath".header.sam"
 	# append filtered sequences
-	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsPath"/"$curSampleNoPath".header.sam"
+#	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsPath"/"$curSampleNoPath".header.sam"
 	#rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
-done
+#done
 
 # TO-DO
 # consider merging BAM files before variant calling
 
 # move to pipeline scripts directory
-#cd $currDir"/Scripts"
+cd $currDir"/Scripts"
 
 # run script to clip primer and ssr sequences
-#bash clipping_samtools_bamclipper.sh $inputsPath
+bash clipping_samtools_bamclipper.sh $inputsPath
 
 # run script to perform sorting 
 #bash sorting_samtools.sh $inputsPath $projectDir
