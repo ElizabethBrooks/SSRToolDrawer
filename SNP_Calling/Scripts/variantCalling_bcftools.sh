@@ -33,14 +33,14 @@ bcftools --version >> $versionFile
 inputsPath=$inputsPath"/sorted"
 
 # loop through all filtered sam files
-ls $inputsPath"/"*"noDups.bam" > "inputBAMList.txt"
+ls $inputsPath"/clipped/"*".readGroups.bam" > "inputBAMList.txt"
 
 # status message
 echo "Performing variant calling for $runNum"
 
 # calculate the read coverage of positions in the genome
 bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$runNum"_raw.bcf" -b "inputBAMList.txt"
-rm "inputBAMList.txt"
+#rm "inputBAMList.txt"
 # detect the single nucleotide polymorphisms 
 bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$runNum"_calls.vcf.gz" $outputsPath"/"$runNum"_raw.bcf" 
 #rm $outputsPath"/"$runNum"_raw.bcf"
@@ -48,10 +48,10 @@ bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$runNum"_calls.vcf.gz" $outp
 bcftools index --threads 4 $outputsPath"/"$runNum"_calls.vcf.gz"
 # normalize indels
 bcftools norm --threads 4 -f $ref -o $outputsPath"/"$runNum"_calls.norm.bcf" $outputsPath"/"$runNum"_calls.vcf.gz"
-rm $outputsPath"/"$runNum"_calls.vcf.gz"*
+#rm $outputsPath"/"$runNum"_calls.vcf.gz"*
 # convert from BCF to VCF
 bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $outputsPath"/"$runNum"_calls.norm.bcf"
-rm $outputsPath"/"$runNum"_calls.norm.vcf"
+#rm $outputsPath"/"$runNum"_calls.norm.vcf"
 
 # status message
 echo "Analysis conplete!"

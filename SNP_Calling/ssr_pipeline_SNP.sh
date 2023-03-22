@@ -15,7 +15,7 @@
 
 # required modules for ND CRC servers
 module load bio
-module load parallel
+#module load parallel
 
 # activate the python2 environment for local run
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
@@ -115,14 +115,15 @@ outputsDir=$inputsPath"/filtered"
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
 
-# run script to perform sorting 
-bash sorting_samtools.sh $inputsPath $projectDir
+# TO-DO
+# consider running script to perform sorting and removal of pcr duplicates
+#bash sorting_samtools.sh $inputsPath $projectDir
 
 # TO-DO
 # consider filtering by mapping quality
 
-# run script to perform variant calling
-#bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
+# consider running script to perform variant calling
+bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
 
 # move to variants directory
 #cd $inputsPath"/variants"
