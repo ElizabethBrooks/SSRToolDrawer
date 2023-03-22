@@ -55,20 +55,20 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
-mkdir $outputsPath
+#mkdir $outputsPath
 # check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $inputsPath
+#mkdir $inputsPath
 
 # prepare data for analysis
-cd $baseDir"/Prep"
-bash ssr_pipeline_prep.sh $inputsFile $inputsPath
+#cd $baseDir"/Prep"
+#bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 
 # TO-DO
 # make sure to check mapping efficiency
@@ -83,8 +83,8 @@ bash ssr_pipeline_prep.sh $inputsFile $inputsPath
 echo "SSR SNP analysis started..."
 
 # copy pipeline scripts to alignment directory
-cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
-cp -r $clipperPath"/"* $inputsPath"/aligned"
+#cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
+#cp -r $clipperPath"/"* $inputsPath"/aligned"
 
 # move to the alignment directory
 cd $inputsPath"/aligned"
@@ -103,22 +103,22 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	grep "^@" $f1 > $noExt".header.sam"
 	# append filtered sequences
 	cat $noExt".filter50.sam" >> $noExt".header.sam"
-	rm $noExt".filter50.sam"
+	#rm $noExt".filter50.sam"
 	# convert sam to bam
 	samtools view -@ 4 -bo $noExt".header.bam" $noExt".header.sam"
-	rm $noExt".header.sam"
+	#rm $noExt".header.sam"
 	# index the bam file
 	samtools index $noExt".header.bam" 
 	# remove primers sequences
 	./bamclipper.sh -b $noExt".header.bam" -p $primerPath -n 4
-	rm $noExt".header.bam"
+	#rm $noExt".header.bam"
 	# remove SSR sequences
 	samtools view -@ 4 -bo $noExt".overlap.bam" -U $noExt".noOverlap.bam" -L $regionsPath $noExt".header.primerclipped.bam"
-	rm $noExt".header.primerclipped.bam"
-	rm $noExt".overlap.bam"
+	#rm $noExt".header.primerclipped.bam"
+	#rm $noExt".overlap.bam"
 	# add read groups
 	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$sample -r SM:$sample -o $noExt".readGroups.bam" $noExt".noOverlap.bam"
-	rm $noExt".noOverlap.bam"
+	#rm $noExt".noOverlap.bam"
 	# status message
 	echo "Processed!"
 done
@@ -127,41 +127,46 @@ done
 # consider merging BAM files before variant calling
 
 # move to pipeline scripts directory
-cd $currDir"/Scripts"
+#cd $currDir"/Scripts"
 
 # perform sorting and variant calling
-bash sorting_samtools.sh $inputsPath $projectDir
-bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
+#bash sorting_samtools.sh $inputsPath $projectDir
+#bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
 
-# remove header lines from the vcf file
-for f2 in $inputsPath"/variants/"*"_calls.norm.bcf"; do
+# copy pipeline script to the variants directory
+#cp $currDir"/Scripts/Format_VCF-Matrix.py"
+
+# move to variants directory
+#cd $inputsPath"/variants/"
+
+# subset vcf file by sample and remove header lines
+#for f2 in $inputsPath"/variants/"*"_calls.norm.bcf"; do
 	# print status message
-	echo "Removing header from $f2"
+#	echo "Removing header from $f2"
 	# remove extension
-	newName=$(echo $f2 | sed 's/\.bcf//g')
+#	newName=$(echo $f2 | sed 's/\.bcf//g')
+	# subset vcf file by the current sample
+	
 	# convert bcf to vcf
-	bcftools convert -Ov -o $newName".vcf" $f2
+#	bcftools convert -Ov -o $newName".vcf" $f2
 	# remove header lines
-	egrep -v "^#" $newName".vcf" > $newName".noHeader.vcf"
+#	egrep -v "^#" $newName".vcf" > $newName".noHeader.vcf"
 	# status message
-	echo "Processed!"
-done
+#	echo "Processed!"
+#done
 
 # retrieve and format sample tag list
-sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
-sampleTags=$(echo $sampleTags | sed 's/.$//')
+#sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
+#sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
-sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
+#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
 
 # format matrix
-python2 Format_VCF-Matrix.py
+#python2 Format_VCF-Matrix.py
 
 # re-name and move output matrix
-mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
-
-# clean up
-rm -r $inputsPath
+#mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # status message
 echo "SSR VC analysis complete!"

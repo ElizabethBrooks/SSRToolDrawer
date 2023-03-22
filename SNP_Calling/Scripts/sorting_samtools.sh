@@ -25,7 +25,7 @@ outputsPath=$inputsPath"/sorted"
 # create the directory
 mkdir $outputsPath
 
-# loop through all filtered sam files
+# loop through all filtered bam files
 for f in $inputsPath"/aligned/"*".readGroups.bam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f" | sed 's/\.readGroups\.bam$//g')
