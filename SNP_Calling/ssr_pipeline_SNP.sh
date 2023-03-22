@@ -100,22 +100,26 @@ outputsDir=$inputsPath"/filtered"
 	# append filtered sequences
 #	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsDir"/"$curSampleNoPath".header.sam"
 	#rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
+	#rm $inputsPath"/aligned/"$curSampleNoPath".sam.hitInfo"
 #done
 
 # TO-DO
 # consider merging BAM files before variant calling
 
 # move to pipeline scripts directory
-cd $currDir"/Scripts"
-
-# run script to clip primer and ssr sequences
-bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
-
-# move to pipeline scripts directory
 #cd $currDir"/Scripts"
 
+# run script to clip primer and ssr sequences
+#bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+
+# move to pipeline scripts directory
+cd $currDir"/Scripts"
+
 # run script to perform sorting 
-#bash sorting_samtools.sh $inputsPath $projectDir
+bash sorting_samtools.sh $inputsPath $projectDir
+
+# TO-DO
+# consider filtering by mapping quality
 
 # run script to perform variant calling
 #bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
