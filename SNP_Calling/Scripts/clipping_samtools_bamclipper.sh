@@ -17,8 +17,6 @@ samtools --version >> $versionFile
 
 # set outputs path
 outputsPath=$inputsPath"/clipped"
-# create the directory
-mkdir $outputsPath
 
 # loop through all aligned sam files
 for f1 in $inputsPath"/filtered/"*".header.sam"; do
@@ -27,12 +25,12 @@ for f1 in $inputsPath"/filtered/"*".header.sam"; do
 	# print status message
 	echo "Processing $f1"
 	# convert sam to bam
-	samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".header.bam" $f1
+	#samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".header.bam" $f1
 	# coordinate sort the filtered sequences
-	samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".header.bam"
+	#samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".header.bam"
 	#rm $outputsPath"/"$curSampleNoPath".header.bam"
 	# index the bam file
-	samtools index $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" 
+	#samtools index $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" 
 	# remove primers sequences
 	./bamclipper.sh -b $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -p $primerPath -n 4
 	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam"
