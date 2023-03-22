@@ -88,7 +88,7 @@ cd $inputsPath"/aligned"
 # set outputs path
 outputsPath=$inputsPath"/filtered"
 # create the directory
-mkdir $outputsPath
+#mkdir $outputsPath
 
 # copy pipeline scripts to alignment and filtering directories
 #cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
@@ -101,12 +101,12 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
-	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+	#python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
 	grep "^@" $f1 > $outputsPath"/"$curSampleNoPath".header.sam"
 	# append filtered sequences
-	cat $outputsPath"/"$curSampleNoPath".sam.filter50.sam" >> $outputsPath"/"$curSampleNoPath".header.sam"
-	#rm $outputsPath"/"$curSampleNoPath".sam.filter50.sam"
+	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsPath"/"$curSampleNoPath".header.sam"
+	#rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
 done
 
 # TO-DO
