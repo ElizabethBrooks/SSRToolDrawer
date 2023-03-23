@@ -49,11 +49,12 @@ while read line; do
 	# retrieve antisense primer sequence length
 	antiLen=$(echo $line | cut -d "," -f 3 | tr -d $'\r' | awk '{ print length }')
 	# sense positions
-	senseStart=1
-	senseEnd=$senseLen
+	senseStart=0
+	senseEnd=$(($senseLen-1))
 	# antisense positions
 	antiStart=$(($fullLen-$antiLen))
-	antiEnd=$fullLen
+	antiStart=$(($antiStart-1))
+	antiEnd=$(($fullLen-1))
 	# output the sequence info in BEDPE format
 	echo -e $markerName"\t"$senseStart"\t"$senseEnd"\t"$markerName"\t"$antiStart"\t"$antiEnd >> $outFile
 done < $inPath".tmp.csv"
