@@ -117,13 +117,17 @@ cd $currDir"/Scripts"
 
 # TO-DO
 # consider running script to perform sorting and removal of pcr duplicates
-#bash sorting_samtools.sh $inputsPath $projectDir
+bash sorting_samtools.sh $inputsPath $baseDir
 
 # TO-DO
 # consider filtering by mapping quality
 
 # consider running script to perform variant calling
-bash variantCalling_bcftools.sh $inputsPath $projectDir $ref $runNum
+bash variantCalling_bcftools.sh $inputsPath $baseDir
+
+# TO-DO
+# remove ssr regions
+#bedtools intersect -v -a file.vcf -b bed.vcf -wa > out.vcf
 
 # move to variants directory
 #cd $inputsPath"/variants"

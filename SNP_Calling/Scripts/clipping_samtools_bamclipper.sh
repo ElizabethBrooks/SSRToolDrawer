@@ -9,8 +9,6 @@ inputsPath=$1
 # retrieve base of working directory
 baseDir=$2
 
-# retrieve ssr regions path
-regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 # retrieve primers path
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 # bamclipper tool path
@@ -47,16 +45,16 @@ for f1 in $inputsPath"/filtered/"*".header.sam"; do
 	#rm $outputsPath"/"$curSampleNoPath".header.bam"
 	# index the bam file
 	samtools index $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" 
-	# remove primers sequences
+	# soft mask primers sequences
 	./bamclipper.sh -b $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -p $primerPath -n 4
 	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam"
 	# remove SSR sequences
-	samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".overlap.bam" -U $outputsPath"/"$curSampleNoPath".noOverlap.bam" -L $regionsPath $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
+	#samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".overlap.bam" -U $outputsPath"/"$curSampleNoPath".noOverlap.bam" -L $regionsPath $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
 	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
 	#rm $outputsPath"/"$curSampleNoPath".overlap.bam"
 	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$curSampleNoPath".noOverlap.bam"
-	#rm $outputsPath"/"$curSampleNoPath".noOverlap.bam"
+	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
+	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
 	# status message
 	echo "Processed!"
 done
