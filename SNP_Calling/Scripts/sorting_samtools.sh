@@ -24,7 +24,7 @@ outputsPath=$inputsPath"/sorted"
 mkdir $outputsPath
 
 # loop through all filtered bam files
-for f in $inputsPath"/clipped/"*".header.sam"; do
+for f in $inputsPath"/filtered/"*".header.sam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f" | sed 's/\.header\.sam$//g')
 	# status message

@@ -33,11 +33,11 @@ cp -r $clipperPath"/"* $outputsPath
 cd $outputsPath
 
 # loop through all aligned sam files
-for f1 in $inputsPath"/filtered/"*".noDups.bam"; do
+for f1 in $inputsPath"/sorted/"*".noDups.bam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f1" | sed 's/\.noDups\.bam$//g')
 	# print status message
-	echo "Processing $f1"
+	echo "Clipping $f1"
 	# index the bam file
 	samtools index $outputsPath"/"$curSampleNoPath".noDups.bam" 
 	# soft mask primers sequences
