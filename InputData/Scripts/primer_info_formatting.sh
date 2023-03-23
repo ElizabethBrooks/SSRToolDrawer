@@ -5,10 +5,10 @@
 # usage Ex: bash primer_info_formatting.sh
 
 # retrieve ssr primers path
-outFile=$(grep "primers:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
+outFile=$(grep "primers:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 #outFile="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/SSRprimer-info2-2023.bedpe"
 # retrieve reference sequences path
-referenceInput=$(grep "reference:" ../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+referenceInput=$(grep "reference:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 #referenceInput="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/finalset-2.fa"
 
 # remove txt extension from input primers file
