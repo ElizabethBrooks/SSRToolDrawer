@@ -77,7 +77,7 @@ inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 echo "SSR SNP analysis started..."
 
 # move to the alignment directory
-cd $inputsPath"/aligned"
+#cd $inputsPath"/aligned"
 
 # copy pipeline scripts to the aligned directory
 #cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
@@ -107,10 +107,10 @@ outputsDir=$inputsPath"/filtered"
 # consider merging BAM files before variant calling
 
 # move to pipeline scripts directory
-#cd $currDir"/Scripts"
+cd $currDir"/Scripts"
 
 # run script to clip primer and ssr sequences
-#bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
@@ -123,7 +123,7 @@ bash sorting_samtools.sh $inputsPath $baseDir
 # consider filtering by mapping quality
 
 # consider running script to perform variant calling
-bash variantCalling_bcftools.sh $inputsPath $baseDir
+#bash variantCalling_bcftools.sh $inputsPath $baseDir
 
 # TO-DO
 # remove ssr regions
