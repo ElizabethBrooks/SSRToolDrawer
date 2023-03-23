@@ -29,10 +29,10 @@ outputsPath=$inputsPath"/clipped"
 mkdir $outputsPath
 
 # copy pipeline scripts to the clipped directory
-cp -r $clipperPath"/"* $outputsPath
+cp -r $clipperPath"/"* $inputsPath"/sorted/"
 
 # move to outputs path
-cd $outputsPath
+cd $inputsPath"/sorted/"
 
 # loop through all aligned sam files
 for f1 in $inputsPath"/sorted/"*".noDups.bam"; do
@@ -41,16 +41,16 @@ for f1 in $inputsPath"/sorted/"*".noDups.bam"; do
 	# print status message
 	echo "Clipping $f1"
 	# index the bam file
-	samtools index $outputsPath"/"$curSampleNoPath".noDups.bam" 
+	samtools index $inputsPath"/sorted/"$curSampleNoPath".noDups.bam" 
 	# soft mask primers sequences
-	./bamclipper.sh -b $outputsPath"/"$curSampleNoPath".noDups.bam" -p $primerPath -n 4
-	#rm $outputsPath"/"$curSampleNoPath".noDups.bam"
+	./bamclipper.sh -b $inputsPath"/sorted/"$curSampleNoPath".noDups.bam" -p $primerPath -n 4
+	#rm $outputsPath"/sorted/"$curSampleNoPath".noDups.bam"
 	# remove SSR sequences
 	#samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".overlap.bam" -U $outputsPath"/"$curSampleNoPath".noOverlap.bam" -L $regionsPath $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
 	#rm $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
 	#rm $outputsPath"/"$curSampleNoPath".overlap.bam"
 	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
+	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $inputsPath"/sorted/"$curSampleNoPath".noDups.primerclipped.bam"
 	# status message
 	echo "Processed!"
 done
