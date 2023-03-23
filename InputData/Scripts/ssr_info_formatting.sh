@@ -5,10 +5,10 @@
 # usage Ex: bash ssr_info_formatting.sh
 
 # retrieve ssr info path
-infoOutput=$(grep "ssrInfo:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
+infoOutput=$(grep "ssrInfo:" ../"inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
 #infoOutput="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/SSRinfo-2023.txt"
 # retrieve sequence info path
-referenceInput=$(grep "reference:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+referenceInput=$(grep "reference:" ../"inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 #referenceInput="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/finalset-2.fa"
 
 # remove extension from input info file

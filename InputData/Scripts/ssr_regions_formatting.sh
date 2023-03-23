@@ -5,10 +5,10 @@
 # usage Ex: bash ssr_regions_formatting.sh
 
 # retrieve ssr info path
-infoInput=$(grep "ssrInfo:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
+infoInput=$(grep "ssrInfo:" ../"inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
 #infoInput="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/SSRinfo-2023.txt"
 # retrieve ssr regions path
-regionsPath=$(grep "ssrRegions:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+regionsPath=$(grep "ssrRegions:" ../"inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 #regionsPath="/Users/bamflappy/GBCF/JRS/romero_Mar2023/Data/SSRinfo-2023.bed"
 
 # remove txt extension from input primers file
