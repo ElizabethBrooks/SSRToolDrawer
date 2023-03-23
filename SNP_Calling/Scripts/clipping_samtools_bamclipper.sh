@@ -25,6 +25,8 @@ samtools --version >> $versionFile
 
 # set outputs path
 outputsPath=$inputsPath"/clipped"
+# create the directory
+mkdir $outputsPath
 
 # copy pipeline scripts to the clipped directory
 cp -r $clipperPath"/"* $outputsPath
