@@ -83,7 +83,7 @@ echo "SSR SNP analysis started..."
 #cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 
 # set outputs path
-outputsDir=$inputsPath"/filtered"
+#outputsDir=$inputsPath"/filtered"
 # create the directory
 #mkdir $outputsDir
 
@@ -109,15 +109,14 @@ outputsDir=$inputsPath"/filtered"
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
 
+# run script to perform sorting and removal of pcr duplicates
+bash sorting_samtools.sh $inputsPath $baseDir
+
 # run script to clip primer and ssr sequences
-bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+#bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # move to pipeline scripts directory
-cd $currDir"/Scripts"
-
-# TO-DO
-# consider running script to perform sorting and removal of pcr duplicates
-bash sorting_samtools.sh $inputsPath $baseDir
+#cd $currDir"/Scripts"
 
 # TO-DO
 # consider filtering by mapping quality

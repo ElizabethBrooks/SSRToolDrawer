@@ -33,28 +33,22 @@ cp -r $clipperPath"/"* $outputsPath
 cd $outputsPath
 
 # loop through all aligned sam files
-for f1 in $inputsPath"/filtered/"*".header.sam"; do
+for f1 in $inputsPath"/filtered/"*".noDups.bam"; do
 	# trim file path from current folder name
-	curSampleNoPath=$(basename "$f1" | sed 's/\.header\.sam$//g')
+	curSampleNoPath=$(basename "$f1" | sed 's/\.noDups\.bam$//g')
 	# print status message
 	echo "Processing $f1"
-	# convert sam to bam
-	samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".header.bam" $f1
-	# coordinate sort the filtered sequences
-	samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".header.bam"
-	#rm $outputsPath"/"$curSampleNoPath".header.bam"
 	# index the bam file
-	samtools index $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" 
+	samtools index $outputsPath"/"$curSampleNoPath".noDups.bam" 
 	# soft mask primers sequences
-	./bamclipper.sh -b $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -p $primerPath -n 4
-	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam"
+	./bamclipper.sh -b $outputsPath"/"$curSampleNoPath".noDups.bam" -p $primerPath -n 4
+	#rm $outputsPath"/"$curSampleNoPath".noDups.bam"
 	# remove SSR sequences
-	#samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".overlap.bam" -U $outputsPath"/"$curSampleNoPath".noOverlap.bam" -L $regionsPath $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
-	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
+	#samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".overlap.bam" -U $outputsPath"/"$curSampleNoPath".noOverlap.bam" -L $regionsPath $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
+	#rm $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
 	#rm $outputsPath"/"$curSampleNoPath".overlap.bam"
 	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
-	#rm $outputsPath"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
+	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
 	# status message
 	echo "Processed!"
 done

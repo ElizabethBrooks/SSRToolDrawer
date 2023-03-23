@@ -24,13 +24,15 @@ outputsPath=$inputsPath"/sorted"
 mkdir $outputsPath
 
 # loop through all filtered bam files
-for f in $inputsPath"/clipped/"*".readGroups.bam"; do
+for f in $inputsPath"/clipped/"*".header.sam"; do
 	# trim file path from current folder name
-	curSampleNoPath=$(basename "$f" | sed 's/\.readGroups\.bam$//g')
+	curSampleNoPath=$(basename "$f" | sed 's/\.header\.sam$//g')
 	# status message
 	echo "Sorting $f"
+	# convert sam to bam
+	samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".header.bam" $f
 	# run samtools to prepare mapped reads for sorting
-	samtools sort -@ 4 -n -o $outputsPath"/"$curSampleNoPath".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $f
+	samtools sort -@ 4 -n -o $outputsPath"/"$curSampleNoPath".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".header.bam"
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $outputsPath"/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	#rm $outputsPath"/"$curSampleNoPath".sortedName.bam"
