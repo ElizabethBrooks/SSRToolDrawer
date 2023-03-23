@@ -15,7 +15,7 @@
 
 # required modules for ND CRC servers
 module load bio
-#module load parallel
+module load parallel
 
 # activate the python2 environment for local run
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
@@ -113,7 +113,7 @@ cd $currDir"/Scripts"
 #bash sorting_samtools.sh $inputsPath $baseDir
 
 # run script to clip primer and ssr sequences
-bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+#bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # move to pipeline scripts directory
 #cd $currDir"/Scripts"
@@ -122,7 +122,7 @@ bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 # consider filtering by mapping quality
 
 # consider running script to perform variant calling
-#bash variantCalling_bcftools.sh $inputsPath $baseDir
+bash variantCalling_bcftools.sh $inputsPath $baseDir $inputsFile
 
 # TO-DO
 # remove ssr regions
