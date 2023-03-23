@@ -113,10 +113,10 @@ cd $currDir"/Scripts"
 #bash sorting_samtools.sh $inputsPath $baseDir
 
 # run script to clip primer and ssr sequences
-#bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # move to pipeline scripts directory
-#cd $currDir"/Scripts"
+cd $currDir"/Scripts"
 
 # TO-DO
 # consider filtering by mapping quality
