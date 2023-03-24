@@ -28,11 +28,8 @@ outputsPath=$inputsPath"/clipped"
 # create the directory
 mkdir $outputsPath
 
-# copy pipeline scripts to the clipped directory
-cp -r $clipperPath"/"* $inputsPath"/sorted/"
-
-# move to outputs path
-cd $inputsPath"/sorted/"
+# move to bamclipper software directory
+cd $clipperPath
 
 # loop through all aligned sam files
 for f1 in $inputsPath"/sorted/"*".noDups.bam"; do
