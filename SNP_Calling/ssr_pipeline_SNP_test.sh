@@ -48,12 +48,10 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
-mkdir $outputsPath
 
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $inputsPath
 
 
 # SSR Analysis Stage - SNP Calling Workflow

@@ -44,9 +44,9 @@ for f1 in $inputsPath"/sorted/"*".sortedCoordinate.bam"; do
 	# print status message
 	echo "Clipping $f1"
 	# index the bam file
-	samtools index $inputsPath"/sorted/"$curSampleNoPath".sortedCoordinate.bam" 
+	samtools index $f1 
 	# soft mask primers sequences
-	./bamclipper.sh -b $inputsPath"/sorted/"$curSampleNoPath".sortedCoordinate.bam" -p $primerPath -n 4
+	./bamclipper.sh -b $f1 -p $primerPath -n 4
 	# add read groups
 	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
 	rm -r $outputsPath"/"$clipperBase
