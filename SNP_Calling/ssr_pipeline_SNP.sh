@@ -153,7 +153,7 @@ python2 Format_VCF-Matrix.py
 mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # clean up
-#rm -r $inputsPath
+rm -r $inputsPath
 
 # status message
 echo "SSR VC analysis complete!"
