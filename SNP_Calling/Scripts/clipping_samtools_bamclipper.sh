@@ -29,13 +29,16 @@ outputsPath=$inputsPath"/clipped"
 mkdir $outputsPath
 
 # copy bamclipper software directory
-cp -r $clipperPath $outputsPath
+cp $clipperPath $outputsPath
 
 # retrieve bamclipper directory name
 clipperBase=$(basename $clipperPath)
 
+# extract clipper
+tar -xzvf $outputsPath"/"$clipperBase
+
 # move to outputs directory
-cd $outputsPath
+cd $outputsPath"/"$clipperBase
 
 # loop through all aligned sam files
 for f1 in $inputsPath"/sorted/"*".sortedCoordinate.bam"; do
@@ -49,10 +52,12 @@ for f1 in $inputsPath"/sorted/"*".sortedCoordinate.bam"; do
 	./bamclipper.sh -b $f1 -p $primerPath -n 4
 	# add read groups
 	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
-	rm -r $outputsPath"/"$clipperBase
 	# status message
 	echo "Processed!"
 done
+
+# clean up
+rm -r $outputsPath"/"$clipperBase
 
 # status message
 echo "Analysis complete!"
