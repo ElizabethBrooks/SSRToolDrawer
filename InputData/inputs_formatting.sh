@@ -4,6 +4,12 @@
 # usage: bash inputs_formatting.sh
 # usage Ex: qsub inputs_formatting.sh
 
+# load software module
+module load bio
+
+# retrieve reference absolute path for alignment
+ref=$(grep "reference:" "inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+
 # status message
 echo "Formatting started..."
 
@@ -11,6 +17,9 @@ echo "Formatting started..."
 bash ssr_info_formatting.sh
 bash ssr_regions_formatting.sh
 bash primer_info_formatting.sh
+
+# make sure the reference has been indexed
+bwa index $ref
 
 # status message
 echo "Formatting complete!"

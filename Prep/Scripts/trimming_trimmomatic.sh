@@ -29,10 +29,13 @@ trimOut=$outputsPath"/trimmed"
 mkdir $trimOut
 
 # move to the new directory
-cd $trimOut
+#cd $trimOut
+
+# set directory for qc input
+qcFolder=$outputsPath"/qc"
 
 # loop through all forward and reverse reads and run trimmomatic on each pair
-for f1 in "$readPath"/*_R1_001.fastq.gz; do
+for f1 in "$readPath"/*"_R1_001.fastq.gz"; do
 	# trim extension from current file name
 	curSample=$(echo $f1 | sed 's/_R._001\.fastq\.gz//')
 	# set paired file name
@@ -42,25 +45,23 @@ for f1 in "$readPath"/*_R1_001.fastq.gz; do
 	# print status message
 	echo "Processing $sampleTag"
 	# determine phred score for trimming
-	if grep -iF "Illumina 1.5" $outputsPath"/qc/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"; then
+	if grep -iF "Illumina 1.5" $qcFolder"/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"; then
 		score=64
-	elif grep -iF "Illumina 1.9" $outputsPath"/qc/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"; then
+	elif grep -iF "Illumina 1.9" $qcFolder"/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"; then
 		score=33
 	else
 		echo "ERROR: Illumina encoding not found... exiting"
 		exit 1
 	fi
-	echo $outputsPath"/qc/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"
+	echo $qcFolder"/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"
 	# perform adapter trimming on paired reads using 8 threads
-	trimmomatic PE -threads 4 -phred"$score" $f1 $f2 $sampleTag"_pForward.fq.gz" $sampleTag"_uForward.fq.gz" $sampleTag"_pReverse.fq.gz" $sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-	# clean up
-	#rm -r $noPath"_R1_001_fastqc.zip"
-	#rm -r $noPath"_R1_001_fastqc/"
-	#rm -r $noPath"_R2_001_fastqc.zip"
-	#rm -r $noPath"_R2_001_fastqc/"
+	trimmomatic PE -threads 4 -phred"$score" $f1 $f2 $trimOut"/"$sampleTag"_pForward.fq.gz" $trimOut"/"$sampleTag"_uForward.fq.gz" $trimOut"/"$sampleTag"_pReverse.fq.gz" $trimOut"/"$sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 	# print status message
 	echo "Processed!"
 done
+
+# clean up
+#rm -r "$trimmedFolder"
 
 # print status message
 echo "Analysis complete!"

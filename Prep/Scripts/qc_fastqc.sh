@@ -26,10 +26,10 @@ qcOut=$outputsPath"/qc"
 mkdir $qcOut
 
 # move to the new directory
-cd $qcOut
+#cd $qcOut
 
 # loop through all forward and reverse reads and run trimmomatic on each pair
-for f1 in "$readPath"/*_R1_001.fastq.gz; do
+for f1 in "$readPath"/*"_R1_001.fastq.gz"; do
 	# trim path from file name
 	noPath=$(basename $f1 | sed 's/_R._001\.fastq\.gz//')
 	# trim extension from current file name

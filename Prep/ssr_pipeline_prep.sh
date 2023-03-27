@@ -11,8 +11,6 @@ outputsPath=$2
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-# retrieve reference absolute path for alignment
-ref=$(grep "reference:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 
 # name output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
@@ -24,12 +22,6 @@ echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 
 # status message
 echo "Prep started..."
-
-# make sure the ssr info file has been converted from csv to txt
-#bash ssr_info_prep.sh
-
-# make sure the reference has been indexed
-#bwa index $ref
 
 # move to scripts directory
 cd Scripts

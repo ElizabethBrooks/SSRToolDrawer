@@ -55,8 +55,10 @@ rm $outputsPath"/"$runNum"_calls.vcf.gz"*
 # convert from BCF to VCF
 bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $outputsPath"/"$runNum"_calls.norm.bcf"
 rm $outputsPath"/"$runNum"_calls.norm.vcf"
-# remove ssr regions from the vcf
+# remove ssr regions
 bedtools intersect -v -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath -header > $outputsPath"/"$runNum"_noSSR.vcf"
+# TO-DO
+# remove primer regions
 
 # status message
 echo "Analysis conplete!"

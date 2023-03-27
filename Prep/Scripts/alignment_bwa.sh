@@ -30,7 +30,7 @@ anOut=$outputsPath"/aligned"
 mkdir $anOut
 
 # move to the outputs directory
-cd $anOut
+#cd $anOut
 
 # set trimmed reads absolute path
 trimmedFolder=$outputsPath"/trimmed"
@@ -46,7 +46,7 @@ for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 	# print status message
 	echo "Processing $curSampleNoPath"
 	# run bwa with default settings
-	bwa mem -t 4 $ref $f1 $curSample"_pReverse.fq.gz" > $curSampleNoPath".sam"
+	bwa mem -t 4 $ref $f1 $curSample"_pReverse.fq.gz" > $anOut"/"$curSampleNoPath".sam"
 	# status message
 	echo "Processed!"
 done
