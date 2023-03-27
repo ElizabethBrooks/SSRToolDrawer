@@ -125,19 +125,19 @@ echo "SSR SNP analysis started..."
 cd $inputsPath"/variants"
 
 # subset vcf file by sample and remove header lines
-#for f2 in $inputsPath"/clipped/"*".readGroups.bam"; do
+for f2 in $inputsPath"/clipped/"*".readGroups.bam"; do
 	# retrieve sample name and remove the file extension
-#	sampleTag=$(basename $f2 | sed 's/\.readGroups\.bam$//g')
+	sampleTag=$(basename $f2 | sed 's/\.readGroups\.bam$//g')
 	# print status message
-#	echo "Subsetting VCF and removing header for $sampleTag"
+	echo "Subsetting VCF and removing header for $sampleTag"
 	# subset vcf files by sample and remove header
-#	bcftools view --threads 4 -H -Ov -o $inputsPath"/variants/"$sampleTag"_noSSR.noHeader.vcf" -s $sampleTag $inputsPath"/variants/"$runNum"_noSSR.vcf"	
+	bcftools view --threads 4 -H -Ov -o $inputsPath"/variants/"$sampleTag".noHeader.vcf" -s $sampleTag $inputsPath"/variants/"$runNum"_noSSR.vcf"	
 	# status message
-#	echo "Processed!"
-#done
+	echo "Processed!"
+done
 
 # retrieve and format sample tag list
-sampleTagList=$(for i in $inputsPath"/variants/"*"_noSSR.noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\_noSSR\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
+sampleTagList=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
 sampleTagList=$(echo $sampleTagList | sed 's/.$//')
 
 # copy pipeline scripts to the variants directory
