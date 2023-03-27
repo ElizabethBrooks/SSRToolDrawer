@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to perform fastqc quality control of paired end reads
-# usage: bash fastqc_ssr_projects.sh inputsFile outputsPath
+# usage: bash fastqc_ssr_projects.sh inputsFile outputsPath baseDir
 
 # required modules for ND CRC servers
 #module load bio

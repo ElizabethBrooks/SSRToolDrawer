@@ -55,10 +55,10 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 mkdir $outputsPath
 # check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to perform bwa alignment of trimmed paired end reads
-# usage: bash bwa_ssr_projects.sh inputsFile outputsPath
+# usage: bash bwa_ssr_projects.sh inputsFile outputsPath baseDir
 
 # required modules for ND CRC servers
 #module load bio
@@ -16,7 +16,7 @@ outputsPath=$2
 baseDir=$3
 
 # retrieve genome reference absolute path for alignment
-ref=$(grep "reference:" $baseDir"/InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 

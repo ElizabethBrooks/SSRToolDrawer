@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to perform trimming of paired end reads
-# usage: bash trimmomatic_ssr_projects.sh inputsFile outputsPath
+# usage: bash trimmomatic_ssr_projects.sh inputsFile outputsPath baseDir
 
 # required modules for ND CRC servers
 #module load bio
@@ -18,7 +18,7 @@ baseDir=$3
 # retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 # retrieve adapter absolute path for alignment
-adapterPath=$(grep "adapter:" $baseDir"/InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/adapter://g")
+adapterPath=$(grep "adapter:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/adapter://g")
 
 # name of output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
