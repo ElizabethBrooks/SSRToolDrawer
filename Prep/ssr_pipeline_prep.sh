@@ -30,11 +30,11 @@ echo "Prep started..."
 cd Scripts
 
 # quality control with fastqc
-#bash qc_fastqc.sh $inputsFile $inputsPath $inputsFile $baseDir
+bash qc_fastqc.sh $inputsFile $inputsPath $inputsFile $baseDir
 # trimming with trimmomatic
 bash trimming_trimmomatic.sh $inputsPath $inputsFile $baseDir
 # mapping with bwa
-#bash alignment_bwa.sh $inputsPath $inputsFile $baseDir
+bash alignment_bwa.sh $inputsPath $inputsFile $baseDir
 
 # status message
 echo "Prep complete!"
