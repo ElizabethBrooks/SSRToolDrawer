@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantCalling_bcftools.sh inputsPath baseDir inputsFile
+# usage: bash variantCalling_bcftools.sh inputsPath inputsFile baseDir
 
 # retrieve input outputs path
 inputsPath=$1
 
-# retrieve base of working directory
-baseDir=$2
-
 # retrieve inputs file
-inputsFile=$3
+inputsFile=$2
+
+# retrieve base of working directory
+baseDir=$3
 
 # retrieve the run number 
 runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")

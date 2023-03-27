@@ -66,7 +66,7 @@ mkdir $inputsPath
 
 # prepare data for analysis
 cd $baseDir"/Prep"
-bash ssr_pipeline_prep.sh $inputsFile $inputsPath
+bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 
 # TO-DO
 # make sure to check mapping efficiency
@@ -123,7 +123,7 @@ cd $currDir"/Scripts"
 # consider filtering by mapping quality
 
 # consider running script to perform variant calling
-bash variantCalling_bcftools.sh $inputsPath $baseDir $inputsFile
+bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # move to variants directory
 cd $inputsPath"/variants"

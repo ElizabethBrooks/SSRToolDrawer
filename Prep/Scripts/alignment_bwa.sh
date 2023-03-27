@@ -12,10 +12,13 @@ inputsFile=$1
 # retrieve input outputs path
 outputsPath=$2
 
+# retrieve base of working directory
+baseDir=$3
+
 # retrieve genome reference absolute path for alignment
-ref=$(grep "reference:" ../../"InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+ref=$(grep "reference:" $baseDir"/InputData/inputPaths_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve paired reads absolute path for alignment
-readPath=$(grep "pairedReads:" ../../"InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
+readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 
 # name of output file of inputs
 versionFile=$outputsPath"/software_prep_summary.txt"
