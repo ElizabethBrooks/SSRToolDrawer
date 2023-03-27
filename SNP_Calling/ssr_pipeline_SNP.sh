@@ -131,7 +131,7 @@ for f2 in $inputsPath"/clipped/"*".readGroups.bam"; do
 	# print status message
 	echo "Subsetting VCF and removing header for $sampleTag"
 	# subset vcf files by sample and remove header
-	bcftools view --threads 4 -H -Ov -o $inputsPath"/variants/"$sampleTag"_noSSR.noHeader.vcf" -s $sampleTag $inputsPath"/variants/"$runNum"_noSSR.noHeader.vcf"	
+	bcftools view --threads 4 -H -Ov -o $inputsPath"/variants/"$sampleTag"_noSSR.noHeader.vcf" -s $sampleTag $inputsPath"/variants/"$runNum"_noSSR.vcf"	
 	# status message
 	echo "Processed!"
 done
