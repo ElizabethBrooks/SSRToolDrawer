@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # script to perform trimming of paired end reads
-# usage: bash trimmomatic_ssr_projects.sh inputsFile outputsPath baseDir
+# usage: bash trimmomatic_ssr_projects.sh inputsPath inputsFile baseDir
 
 # required modules for ND CRC servers
 #module load bio
 
 # retrieve input argument of a inputs file
-inputsFile=$1
+inputsPath=$1
 
-# retrieve input outputs path
-outputsPath=$2
+# retrieve analysis outputs absolute path
+inputsFile=$2
 
 # retrieve base of working directory
 baseDir=$3
@@ -21,21 +21,21 @@ readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | se
 adapterPath=$(grep "adapter:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/adapter://g")
 
 # name of output file of inputs
-versionFile=$outputsPath"/software_prep_summary.txt"
+versionFile=$inputsPath"/software_prep_summary.txt"
 
 # add software version to outputs
 echo "Trimmomatic:" >> $versionFile
 trimmomatic -version >> $versionFile
 
 # make a new directory for analysis
-trimOut=$outputsPath"/trimmed"
+trimOut=$inputsPath"/trimmed"
 mkdir $trimOut
 
 # move to the new directory
 #cd $trimOut
 
 # set directory for qc input
-qcFolder=$outputsPath"/qc"
+qcFolder=$inputsPath"/qc"
 
 # loop through all forward and reverse reads and run trimmomatic on each pair
 for f1 in "$readPath"/*"_R1_001.fastq.gz"; do

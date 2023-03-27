@@ -4,10 +4,10 @@
 # usage: bash ssr_pipeline_prep.sh inputsPath inputsFile baseDir
 
 # retrieve input argument of a inputs file
-inputsFile=$1
+inputsPath=$1
 
 # retrieve analysis outputs absolute path
-inputsPath=$2
+inputsFile=$2
 
 # retrieve base of working directory
 baseDir=$3

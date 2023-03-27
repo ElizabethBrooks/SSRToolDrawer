@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # script to perform bwa alignment of trimmed paired end reads
-# usage: bash bwa_ssr_projects.sh inputsFile outputsPath baseDir
+# usage: bash bwa_ssr_projects.sh inputsPath inputsFile baseDir
 
 # required modules for ND CRC servers
 #module load bio
 
 # retrieve input argument of a inputs file
-inputsFile=$1
+inputsPath=$1
 
-# retrieve input outputs path
-outputsPath=$2
+# retrieve analysis outputs absolute path
+inputsFile=$2
 
 # retrieve base of working directory
 baseDir=$3
@@ -21,7 +21,7 @@ ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " "
 readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
 
 # name of output file of inputs
-versionFile=$outputsPath"/software_prep_summary.txt"
+versionFile=$inputsPath"/software_prep_summary.txt"
 
 # add software versions to outputs
 bwa &> tmp.txt
@@ -29,14 +29,14 @@ cat tmp.txt | head -3 >> $versionFile
 rm tmp.txt
 
 # make an outputs directory for analysis
-anOut=$outputsPath"/aligned"
+anOut=$inputsPath"/aligned"
 mkdir $anOut
 
 # move to the outputs directory
 #cd $anOut
 
 # set trimmed reads absolute path
-trimmedFolder=$outputsPath"/trimmed"
+trimmedFolder=$inputsPath"/trimmed"
 
 # loop through all forward and reverse paired reads and run bwa on each pair
 # using 8 threads
