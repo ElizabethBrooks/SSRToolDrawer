@@ -56,7 +56,7 @@ echo "Performing variant calling for $runNum"
 #bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $outputsPath"/"$runNum"_calls.norm.bcf"
 #rm $outputsPath"/"$runNum"_calls.norm.vcf"
 # remove ssr regions from the vcf
-bedtools intersect -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath -header > $outputsPath"/"$runNum"_noSSR.vcf"
+bedtools intersect -v -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath -header > $outputsPath"/"$runNum"_noSSR.vcf"
 
 # status message
 echo "Analysis conplete!"
