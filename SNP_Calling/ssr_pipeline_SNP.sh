@@ -122,7 +122,7 @@ echo "SSR SNP analysis started..."
 #bash variantCalling_bcftools.sh $inputsPath $baseDir $inputsFile
 
 # move to variants directory
-#cd $inputsPath"/variants"
+cd $inputsPath"/variants"
 
 # subset vcf file by sample and remove header lines
 for f2 in $inputsPath"/clipped/"*".readGroups.bam"; do
@@ -131,26 +131,29 @@ for f2 in $inputsPath"/clipped/"*".readGroups.bam"; do
 	# print status message
 	echo "Subsetting VCF and removing header for $sampleTag"
 	# subset vcf files by sample and remove header
-	bcftools view --threads 4 -H -Ov -o $inputsPath"/variants/"$sampleTag"_noSSR.vcf" -s $sampleTag $inputsPath"/variants/"$runNum"_noSSR.vcf"	
+	bcftools view --threads 4 -H -Ov -o $inputsPath"/variants/"$sampleTag"_noSSR.noHeader.vcf" -s $sampleTag $inputsPath"/variants/"$runNum"_noSSR.noHeader.vcf"	
 	# status message
 	echo "Processed!"
 done
 
 # retrieve and format sample tag list
-#sampleTagList=$(for i in $inputsPath"/clipped/"*".readGroups.bam"; do basename $i | sed "s/^/\"/g" | sed "s/\.readGroups\.bam$/\",/g" | tr '\n' ' '; done)
-#sampleTagList=$(echo $sampleTagList | sed 's/.$//')
+sampleTagList=$(for i in $inputsPath"/variants/"*"_noSSR.noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\_noSSR\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
+sampleTagList=$(echo $sampleTagList | sed 's/.$//')
 
 # copy pipeline scripts to the variants directory
-#cp $currDir"/SNP_Calling/Scripts/Format_VCF-Matrix.py" $inputsPath"/variants"
+cp $currDir"/SNP_Calling/Scripts/Format_VCF-Matrix.py" $inputsPath"/variants"
 
 # find and replace the sample list
-#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTagList/g" $inputsPath"/variants/"Format_VCF-Matrix.py
+sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTagList/g" $inputsPath"/variants/"Format_VCF-Matrix.py
 
 # format matrix
-#python2 Format_VCF-Matrix.py
+python2 Format_VCF-Matrix.py
 
 # re-name and move output matrix
-#mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
+mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
+
+# clean up
+#rm -r $inputsPath
 
 # status message
 echo "SSR VC analysis complete!"
