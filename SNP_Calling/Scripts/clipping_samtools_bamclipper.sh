@@ -29,13 +29,10 @@ outputsPath=$inputsPath"/clipped"
 mkdir $outputsPath
 
 # copy bamclipper software directory
-cp $clipperPath $outputsPath
+cp -r $clipperPath $outputsPath
 
 # retrieve bamclipper directory name
 clipperBase=$(basename $clipperPath)
-
-# extract clipper
-tar -xzvf $outputsPath"/"$clipperBase
 
 # move to outputs directory
 cd $outputsPath"/"$clipperBase
