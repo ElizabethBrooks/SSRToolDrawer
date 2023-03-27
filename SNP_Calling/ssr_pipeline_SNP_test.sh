@@ -71,32 +71,11 @@ cd $inputsPath"/aligned"
 # copy pipeline scripts to the aligned directory
 cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 
-# set outputs path
-outputsDir=$inputsPath"/filtered"
-# create the directory
-mkdir $outputsDir
 
-# loop through all aligned sam files
-for f1 in $inputsPath"/aligned/"*".sam"; do
-	# trim file path from current folder name
-	curSampleNoPath=$(basename "$f1" | sed 's/\.sam$//g')
-	# print status message
-	echo "Processing $f1"
-	# run SSR pipeline
-	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
-	# replace SAM header
-	grep "^@" $f1 > $outputsDir"/"$curSampleNoPath".header.sam"
-	# append filtered sequences
-	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsDir"/"$curSampleNoPath".header.sam"
-	rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
-	rm $inputsPath"/aligned/"$curSampleNoPath".sam.hitInfo"
-done
 
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
 
-# run script to perform sorting and removal of pcr duplicates
-bash sorting_samtools.sh $inputsPath $baseDir
 
 # run script to clip primer and ssr sequences
 bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
