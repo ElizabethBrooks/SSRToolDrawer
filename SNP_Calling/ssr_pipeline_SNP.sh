@@ -12,6 +12,10 @@
 # usage Ex: qsub ssr_pipeline_SNP.sh inputs_run3.txt
 # usage Ex: qsub ssr_pipeline_SNP.sh inputs_run4.txt
 # usage Ex: qsub ssr_pipeline_SNP.sh inputs_run5.txt
+# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run6.txt
+
+# TO-DO
+# add the combination of plate runs to VC
 
 # required modules for ND CRC servers
 module load bio
