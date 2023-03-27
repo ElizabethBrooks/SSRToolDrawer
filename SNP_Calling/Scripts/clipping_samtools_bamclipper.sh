@@ -44,7 +44,6 @@ for f1 in $inputsPath"/sorted/"*".noDups.bam"; do
 	samtools index $inputsPath"/sorted/"$curSampleNoPath".noDups.bam" 
 	# soft mask primers sequences
 	./bamclipper.sh -b $inputsPath"/sorted/"$curSampleNoPath".noDups.bam" -p $primerPath -n 4
-	rm $inputsPath"/sorted/"$curSampleNoPath".noDups.bam"
 	# add read groups
 	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
 	rm $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
