@@ -101,10 +101,7 @@ echo "SSR SNP analysis started..."
 #	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsDir"/"$curSampleNoPath".header.sam"
 	#rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
 	#rm $inputsPath"/aligned/"$curSampleNoPath".sam.hitInfo"
-#done
-
-# TO-DO
-# consider merging BAM files before variant calling
+#dones
 
 # move to pipeline scripts directory
 #cd $currDir"/Scripts"
@@ -116,46 +113,38 @@ echo "SSR SNP analysis started..."
 #bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # move to pipeline scripts directory
-cd $currDir"/Scripts"
+#cd $currDir"/Scripts"
 
 # TO-DO
 # consider filtering by mapping quality
 
 # consider running script to perform variant calling
-bash variantCalling_bcftools.sh $inputsPath $baseDir $inputsFile
-
-# TO-DO
-# remove ssr regions
-#bedtools intersect -v -a file.vcf -b bed.vcf -wa > out.vcf
+#bash variantCalling_bcftools.sh $inputsPath $baseDir $inputsFile
 
 # move to variants directory
 #cd $inputsPath"/variants"
 
+# subset vcf file by sample and remove header lines
+for f2 in $inputsPath"/clipped/"*".readGroups.bam"; do
+	# retrieve sample name and remove the file extension
+	sampleTag=$(basename $f2 | sed 's/\.readGroups\.bam$//g')
+	# print status message
+	echo "Subsetting VCF and removing header for $sampleTag"
+	# subset vcf files by sample and remove header
+	bcftools view --threads 4 -H -Ov -o $inputsPath"/variants/"$sampleTag"_noSSR.vcf" -s $sampleTag $runNum"_noSSR.vcf"	
+	# status message
+	echo "Processed!"
+done
+
+# retrieve and format sample tag list
+#sampleTagList=$(for i in $inputsPath"/clipped/"*".readGroups.bam"; do basename $i | sed "s/^/\"/g" | sed "s/\.readGroups\.bam$/\",/g" | tr '\n' ' '; done)
+#sampleTagList=$(echo $sampleTagList | sed 's/.$//')
+
 # copy pipeline scripts to the variants directory
 #cp $currDir"/SNP_Calling/Scripts/Format_VCF-Matrix.py" $inputsPath"/variants"
 
-# subset vcf file by sample and remove header lines
-#for f2 in $inputsPath"/variants/"*"_calls.norm.bcf"; do
-	# print status message
-#	echo "Removing header from $f2"
-	# remove extension
-#	newName=$(echo $f2 | sed 's/\.bcf//g')
-	# subset vcf file by the current sample
-	
-	# convert bcf to vcf
-#	bcftools convert -Ov -o $newName".vcf" $f2
-	# remove header lines
-#	egrep -v "^#" $newName".vcf" > $newName".noHeader.vcf"
-	# status message
-#	echo "Processed!"
-#done
-
-# retrieve and format sample tag list
-#sampleTags=$(for i in $inputsPath"/variants/"*".noHeader.vcf"; do basename $i | sed "s/^/\"/g" | sed "s/\.noHeader\.vcf$/\",/g" | tr '\n' ' '; done)
-#sampleTags=$(echo $sampleTags | sed 's/.$//')
-
 # find and replace the sample list
-#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_VCF-Matrix.py
+#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTagList/g" $inputsPath"/variants/"Format_VCF-Matrix.py
 
 # format matrix
 #python2 Format_VCF-Matrix.py
