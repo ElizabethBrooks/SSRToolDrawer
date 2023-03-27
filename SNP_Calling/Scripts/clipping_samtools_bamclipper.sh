@@ -38,17 +38,17 @@ clipperBase=$(basename $clipperPath)
 cd $outputsPath
 
 # loop through all aligned sam files
-for f1 in $inputsPath"/sorted/"*".noDups.bam"; do
+for f1 in $inputsPath"/sorted/"*".sortedCoordinate.bam"; do
 	# trim file path from current folder name
-	curSampleNoPath=$(basename "$f1" | sed 's/\.noDups\.bam$//g')
+	curSampleNoPath=$(basename "$f1" | sed 's/\.sortedCoordinate\.bam$//g')
 	# print status message
 	echo "Clipping $f1"
 	# index the bam file
-	samtools index $inputsPath"/sorted/"$curSampleNoPath".noDups.bam" 
+	samtools index $inputsPath"/sorted/"$curSampleNoPath".sortedCoordinate.bam" 
 	# soft mask primers sequences
-	./bamclipper.sh -b $inputsPath"/sorted/"$curSampleNoPath".noDups.bam" -p $primerPath -n 4
+	./bamclipper.sh -b $inputsPath"/sorted/"$curSampleNoPath".sortedCoordinate.bam" -p $primerPath -n 4
 	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".noDups.primerclipped.bam"
+	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
 	rm -r $outputsPath"/"$clipperBase
 	# status message
 	echo "Processed!"

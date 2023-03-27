@@ -74,6 +74,9 @@ bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 # consider demultiplexing using primers
 # or removing primers using trimmomatic along with adapters
 
+# TO-DO
+# consider sorting and removinng PCR duplicates before filtering with SamIAM.py
+
 
 # SSR Analysis Stage - SNP Calling Workflow
 
