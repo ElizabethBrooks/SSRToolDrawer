@@ -49,11 +49,7 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 mkdir $outputsPath
-# check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $outputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
@@ -119,8 +115,6 @@ python2 Format_VCF-Matrix.py
 # re-name and move output matrix
 mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
-# clean up
-#rm -r $inputsPath
 
 # status message
 echo "SSR VC analysis complete!"
