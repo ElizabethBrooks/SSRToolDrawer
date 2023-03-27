@@ -29,7 +29,10 @@ outputsPath=$inputsPath"/clipped"
 mkdir $outputsPath
 
 # copy bamclipper software directory
-cp $clipperPath"/"* $outputsPath
+cp $clipperPath $outputsPath
+
+# retrieve bamclipper directory name
+clipperBase=$(basename $clipperPath)
 
 # move to outputs directory
 cd $outputsPath
@@ -45,8 +48,8 @@ for f1 in $inputsPath"/sorted/"*".noDups.bam"; do
 	# soft mask primers sequences
 	./bamclipper.sh -b $inputsPath"/sorted/"$curSampleNoPath".noDups.bam" -p $primerPath -n 4
 	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
-	rm $outputsPath"/"$curSampleNoPath".noDups.primerclipped.bam"
+	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".noDups.primerclipped.bam"
+	rm -r $outputsPath"/"$clipperBase
 	# status message
 	echo "Processed!"
 done
