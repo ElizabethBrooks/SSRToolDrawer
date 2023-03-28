@@ -114,7 +114,7 @@ done
 cd $currDir"/Scripts"
 
 # run script to perform sorting and removal of pcr duplicates
-bash sorting_samtools.sh $inputsPath $baseDir
+bash sorting_samtools.sh $inputsPath
 
 # run script to clip primer and ssr sequences
 bash clipping_samtools_bamclipper.sh $inputsPath $baseDir

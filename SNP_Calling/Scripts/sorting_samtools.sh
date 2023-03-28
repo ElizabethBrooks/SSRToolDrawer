@@ -1,13 +1,10 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash sorting_samtools.sh inputsPath projectDir
+# usage: bash sorting_samtools.sh inputsPath
 
 # retrieve inputs path
 inputsPath=$1
-
-# retrieve the project ID 
-projectDir=$2
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
