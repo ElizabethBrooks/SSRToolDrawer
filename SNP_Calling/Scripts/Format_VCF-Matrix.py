@@ -44,14 +44,14 @@ for i in sample_list:
 				#print "here"
 				if float(qual)>=30:
 					# add alt and pos to the current cell in the sample row
-                    print >> G,",",alt,"(",pos,")",
+                                        print >> G,",",alt,"(",pos,")",
             # check if the current contig is in the contig list
 			elif j.rstrip(" ")==contig.rstrip(" "):
 				prev=contig
 				if float(qual)>=30:
 					found=True
 					# add alt and pos to a new cell in the sample row
-                    print >> G,"	",alt,"(",pos,")",
+                                        print >> G,"	",alt,"(",pos,")",
 		# check if a new cell has been made for the current contig
 		if found == False:
 			# output NULL to the new cell in the sample row
