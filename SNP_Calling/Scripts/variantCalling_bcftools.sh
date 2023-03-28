@@ -51,10 +51,10 @@ rm $outputsPath"/"$runNum"_raw.bcf"
 bcftools index --threads 4 $outputsPath"/"$runNum"_calls.vcf.gz"
 # normalize indels
 bcftools norm --threads 4 -f $ref -o $outputsPath"/"$runNum"_calls.norm.bcf" $outputsPath"/"$runNum"_calls.vcf.gz"
-rm $outputsPath"/"$runNum"_calls.vcf.gz"*
+rm $outputsPath"/"$runNum"_calls.vcf.gz"
 # convert from BCF to VCF
 bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $outputsPath"/"$runNum"_calls.norm.bcf"
-rm $outputsPath"/"$runNum"_calls.norm.vcf"
+rm $outputsPath"/"$runNum"_calls.norm.bcf"
 # remove ssr regions
 bedtools intersect -v -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath -header > $outputsPath"/"$runNum"_noSSR.vcf"
 # TO-DO
