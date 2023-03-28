@@ -36,9 +36,9 @@ for i in sample_list:
 			# the reference position, with the 1st base having position 1
 			pos=fields[1]
 			# comma separated list of alternate non-reference alleles
-            alt=fields[4]
+                        alt=fields[4]
             # phred-scaled quality score
-            qual=fields[5]
+                        qual=fields[5]
             # check if the current contig has been processed and is in the contig list
 			if prev.rstrip(" ")==contig.rstrip(" ") and j.rstrip(" ")==contig.rstrip(" "):
 				#print "here"
