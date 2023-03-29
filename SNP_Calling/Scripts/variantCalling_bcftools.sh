@@ -20,6 +20,8 @@ projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+# retrieve primers path
+primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 
 # setup the variant calling directory
 outputsPath=$inputsPath"/variants"
@@ -54,11 +56,21 @@ bcftools norm --threads 4 -f $ref -o $outputsPath"/"$runNum"_calls.norm.bcf" $ou
 rm $outputsPath"/"$runNum"_calls.vcf.gz"*
 # convert from BCF to VCF
 bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $outputsPath"/"$runNum"_calls.norm.bcf"
-rm $outputsPath"/"$runNum"_calls.norm.bcf"
+#rm $outputsPath"/"$runNum"_calls.norm.bcf"
+
 # remove ssr regions
-bedtools intersect -v -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath -header > $outputsPath"/"$runNum"_noSSR.vcf"
-# TO-DO
-# remove primer regions
+bedtools intersect -v -header -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
+rm $outputsPath"/"$runNum"_calls.norm.vcf"
+# remove sense primer regions
+cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"
+bedtools intersect -v -header -a $outputsPath"/"$runNum"_noSSR.vcf" -b $outputsPath"/tmp_sense_primerRegions.bed" > $outputsPath"/"$runNum"_noSense.vcf"
+rm cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"
+rm $outputsPath"/"$runNum"_noSSR.vcf"
+# remove antisense primer regions
+cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_antisense_primerRegions.bed"
+bedtools intersect -v -header -a $outputsPath"/"$runNum"_noSense.vcf" -b $outputsPath"/tmp_antisense_primerRegions.bed" > $outputsPath"/"$runNum"_trimmed.vcf"
+rm cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_antisense_primerRegions.bed"
+rm $outputsPath"/"$runNum"_noSense.vcf"
 
 # status message
 echo "Analysis conplete!"
