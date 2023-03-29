@@ -58,6 +58,8 @@ echo "Performing variant calling for $runNum"
 bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $outputsPath"/"$runNum"_calls.norm.bcf"
 #rm $outputsPath"/"$runNum"_calls.norm.bcf"
 
+rm $outputsPath"/"$runNum"_trimmed.vcf"
+
 # remove ssr regions
 bedtools intersect -v -header -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
 #rm $outputsPath"/"$runNum"_calls.norm.vcf"
