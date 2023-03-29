@@ -44,33 +44,35 @@ ls $inputsPath"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
 echo "Performing variant calling for $runNum"
 
 # calculate the read coverage of positions in the genome
-bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$runNum"_raw.bcf" -b $outputsPath"/inputBAMList.txt"
-rm $outputsPath"/inputBAMList.txt"
+#bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$runNum"_raw.bcf" -b $outputsPath"/inputBAMList.txt"
+#rm $outputsPath"/inputBAMList.txt"
 # detect the single nucleotide polymorphisms 
-bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$runNum"_calls.vcf.gz" $outputsPath"/"$runNum"_raw.bcf" 
-rm $outputsPath"/"$runNum"_raw.bcf"
+#bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$runNum"_calls.vcf.gz" $outputsPath"/"$runNum"_raw.bcf" 
+#rm $outputsPath"/"$runNum"_raw.bcf"
 # index vcf file
-bcftools index --threads 4 $outputsPath"/"$runNum"_calls.vcf.gz"
+#bcftools index --threads 4 $outputsPath"/"$runNum"_calls.vcf.gz"
 # normalize indels
-bcftools norm --threads 4 -f $ref -o $outputsPath"/"$runNum"_calls.norm.bcf" $outputsPath"/"$runNum"_calls.vcf.gz"
-rm $outputsPath"/"$runNum"_calls.vcf.gz"*
+#bcftools norm --threads 4 -f $ref -o $outputsPath"/"$runNum"_calls.norm.bcf" $outputsPath"/"$runNum"_calls.vcf.gz"
+#rm $outputsPath"/"$runNum"_calls.vcf.gz"*
 # convert from BCF to VCF
 bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $outputsPath"/"$runNum"_calls.norm.bcf"
 #rm $outputsPath"/"$runNum"_calls.norm.bcf"
 
+rm $outputsPath"/"$runNum"_trimmed.vcf"
+
 # remove ssr regions
 bedtools intersect -v -header -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
-rm $outputsPath"/"$runNum"_calls.norm.vcf"
+#rm $outputsPath"/"$runNum"_calls.norm.vcf"
 # remove sense primer regions
 cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"
 bedtools intersect -v -header -a $outputsPath"/"$runNum"_noSSR.vcf" -b $outputsPath"/tmp_sense_primerRegions.bed" > $outputsPath"/"$runNum"_noSense.vcf"
-rm cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"
-rm $outputsPath"/"$runNum"_noSSR.vcf"
+#rm $outputsPath"/tmp_sense_primerRegions.bed"
+#rm $outputsPath"/"$runNum"_noSSR.vcf"
 # remove antisense primer regions
 cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_antisense_primerRegions.bed"
 bedtools intersect -v -header -a $outputsPath"/"$runNum"_noSense.vcf" -b $outputsPath"/tmp_antisense_primerRegions.bed" > $outputsPath"/"$runNum"_trimmed.vcf"
-rm cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_antisense_primerRegions.bed"
-rm $outputsPath"/"$runNum"_noSense.vcf"
+#rm $outputsPath"/tmp_antisense_primerRegions.bed"
+#rm $outputsPath"/"$runNum"_noSense.vcf"
 
 # status message
 echo "Analysis conplete!"
