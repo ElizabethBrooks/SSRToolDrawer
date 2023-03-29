@@ -61,15 +61,15 @@ bcftools view --threads 4 -Ov -o $outputsPath"/"$runNum"_calls.norm.vcf" $output
 rm $outputsPath"/"$runNum"_trimmed.vcf"
 
 # remove ssr regions
-bedtools intersect -v -header -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
+#bedtools intersect -v -header -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
 #rm $outputsPath"/"$runNum"_calls.norm.vcf"
 # remove sense primer regions
-cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"
-bedtools intersect -v -header -a $outputsPath"/"$runNum"_noSSR.vcf" -b $outputsPath"/tmp_sense_primerRegions.bed" > $outputsPath"/"$runNum"_noSense.vcf"
+#cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"
+#bedtools intersect -v -header -a $outputsPath"/"$runNum"_noSSR.vcf" -b $outputsPath"/tmp_sense_primerRegions.bed" > $outputsPath"/"$runNum"_noSense.vcf"
 #rm $outputsPath"/tmp_sense_primerRegions.bed"
 #rm $outputsPath"/"$runNum"_noSSR.vcf"
 # remove antisense primer regions
-cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_antisense_primerRegions.bed"
+cat $primerPath | cut -f 4-6 > $outputsPath"/tmp_antisense_primerRegions.bed"
 bedtools intersect -v -header -a $outputsPath"/"$runNum"_noSense.vcf" -b $outputsPath"/tmp_antisense_primerRegions.bed" > $outputsPath"/"$runNum"_trimmed.vcf"
 #rm $outputsPath"/tmp_antisense_primerRegions.bed"
 #rm $outputsPath"/"$runNum"_noSense.vcf"

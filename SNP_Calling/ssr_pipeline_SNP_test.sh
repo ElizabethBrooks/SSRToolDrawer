@@ -94,9 +94,6 @@ sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTagList/g" $inputsPath"/variants/"Format
 # format matrix
 python2 Format_VCF-Matrix.py
 
-# pre-clean up
-rm $outputsPath"/"$runNum".txt"
-
 # re-name and move output matrix
 mv VCF_Matrix.txt $outputsPath"/"$runNum".txt"
 
