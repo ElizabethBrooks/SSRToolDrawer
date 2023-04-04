@@ -20,10 +20,13 @@ regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | 
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 
 # setup the variant calling directory
-outputsPath=$inputsPath"/variants"
+outputsPath=$inputsPath"/variantsTrimmed"
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
+
+# set inputs path
+inputsPath=$inputsPath"/variantsFiltered"
 
 # retrieve software version
 bcftools --version >> $versionFile
@@ -35,7 +38,7 @@ bcftools --version >> $versionFile
 echo "Performing variant trimming for $runNum"
 
 # remove ssr regions
-bedtools intersect -v -header -a $outputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
+bedtools intersect -v -header -a $inputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
 #rm $outputsPath"/"$runNum"_calls.norm.vcf"
 # remove sense primer regions
 cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"
