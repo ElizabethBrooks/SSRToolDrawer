@@ -8,11 +8,6 @@
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runInputs
 # usage Ex: qsub ssr_pipeline_SNP.sh inputs_run1.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run2.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run3.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run4.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run5.txt
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run6.txt
 
 # TO-DO
 # add the combination of plate runs to VC
@@ -136,18 +131,6 @@ bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant trimming
 bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
-
-# subset vcf file by sample and remove header lines
-for f2 in $inputsPath"/clipped/"*".readGroups.bam"; do
-	# retrieve sample name and remove the file extension
-	sampleTag=$(basename $f2 | sed 's/\.readGroups\.bam$//g')
-	# print status message
-	echo "Subsetting VCF and removing header for $sampleTag"
-	# subset vcf files by sample and remove header
-	bcftools view --threads 4 -H -Ov -o $inputsPath"/variantsTrimmed/"$sampleTag".noHeader.vcf" -s $sampleTag $inputsPath"/variantsTrimmed/"$runNum"_trimmed.vcf"	
-	# status message
-	echo "Processed!"
-done
 
 # format matrix
 bash variant_matrix_formatting.sh $inputsPath $inputsFile $baseDir

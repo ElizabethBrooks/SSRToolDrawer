@@ -28,7 +28,8 @@ versionFile=$inputsPath"/software_VC_summary.txt"
 # set inputs path
 inputsPath=$inputsPath"/variantsFiltered"
 
-# retrieve software version
+# output software version
+echo "Variant trimming: " >> $versionFile
 bcftools --version >> $versionFile
 
 

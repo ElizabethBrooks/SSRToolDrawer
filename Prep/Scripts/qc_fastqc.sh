@@ -21,7 +21,8 @@ readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | se
 # name of output file of inputs
 versionFile=$inputsPath"/software_prep_summary.txt"
 
-# report software version
+# output software version
+echo "QC: " >> $versionFile
 fastqc -version >> $versionFile
 
 # make a new directory for analysis

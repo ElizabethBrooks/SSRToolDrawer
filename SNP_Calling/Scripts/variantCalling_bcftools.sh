@@ -29,7 +29,8 @@ mkdir $outputsPath
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
 
-# retrieve software version
+# output software version
+echo "Variant calling: " >> $versionFile
 bcftools --version >> $versionFile
 
 

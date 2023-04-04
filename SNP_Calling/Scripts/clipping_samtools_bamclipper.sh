@@ -17,7 +17,8 @@ clipperPath=$(grep "bamclipperTool:" $baseDir"/InputData/inputs_ssr_pipeline.txt
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
 
-# retrieve software version
+# output software version
+echo "Clipping: " >> $versionFile
 samtools --version >> $versionFile
 
 

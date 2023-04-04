@@ -5,8 +5,7 @@
 #$ -N SNP_matrix_jobOutput
 
 # script to create a formatted variant matrix
-# usage: bash variantMatrix_formatting.sh inputsPath inputsFile baseDir
-
+# usage: bash variantMatrix_bcftools.sh inputsPath inputsFile baseDir
 
 # retrieve input outputs path
 inputsPath=$1
@@ -27,17 +26,33 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 # set outputs path
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 
-# set the inputs path
-inputsPath=$inputsPath"/variantsTrimmed"
+# name of output file of inputs
+versionFile=$inputsPath"/software_VC_summary.txt"
 
-# set output matrix file
-resultsFile=$outputsPath"/"$runNum".txt"
+# output software version
+echo "Variant matrix formatting: " >> $versionFile
+bcftools --version >> $versionFile
 
 
 # Variant Matrix Formatting Stage - SNP Calling Workflow
 
 # status message
 echo "Performing variant matrix formatting for $runNum"
+
+# subset vcf file by sample and remove header lines
+for f1 in $inputsPath"/clipped/"*".readGroups.bam"; do
+	# retrieve sample name and remove the file extension
+	sampleTag=$(basename $f1 | sed 's/\.readGroups\.bam$//g')
+	# print status message
+	echo "Subsetting VCF and removing header for $sampleTag"
+	# subset vcf files by sample and remove header
+	bcftools view --threads 4 -H -Ov -o $inputsPath"/variantsTrimmed/"$sampleTag".noHeader.vcf" -s $sampleTag $inputsPath"/variantsTrimmed/"$runNum"_trimmed.vcf"	
+	# status message
+	echo "Processed!"
+done
+
+# set output matrix file
+resultsFile=$outputsPath"/"$runNum".txt"
 
 # contig (marker) ID list
 contingList=$(cat $regionsPath | cut -f 1)
@@ -46,15 +61,15 @@ contingList=$(cat $regionsPath | cut -f 1)
 echo -e 'Sample\t'$contingList > $resultsFile
 
 # loop over each sample
-for f in $inputsPath"/"*"_trimmed.vcf"; do
+for f2 in $inputsPath"/variantsTrimmed/"*"_trimmed.vcf"; do
 	# retrieve sample tag
-	sampleTag=$(basename $f1 | sed "s/\_trimmed\.vcf$//g")
+	sampleTag=$(basename $f2 | sed "s/\_trimmed\.vcf$//g")
 	# add sample tag to matrix row
 	echo $sampleTag >> $resultsFile
 	# loop over each marker
 	for i in $contingList; do
 		# create file with current marker variants
-		cat $f | grep $i > $f"."$i".tmp.txt"
+		cat $f2 | grep $i > $f2"."$i".tmp.txt"
 		# initialize alleles
 		firstAlleles="NULL"
 		secondAlleles="NULL"
@@ -77,9 +92,9 @@ for f in $inputsPath"/"*"_trimmed.vcf"; do
 			# append GT to lists of allele variants
 			firstAlleles=$firstAlleles","$firstGT
 			secondAlleles=$secondAlleles","$secondGT
-		done < $f"."$i".tmp.txt"
+		done < $f2"."$i".tmp.txt"
 		# clean up
-		rm $f"."$i".tmp.txt"
+		rm $f2"."$i".tmp.txt"
 		# output allele lists to the results matrix
 		echo -en $firstAlleles'\t'$secondAlleles >> $resultsFile
 	done

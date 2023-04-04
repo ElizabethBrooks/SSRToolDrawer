@@ -31,7 +31,8 @@ outputsFile=$inputsPath"/filtering_summary.txt"
 # set inputs path
 inputsPath=$inputsPath"/variants"
 
-# retrieve software version
+# output software version
+echo "Variant filtering: " >> $versionFile
 bcftools --version >> $versionFile
 
 

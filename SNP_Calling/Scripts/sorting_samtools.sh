@@ -9,7 +9,8 @@ inputsPath=$1
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"
 
-# retrieve software version
+# output software version
+echo "Sorting: " >> $versionFile
 samtools --version >> $versionFile
 
 

@@ -23,7 +23,8 @@ readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | se
 # name of output file of inputs
 versionFile=$inputsPath"/software_prep_summary.txt"
 
-# add software versions to outputs
+# output software version
+echo "Alignment: " >> $versionFile
 bwa &> tmp.txt
 cat tmp.txt | head -3 >> $versionFile
 rm tmp.txt

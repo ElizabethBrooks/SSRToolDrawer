@@ -23,8 +23,8 @@ adapterPath=$(grep "adapter:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 # name of output file of inputs
 versionFile=$inputsPath"/software_prep_summary.txt"
 
-# add software version to outputs
-echo "Trimmomatic:" >> $versionFile
+# output software version
+echo "Read trimming: " >> $versionFile
 trimmomatic -version >> $versionFile
 
 # make a new directory for analysis
