@@ -38,9 +38,9 @@ clipperBase=$(basename $clipperPath)
 cd $outputsPath"/"$clipperBase
 
 # loop through all aligned sam files
-for f1 in $inputsPath"/sorted/"*".sortedCoordinate.bam"; do
+for f1 in $inputsPath"/sorted/"*".filteredMapQ.bam"; do
 	# trim file path from current folder name
-	curSampleNoPath=$(basename "$f1" | sed 's/\.sortedCoordinate\.bam$//g')
+	curSampleNoPath=$(basename "$f1" | sed 's/\.filteredMapQ\.bam$//g')
 	# print status message
 	echo "Clipping $f1"
 	# index the bam file
@@ -48,13 +48,16 @@ for f1 in $inputsPath"/sorted/"*".sortedCoordinate.bam"; do
 	# soft mask primers sequences
 	./bamclipper.sh -b $f1 -p $primerPath -n 4
 	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".sortedCoordinate.primerclipped.bam"
+	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".filteredMapQ.primerclipped.bam"
 	# status message
 	echo "Processed!"
 done
 
 # clean up
 rm -r $outputsPath"/"$clipperBase
+
+# move back to pipeline scripts directory
+cd $baseDir"/SNP_Calling/Scripts"
 
 # status message
 echo "Analysis complete!"
