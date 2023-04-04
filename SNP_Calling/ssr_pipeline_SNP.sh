@@ -122,6 +122,12 @@ bash filterByMapQ_samtools.sh $inputsPath
 # run script to clip primer and ssr sequences
 bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
+# TO-DO
+# consider single sample calling
+# https://github.com/samtools/bcftools/issues/811
+# bcftools mpileup -a AD
+# bcftools call -G -
+
 # run script to perform variant calling
 bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
 

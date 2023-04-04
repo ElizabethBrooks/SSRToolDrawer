@@ -41,6 +41,11 @@ ls $inputsPath"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
 # status message
 echo "Performing variant calling for $runNum"
 
+# TO-DO
+# https://github.com/samtools/bcftools/issues/811
+# bcftools mpileup -a AD
+# bcftools call -G
+
 # calculate the read coverage of positions in the genome
 bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$runNum"_raw.bcf" -b $outputsPath"/inputBAMList.txt"
 rm $outputsPath"/inputBAMList.txt"

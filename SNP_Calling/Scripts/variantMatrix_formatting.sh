@@ -78,6 +78,8 @@ for f in $inputsPath"/"*"_trimmed.vcf"; do
 			firstAlleles=$firstAlleles","$firstGT
 			secondAlleles=$secondAlleles","$secondGT
 		done < $f"."$i".tmp.txt"
+		# clean up
+		rm $f"."$i".tmp.txt"
 		# output allele lists to the results matrix
 		echo -en $firstAlleles'\t'$secondAlleles >> $resultsFile
 	done
