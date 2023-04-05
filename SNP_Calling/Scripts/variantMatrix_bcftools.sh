@@ -22,6 +22,8 @@ runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run:/
 projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve analysis outputs path
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+# retrieve ssr regions path
+regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 
 # set outputs path
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
