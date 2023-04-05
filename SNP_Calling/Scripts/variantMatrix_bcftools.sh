@@ -63,9 +63,9 @@ contingList=$(cat $regionsPath | cut -f 1 | tr ' ' '\t')
 echo -e 'Sample\t'$contingList > $resultsFile
 
 # loop over each sample
-for f2 in $inputsPath"/variantsTrimmed/"*"noHeader.vcf"; do
+for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
 	# retrieve sample tag
-	sampleTag=$(basename $f2 | sed "s/\noHeader\.vcf$//g")
+	sampleTag=$(basename $f2 | sed "s/\.noHeader\.vcf$//g")
 	# add sample tag to matrix row
 	echo $sampleTag >> $resultsFile
 	# loop over each marker
