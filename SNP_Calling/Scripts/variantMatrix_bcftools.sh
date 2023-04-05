@@ -56,8 +56,8 @@ echo "Performing variant matrix formatting for $runNum"
 # set output matrix file
 resultsFile=$outputsPath"/"$runNum".txt"
 
-# contig (marker) ID list
-contingList=$(cat $regionsPath | cut -f 1)
+# retrieve contig (marker) ID list
+contingList=$(cat $regionsPath | cut -f 1 | tr ' ' '\t')
 
 # add header to matrix results file
 echo -e 'Sample\t'$contingList > $resultsFile
@@ -69,9 +69,11 @@ for f2 in $inputsPath"/variantsTrimmed/"*"noHeader.vcf"; do
 	# add sample tag to matrix row
 	echo $sampleTag >> $resultsFile
 	# loop over each marker
-	for i in $contingList; do
+	while read marker; do
+		# retrieve contig
+		contig=$(echo $marker | cut -f1)
 		# create file with current marker variants
-		cat $f2 | grep $i > $f2"."$i".tmp.txt"
+		cat $f2 | grep $contig > $f2"."$contig".tmp.txt"
 		# initialize alleles
 		firstAlleles="NULL"
 		secondAlleles="NULL"
@@ -94,12 +96,12 @@ for f2 in $inputsPath"/variantsTrimmed/"*"noHeader.vcf"; do
 			# append GT to lists of allele variants
 			firstAlleles=$firstAlleles","$firstGT
 			secondAlleles=$secondAlleles","$secondGT
-		done < $f2"."$i".tmp.txt"
+		done < $f2"."$contig".tmp.txt"
 		# clean up
-		rm $f2"."$i".tmp.txt"
+		rm $f2"."$contig".tmp.txt"
 		# output allele lists to the results matrix
 		echo -en $firstAlleles'\t'$secondAlleles >> $resultsFile
-	done
+	done < $regionsPath
 done
 
 # status message
