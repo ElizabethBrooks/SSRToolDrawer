@@ -2,12 +2,12 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
-#$ -N ssr_SNP_jobOutput
+#$ -N test_ssr_SNP_jobOutput
 #$ -pe smp 4
 
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runInputs
-# usage Ex: qsub ssr_pipeline_SNP.sh inputs_run1.txt
+# usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run1.txt
 
 # TO-DO
 # add the combination of plate runs to VC
@@ -47,7 +47,7 @@ ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " "
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_SNP_run5"
+outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
 #mkdir $outputsPath
 # check if the folder already exists
 #if [ $? -ne 0 ]; then
