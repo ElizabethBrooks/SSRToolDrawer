@@ -21,6 +21,8 @@ primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -
 
 # setup the variant calling directory
 outputsPath=$inputsPath"/variantsTrimmed"
+# create the directory
+mkdir $outputsPath
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VC_summary.txt"

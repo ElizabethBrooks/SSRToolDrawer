@@ -15,6 +15,8 @@ samtools --version >> $versionFile
 
 # set outputs path
 outputsPath=$inputsPath"/alignedFilteredMapQ"
+# create the directory
+mkdir $outputsPath
 
 # set inputs inputsPath
 inputsPath=$inputsPath"/sorted"
