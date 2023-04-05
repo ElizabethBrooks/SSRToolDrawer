@@ -69,11 +69,9 @@ for f2 in $inputsPath"/variantsTrimmed/"*"noHeader.vcf"; do
 	# add sample tag to matrix row
 	echo $sampleTag >> $resultsFile
 	# loop over each marker
-	while read marker; do
-		# retrieve contig
-		contig=$(echo $marker | cut -f1)
+	for i in $contigList; do
 		# create file with current marker variants
-		cat $f2 | grep $contig > $f2"."$contig".tmp.txt"
+		cat $f2 | grep $i > $f2"."$i".tmp.txt"
 		# initialize alleles
 		firstAlleles="NULL"
 		secondAlleles="NULL"
@@ -96,9 +94,9 @@ for f2 in $inputsPath"/variantsTrimmed/"*"noHeader.vcf"; do
 			# append GT to lists of allele variants
 			firstAlleles=$firstAlleles","$firstGT
 			secondAlleles=$secondAlleles","$secondGT
-		done < $f2"."$contig".tmp.txt"
+		done < $f2"."$i".tmp.txt"
 		# clean up
-		rm $f2"."$contig".tmp.txt"
+		rm $f2"."$i".tmp.txt"
 		# output allele lists to the results matrix
 		echo -en $firstAlleles'\t'$secondAlleles >> $resultsFile
 	done < $regionsPath
