@@ -28,6 +28,9 @@ versionFile=$inputsPath"/software_VC_summary.txt"
 # name of output file of filtering summary
 outputsFile=$inputsPath"/filtering_summary.txt"
 
+# name output file of inputs
+inputOutFile=$inputsPath"/variantFiltering_summary.txt"
+
 # set inputs path
 inputsPath=$inputsPath"/variantsCalled"
 
@@ -58,14 +61,14 @@ echo "& including sites with average read depth > 10: " >> $outputsFile
 bcftools filter --threads 4 -i 'INFO/DP>10' $outputsPath"/"$runNum"_calls.flt-qual.bcf" | grep -v "#" | wc -l >> $outputsFile
 
 #Turn on left alignment, normalize indels, and collapse multi allelic sites
-bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-norm.bcf"
-echo "bcftools norm --threads 4 -m +any -f "$ref" "$outputsPath"/"$runNum"_calls.flt-qualDP.bcf -Ob -o "$outputsPath"/"$runNum"_calls.flt-norm.bcf" >> $inputOutFile
+bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
+echo "bcftools norm --threads 4 -m +any -f "$ref" "$outputsPath"/"$runNum"_calls.flt-qualDP.bcf -Ob -o "$outputsPath"/"$runNum"_calls.flt-norm.vcf" >> $inputOutFile
 echo "& with left alignment, normalized indels, and collapsed multi allelic sites: " >> $outputsFile
 bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -v "#" | wc -l >> $outputsFile
 
 #Index bcf file
-bcftools index --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.bcf"
-echo "bcftools index --threads 4 "$outputsPath"/"$runNum"_calls.flt-norm.bcf" >> $inputOutFile
+bcftools index --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.vcf"
+echo "bcftools index --threads 4 "$outputsPath"/"$runNum"_calls.flt-norm.vcf" >> $inputOutFile
 
 # clean up
 #rm $outputsPath"/"$runNum"_calls.flt-qual.bcf"

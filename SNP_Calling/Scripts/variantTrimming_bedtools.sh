@@ -41,7 +41,7 @@ bcftools --version >> $versionFile
 echo "Performing variant trimming for $runNum"
 
 # remove ssr regions
-bedtools intersect -v -header -a $inputsPath"/"$runNum"_calls.norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
+bedtools intersect -v -header -a $inputsPath"/"$runNum"_calls.flt-norm.vcf" -b $regionsPath > $outputsPath"/"$runNum"_noSSR.vcf"
 #rm $outputsPath"/"$runNum"_calls.norm.vcf"
 # remove sense primer regions
 cat $primerPath | cut -f 1-3 > $outputsPath"/tmp_sense_primerRegions.bed"

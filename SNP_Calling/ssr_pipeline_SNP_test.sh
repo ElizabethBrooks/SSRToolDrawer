@@ -112,7 +112,7 @@ cd $currDir"/Scripts"
 #bash sorting_samtools.sh $inputsPath
 
 # run script to keep only unique read alignments
-bash filterByMapQ_samtools.sh $inputsPath
+#bash filterByMapQ_samtools.sh $inputsPath
 
 # run script to clip primer and ssr sequences
 #bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
@@ -127,7 +127,7 @@ bash filterByMapQ_samtools.sh $inputsPath
 #bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant filtering
-#bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
+bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant trimming
 #bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
