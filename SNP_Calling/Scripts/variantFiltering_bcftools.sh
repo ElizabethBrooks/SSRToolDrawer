@@ -57,17 +57,11 @@ echo "bcftools filter --threads 4 -i 'INFO/DP>10' "$outputsPath"/"$runNum"_calls
 echo "& including sites with average read depth > 10: " >> $outputsFile
 bcftools filter --threads 4 -i 'INFO/DP>10' $outputsPath"/"$runNum"_calls.flt-qual.bcf" | grep -v "#" | wc -l >> $outputsFile
 
-#Exclude heterozygous sites
-bcftools filter --threads 4 -e 'GT="het"' $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-qualDP-homo.bcf"
-echo "bcftools filter --threads 4 -e 'GT=\"het\"' "$outputsPath"/"$runNum"_calls.flt-qualDP.bcf -Ob -o "$outputsPath"/"$runNum"_calls.flt-qualDP-homo.bcf" >> $inputOutFile
-echo "& excluding heterozygous sites: " >> $outputsFile
-bcftools filter --threads 4 -e 'GT="het"' $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -v "#" | wc -l >> $outputsFile
-
 #Turn on left alignment, normalize indels, and collapse multi allelic sites
-bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP-homo.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-norm.bcf"
-echo "bcftools norm --threads 4 -m +any -f "$ref" "$outputsPath"/"$runNum"_calls.flt-qualDP-homo.bcf -Ob -o "$outputsPath"/"$runNum"_calls.flt-norm.bcf" >> $inputOutFile
+bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-norm.bcf"
+echo "bcftools norm --threads 4 -m +any -f "$ref" "$outputsPath"/"$runNum"_calls.flt-qualDP.bcf -Ob -o "$outputsPath"/"$runNum"_calls.flt-norm.bcf" >> $inputOutFile
 echo "& with left alignment, normalized indels, and collapsed multi allelic sites: " >> $outputsFile
-bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP-homo.bcf" | grep -v "#" | wc -l >> $outputsFile
+bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -v "#" | wc -l >> $outputsFile
 
 #Index bcf file
 bcftools index --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.bcf"
@@ -76,7 +70,6 @@ echo "bcftools index --threads 4 "$outputsPath"/"$runNum"_calls.flt-norm.bcf" >>
 # clean up
 #rm $outputsPath"/"$runNum"_calls.flt-qual.bcf"
 #rm $outputsPath"/"$runNum"_calls.flt-qualDP.bcf"
-#rm $outputsPath"/"$runNum"_calls.flt-qualDP-homo.bcf"
 
 # status message
 echo "Analysis conplete!"
