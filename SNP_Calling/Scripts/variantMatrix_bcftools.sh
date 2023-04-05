@@ -57,10 +57,10 @@ echo "Performing variant matrix formatting for $runNum"
 resultsFile=$outputsPath"/"$runNum".txt"
 
 # retrieve contig (marker) ID list
-contingList=$(cat $regionsPath | cut -f 1 | tr ' ' '\t')
+contigList=$(cat $regionsPath | cut -f 1 | tr ' ' '\t')
 
 # add header to matrix results file
-echo -e 'Sample\t'$contingList > $resultsFile
+echo -e 'Sample\t'$contigList > $resultsFile
 
 # loop over each sample
 for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
