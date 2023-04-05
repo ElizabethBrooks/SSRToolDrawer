@@ -13,16 +13,19 @@ versionFile=$inputsPath"/software_VC_summary.txt"
 echo "Sorting: " >> $versionFile
 samtools --version >> $versionFile
 
-
-# Sorting Stage - SNP Calling Workflow
-
 # set outputs path
 outputsPath=$inputsPath"/sorted"
 # create the directory
 mkdir $outputsPath
 
+# set inputs inputsPath
+inputsPath=$inputsPath"/alignedFiltered50"
+
+
+# Sorting Stage - SNP Calling Workflow
+
 # loop through all filtered bam files
-for f in $inputsPath"/filtered/"*".header.sam"; do
+for f in $inputsPath"/"*".header.sam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f" | sed 's/\.header\.sam$//g')
 	# status message

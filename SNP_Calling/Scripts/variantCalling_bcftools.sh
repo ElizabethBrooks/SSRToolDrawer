@@ -22,7 +22,7 @@ regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | 
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 
 # setup the variant calling directory
-outputsPath=$inputsPath"/variants"
+outputsPath=$inputsPath"/variantsCalled"
 # create the directory
 mkdir $outputsPath
 
@@ -33,11 +33,14 @@ versionFile=$inputsPath"/software_VC_summary.txt"
 echo "Variant calling: " >> $versionFile
 bcftools --version >> $versionFile
 
+# set inputs inputsPath
+inputsPath=$inputsPath"/clipped"
+
 
 # Variant Calling Stage - SNP Calling Workflow
 
 # loop through all filtered sam files
-ls $inputsPath"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
+ls $inputsPath"/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
 
 # status message
 echo "Performing variant calling for $runNum"

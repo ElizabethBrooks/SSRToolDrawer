@@ -29,7 +29,7 @@ versionFile=$inputsPath"/software_VC_summary.txt"
 outputsFile=$inputsPath"/filtering_summary.txt"
 
 # set inputs path
-inputsPath=$inputsPath"/variants"
+inputsPath=$inputsPath"/variantsCalled"
 
 # output software version
 echo "Variant filtering: " >> $versionFile

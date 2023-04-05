@@ -90,7 +90,7 @@ cd $inputsPath"/aligned"
 cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 
 # set outputs path
-outputsDir=$inputsPath"/filtered"
+outputsDir=$inputsPath"/alignedFiltered50"
 # create the directory
 mkdir $outputsDir
 

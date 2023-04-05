@@ -14,8 +14,10 @@ echo "Alignment filtering: " >> $versionFile
 samtools --version >> $versionFile
 
 # set outputs path
-outputsPath=$inputsPath"/sorted"
+outputsPath=$inputsPath"/alignedFilteredMapQ"
 
+# set inputs inputsPath
+inputsPath=$inputsPath"/sorted"
 
 
 # Alignments Filtering Stage - SNP Calling Workflow
@@ -24,7 +26,7 @@ outputsPath=$inputsPath"/sorted"
 echo "Performing alignment filtering..."
 
 # loop over each coordinate sorted sample
-for f in $inputsPath"/sorted/"*".sortedCoordinate.bam"; do
+for f in $inputsPath"/"*".sortedCoordinate.bam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f" | sed 's/\.sortedCoordinate\.bam$//g')
 	# status message

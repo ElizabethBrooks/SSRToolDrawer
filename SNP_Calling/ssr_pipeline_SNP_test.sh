@@ -48,20 +48,20 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP_run5"
-mkdir $outputsPath
+#mkdir $outputsPath
 # check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $inputsPath
+#mkdir $inputsPath
 
 # prepare data for analysis
-cd $baseDir"/Prep"
-bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
+#cd $baseDir"/Prep"
+#bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 
 # TO-DO
 # make sure to check mapping efficiency
@@ -85,7 +85,7 @@ cd $inputsPath"/aligned"
 cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 
 # set outputs path
-outputsDir=$inputsPath"/filtered"
+outputsDir=$inputsPath"/alignedFiltered50"
 # create the directory
 mkdir $outputsDir
 
@@ -106,16 +106,16 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 done
 
 # move to pipeline scripts directory
-cd $currDir"/Scripts"
+#cd $currDir"/Scripts"
 
 # run script to perform sorting and removal of pcr duplicates
-bash sorting_samtools.sh $inputsPath
+#bash sorting_samtools.sh $inputsPath
 
 # run script to keep only unique read alignments
-bash filterByMapQ_samtools.sh $inputsPath
+#bash filterByMapQ_samtools.sh $inputsPath
 
 # run script to clip primer and ssr sequences
-bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+#bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # TO-DO
 # consider single sample calling
@@ -124,16 +124,16 @@ bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 # bcftools call -G -
 
 # run script to perform variant calling
-bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
+#bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant filtering
-bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
+#bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant trimming
-bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
+#bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
 
 # format matrix
-bash variant_matrix_formatting.sh $inputsPath $inputsFile $baseDir
+#bash variant_matrix_formatting.sh $inputsPath $inputsFile $baseDir
 
 # clean up
 #rm -r $inputsPath

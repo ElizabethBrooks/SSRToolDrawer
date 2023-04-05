@@ -21,13 +21,16 @@ versionFile=$inputsPath"/software_VC_summary.txt"
 echo "Clipping: " >> $versionFile
 samtools --version >> $versionFile
 
-
-# Clipping Stage - SNP Calling Workflow
-
 # set outputs path
 outputsPath=$inputsPath"/clipped"
 # create the directory
 mkdir $outputsPath
+
+# set inputs inputsPath
+inputsPath=$inputsPath"/alignedFilteredMapQ"
+
+
+# Clipping Stage - SNP Calling Workflow
 
 # copy bamclipper software directory
 cp -r $clipperPath $outputsPath
@@ -39,7 +42,7 @@ clipperBase=$(basename $clipperPath)
 cd $outputsPath"/"$clipperBase
 
 # loop through all aligned sam files
-for f1 in $inputsPath"/sorted/"*".filteredMapQ.bam"; do
+for f1 in $inputsPath"/"*".filteredMapQ.bam"; do
 	# trim file path from current folder name
 	curSampleNoPath=$(basename "$f1" | sed 's/\.filteredMapQ\.bam$//g')
 	# print status message
