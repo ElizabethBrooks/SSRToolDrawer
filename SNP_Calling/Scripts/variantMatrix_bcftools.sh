@@ -78,13 +78,13 @@ for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
 		# loop over each line in the sample vcf
 		while read line; do
 			# retrieve the CHROM
-			chrom=$(echo $line | cut -f 1)
+			chrom=$(echo $line | cut -d " " -f 1)
 			# retrieve the POS
-			pos=$(echo $line | cut -f 2)
+			pos=$(echo $line | cut -d " " -f 2)
 			# retrieve the REF
-			ref=$(echo $line | cut -f 4)
+			ref=$(echo $line | cut -d " " -f 4)
 			# retrieve the ALT
-			alt=$(echo $line | cut -f 5)
+			alt=$(echo $line | cut -d " " -f 5)
 			# retrieve the GT alleles and translate encodings
 			firstGT=$(echo $line | cut -d " " -f 10 | cut -d ":" -f 1 | cut -d "/" -f 1 | sed "s/0/$ref/g" | sed "s/1/$alt/g" | sed "s/\./NULL/g")
 			secondGT=$(echo $line | cut -d " " -f 10 | cut -d ":" -f 1 | cut -d "/" -f 2 | sed "s/0/$ref/g" | sed "s/1/$alt/g" | sed "s/\./NULL/g")
