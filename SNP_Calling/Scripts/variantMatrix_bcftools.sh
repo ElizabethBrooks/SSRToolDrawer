@@ -60,14 +60,16 @@ resultsFile=$outputsPath"/"$runNum".txt"
 contigList=$(cat $regionsPath | cut -f 1 | tr ' ' '\t')
 
 # add header to matrix results file
-echo -e 'Sample\t'$contigList > $resultsFile
+echo -en 'Sample\t'$contigList > $resultsFile
 
 # loop over each sample
 for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
 	# retrieve sample tag
 	sampleTag=$(basename $f2 | sed "s/\.noHeader\.vcf$//g")
+	# output status message
+	echo "Processing $sampleTag"
 	# add sample tag to matrix row
-	echo $sampleTag >> $resultsFile
+	echo -en '\n'$sampleTag >> $resultsFile
 	# loop over each marker
 	for i in $contigList; do
 		# create file with current marker variants
@@ -75,8 +77,12 @@ for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
 		# initialize alleles
 		firstAlleles="NULL"
 		secondAlleles="NULL"
+		# initialize line counter
+		lineCount=0
 		# loop over each line in the sample vcf
 		while read line; do
+			# increment line counter
+			lineCount=$(($lineCount+1))
 			# retrieve the CHROM
 			chrom=$(echo $line | cut -d " " -f 1)
 			# retrieve the POS
@@ -91,16 +97,25 @@ for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
 			# add POS to GT alleles
 			firstGT=$firstGT"("$pos")"
 			secondGT=$secondGT"("$pos")"
-			# append GT to lists of allele variants
-			firstAlleles=$firstAlleles","$firstGT
-			secondAlleles=$secondAlleles","$secondGT
+			# check the line count
+			if [[ $lineCount -eq 1 ]]; then
+				# begin new list of allele variants
+				firstAlleles=$firstGT
+				secondAlleles=$secondGT
+			else
+				# append GT to lists of allele variants
+				firstAlleles=$firstAlleles","$firstGT
+				secondAlleles=$secondAlleles","$secondGT
+			fi
 		done < $f2"."$i".tmp.txt"
 		# clean up
 		rm $f2"."$i".tmp.txt"
 		# output allele lists to the results matrix
-		echo -en $firstAlleles'\t'$secondAlleles >> $resultsFile
+		echo -en '\t'$firstAlleles'\t'$secondAlleles >> $resultsFile
 	done < $regionsPath
 done
+# add a new line to the end of the matrix
+echo "" >> $resultsFile
 
 # status message
 echo "Analysis conplete!"
