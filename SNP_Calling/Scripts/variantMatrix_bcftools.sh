@@ -57,7 +57,7 @@ echo "Performing variant matrix formatting for $runNum"
 resultsFile=$outputsPath"/"$runNum".txt"
 
 # retrieve contig (marker) ID list
-contigList=$(cat $regionsPath | cut -f 1 | tr ' ' '\t')
+contigList=$(cat $regionsPath | cut -f 1 | sed 's/\n/\t\t/g')
 
 # add header to matrix results file
 echo -en 'Sample\t'$contigList > $resultsFile
