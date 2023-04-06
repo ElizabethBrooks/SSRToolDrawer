@@ -138,7 +138,7 @@ bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
 bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
 
 # format matrix
-bash variant_matrix_formatting.sh $inputsPath $inputsFile $baseDir
+bash variantMatrix_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # clean up
 #rm -r $inputsPath
