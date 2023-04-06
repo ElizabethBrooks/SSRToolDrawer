@@ -57,7 +57,7 @@ done
 resultsFile=$outputsPath"/"$runNum".txt"
 
 # retrieve contig (marker) ID list
-contigList=$(cat $regionsPath | cut -f 1 | sed 's/\n/\t\t/g')
+contigList=$(cat $regionsPath | cut -f 1 | sed 's/$/\t/g' | tr '\n' '\t')
 
 # add header to matrix results file
 echo -en 'Sample\t'$contigList > $resultsFile
