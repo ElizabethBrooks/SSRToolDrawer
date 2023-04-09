@@ -42,25 +42,25 @@ bcftools --version >> $versionFile
 echo "Performing variant matrix formatting for $runNum"
 
 # subset vcf file by sample and remove header lines
-for f1 in $inputsPath"/clipped/"*".readGroups.bam"; do
+#for f1 in $inputsPath"/clipped/"*".readGroups.bam"; do
 	# retrieve sample name and remove the file extension
-	sampleTag=$(basename $f1 | sed 's/\.readGroups\.bam$//g')
+#	sampleTag=$(basename $f1 | sed 's/\.readGroups\.bam$//g')
 	# print status message
-	echo "Subsetting VCF and removing header for $sampleTag"
+#	echo "Subsetting VCF and removing header for $sampleTag"
 	# subset vcf files by sample and remove header
-	bcftools view --threads 4 -H -Ov -o $inputsPath"/variantsTrimmed/"$sampleTag".noHeader.vcf" -s $sampleTag $inputsPath"/variantsTrimmed/"$runNum"_trimmed.vcf"	
+#	bcftools view --threads 4 -H -Ov -o $inputsPath"/variantsTrimmed/"$sampleTag".noHeader.vcf" -s $sampleTag $inputsPath"/variantsTrimmed/"$runNum"_trimmed.vcf"	
 	# status message
-	echo "Processed!"
-done
+#	echo "Processed!"
+#done
 
 # set output matrix file
 resultsFile=$outputsPath"/"$runNum".txt"
 
 # retrieve contig (marker) ID list
-contigList=$(cat $regionsPath | cut -f 1 | sed 's/$/\t/g' | tr '\n' '\t')
+contigList=$(cat $regionsPath | cut -f 1 | sed 's/$/\t/g' | tr '\n' '\t' | sed 's/\t\t$//g')
 
 # add header to matrix results file
-echo -en 'Sample\t'$contigList > $resultsFile
+echo -e 'Sample\t'"$contigList" > $resultsFile
 
 # loop over each sample
 for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
