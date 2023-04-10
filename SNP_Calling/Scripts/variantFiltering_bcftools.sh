@@ -55,13 +55,10 @@ bcftools filter --threads 4 -i 'INFO/DP>10' $outputsPath"/"$runNum"_calls.flt-qu
 echo "& including sites with average read depth > 10: " >> $outputsFile
 bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -v "#" | wc -l >> $outputsFile
 
-#Turn on left alignment and normalize indels
-bcftools norm --threads 4 -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
+#Turn on left alignment, normalize indels, and split multiallelic sites
+bcftools norm --threads 4 -m -any --write-index -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
 echo "& with left alignment and normalized indels: " >> $outputsFile
 bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.bcf" | grep -v "#" | wc -l >> $outputsFile
-
-#Index bcf file
-bcftools index --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.vcf"
 
 # clean up
 #rm $outputsPath"/"$runNum"_calls.flt-qual.bcf"
