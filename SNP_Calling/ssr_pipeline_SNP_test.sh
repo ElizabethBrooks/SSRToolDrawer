@@ -127,10 +127,10 @@ cd $currDir"/Scripts"
 #bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant filtering
-#bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
+bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant trimming
-#bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
+bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
 
 # format matrix
 bash variantMatrix_bcftools.sh $inputsPath $inputsFile $baseDir
