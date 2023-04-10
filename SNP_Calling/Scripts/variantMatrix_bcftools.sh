@@ -60,7 +60,7 @@ resultsFile=$outputsPath"/"$runNum".txt"
 contigList=$(cat $regionsPath | cut -f 1 | sed 's/$/\t/g' | tr '\n' '\t' | sed 's/\t\t$//g')
 
 # add header to matrix results file
-echo -e 'Sample\t'"$contigList" > $resultsFile
+echo -en 'Sample\t'"$contigList" > $resultsFile
 
 # loop over each sample
 for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
