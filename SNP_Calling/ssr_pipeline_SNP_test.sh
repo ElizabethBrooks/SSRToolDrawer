@@ -79,10 +79,10 @@ inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 echo "SSR SNP analysis started..."
 
 # move to the alignment directory
-cd $inputsPath"/aligned"
+#cd $inputsPath"/aligned"
 
 # copy pipeline scripts to the aligned directory
-cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
+#cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 
 # set outputs path
 #outputsDir=$inputsPath"/alignedFiltered50"
