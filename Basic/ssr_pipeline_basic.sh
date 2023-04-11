@@ -30,23 +30,23 @@ conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 # retrieve input argument of a inputs file
 inputsFile=$1
 
-# retrieve the run number 
-runNum=$(grep "run:" ../"InputData/"$inputsFile | tr -d " " | sed "s/run://g")
-# retrieve the project ID 
-projectDir=$(grep "ID:" ../"InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-# retrieve ssr info path
-infoPath=$(grep "ssrInfo:" ../"InputData/inputs_ssr_pipeline.txt"| tr -d " " | sed "s/ssrInfo://g")
-# retrieve analysis outputs absolute path
-outputsPath=$(grep "outputs:" ../"InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-
 # retrieve current working directory
 currDir=$(pwd)
 
 # retrieve base directory path
 baseDir=$(dirname $currDir)
 
+# retrieve the run number 
+runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
+# retrieve the project ID 
+projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
+# retrieve ssr info path
+infoPath=$(grep "ssrInfo:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
+# retrieve analysis outputs path
+outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+
 # make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_basic"
+outputsPath=$outputsPath"/"$projectDir"_SSR_Basic"
 mkdir $outputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then
