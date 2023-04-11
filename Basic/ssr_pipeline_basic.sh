@@ -99,7 +99,7 @@ python2 Format_Matrix.py
 mv SNP_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # clean up
-rm -r $inputsPath
+#rm -r $inputsPath
 
 # status message
 echo "SSR SNP analysis complete!"
