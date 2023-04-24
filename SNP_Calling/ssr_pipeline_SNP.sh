@@ -119,7 +119,7 @@ bash sorting_samtools.sh $inputsPath
 # run script to keep only unique read alignments
 bash filterByMapQ_samtools.sh $inputsPath
 
-# run script to clip primer and ssr sequences
+# run script to clip to soft mask primer sequences and add read groups
 bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
 # TO-DO

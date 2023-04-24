@@ -92,8 +92,8 @@ for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
 			# retrieve the ALT
 			alt=$(echo $line | cut -d " " -f 5)
 			# retrieve the GT alleles and translate encodings
-			firstGT=$(echo $line | cut -d " " -f 10 | cut -d ":" -f 1 | cut -d "/" -f 1 | sed "s/0/$ref/g" | sed "s/1/$alt/g" | sed "s/\./NULL/g")
-			secondGT=$(echo $line | cut -d " " -f 10 | cut -d ":" -f 1 | cut -d "/" -f 2 | sed "s/0/$ref/g" | sed "s/1/$alt/g" | sed "s/\./NULL/g")
+			firstGT=$(echo $line | cut -d " " -f 10 | cut -d ":" -f 1 | cut -d "/" -f 1 | sed "s/\./NULL/g" | sed "s/0/$ref/g" | sed "s/1/$alt/g")
+			secondGT=$(echo $line | cut -d " " -f 10 | cut -d ":" -f 1 | cut -d "/" -f 2 | sed "s/\./NULL/g" | sed "s/0/$ref/g" | sed "s/1/$alt/g")
 			# add POS to GT alleles
 			firstGT=$firstGT"("$pos")"
 			secondGT=$secondGT"("$pos")"
