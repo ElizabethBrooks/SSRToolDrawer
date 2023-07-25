@@ -16,7 +16,7 @@
 # usage Ex: qsub ssr_pipeline_basic.sh inputs_run7.txt
 
 # required modules for ND CRC servers
-module load bio
+module load bio/2.0
 
 # activate the python2 environment for local run
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc

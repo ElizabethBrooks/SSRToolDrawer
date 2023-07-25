@@ -13,7 +13,7 @@
 # add the combination of plate runs to VC
 
 # required modules for ND CRC servers
-module load bio
+module load bio/2.0
 module load parallel
 
 # activate the python2 environment for local run
