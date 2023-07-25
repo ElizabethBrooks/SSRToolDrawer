@@ -1,10 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantCalling_bcftools.sh inputsPath inputsFile baseDir
-
-# retrieve input outputs path
-inputsPath=$1
+# usage: bash variantCalling_bcftools.sh inputsFile baseDir inputsPathList
 
 # retrieve inputs file
 inputsFile=$2
@@ -12,8 +9,8 @@ inputsFile=$2
 # retrieve base of working directory
 baseDir=$3
 
-# retrieve the run number 
-runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
+# set run num tag
+runNum="combined"
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve ssr regions path
@@ -39,11 +36,19 @@ inputsPath=$inputsPath"/clipped"
 
 # Variant Calling Stage - SNP Calling Workflow
 
-# loop through all filtered sam files
-ls $inputsPath"/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
+# pre-clean up
+rm $outputsPath"/inputBAMList.txt"
+
+# loop over each input file
+for arg in "${@:3}"; do
+	# retrieve input outputs path
+	inputsPath=$1
+	# loop through all filtered sam files
+	ls $inputsPath"/"*".readGroups.bam" >> $outputsPath"/inputBAMList.txt"
+done
 
 # status message
-echo "Performing variant calling for $runNum"
+echo "Performing variant calling..."
 
 # TO-DO
 # https://github.com/samtools/bcftools/issues/811

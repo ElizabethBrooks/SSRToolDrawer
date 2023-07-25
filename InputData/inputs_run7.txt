@@ -1,0 +1,3 @@
+run: run7
+ID: 230719_ChestnutSSR_Round7
+pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230719_ChestnutSSR_Round7
