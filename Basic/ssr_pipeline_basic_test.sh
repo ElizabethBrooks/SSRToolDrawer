@@ -19,8 +19,8 @@
 module load bio/2.0
 
 # activate the python2 environment for local run
-source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
-conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
+#source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
+#conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
 ## if necessary
 ## activate the python2 environment for job run
@@ -48,12 +48,12 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_Basic"
-#mkdir $outputsPath
+mkdir $outputsPath
 # check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $outputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
@@ -65,6 +65,13 @@ bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 
 
 # SSR Analysis Stage - Basic Workflow
+
+# unload modules
+module unload bio/2.0
+
+# activate the python2 environment for local run
+source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
+conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
 # status message
 echo "SSR basic analysis started..."
