@@ -7,16 +7,10 @@
 
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_basic_test.sh runInputs
-# usage Ex: qsub ssr_pipeline_basic_test.sh inputs_run1.txt
-# usage Ex: qsub ssr_pipeline_basic_test.sh inputs_run2.txt
-# usage Ex: qsub ssr_pipeline_basic_test.sh inputs_run3.txt
-# usage Ex: qsub ssr_pipeline_basic_test.sh inputs_run4.txt
-# usage Ex: qsub ssr_pipeline_basic_test.sh inputs_run5.txt
-# usage Ex: qsub ssr_pipeline_basic_test.sh inputs_run6.txt
 # usage Ex: qsub ssr_pipeline_basic_test.sh inputs_run7.txt
 
 # required modules for ND CRC servers
-module load bio/2.0
+#module load bio/2.0
 
 # activate the python2 environment for local run
 #source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
@@ -48,26 +42,26 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_Basic"
-mkdir $outputsPath
+#mkdir $outputsPath
 # check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
-fi
+#if [ $? -ne 0 ]; then
+#	echo "The $outputsPath directory already exsists... please remove before proceeding."
+#	exit 1
+#fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-mkdir $inputsPath
+#mkdir $inputsPath
 
 # prepare data for analysis
-cd $baseDir"/Prep"
-bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
+#cd $baseDir"/Prep"
+#bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 
 
 # SSR Analysis Stage - Basic Workflow
 
 # unload modules
-module unload bio/2.0
+#module unload bio/2.0
 
 # activate the python2 environment for local run
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
@@ -87,8 +81,8 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
-	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "paired"
-	#python2 SnipMatrix.py $f1".Matrix.txt"
+	#python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "paired"
+	python2 SnipMatrix.py $f1".Matrix.txt"
 	# status message
 	echo "Processed!"
 done
