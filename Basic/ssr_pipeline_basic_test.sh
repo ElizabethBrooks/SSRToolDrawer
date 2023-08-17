@@ -81,8 +81,11 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
 	echo "Processing $f1"
 	# run SSR pipeline
+	python2 GapGenes.v3.py -sam $f1 -C $infoPath -P
 	#python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "paired"
-	python2 SnipMatrix.py $f1".Matrix.txt"
+	#python2 SnipMatrix.py $f1".Matrix.txt"
+	#python2 SnipMatrix.py $f1".Matrix.1.txt"
+	#python2 SnipMatrix.py $f1".Matrix.2.txt"
 	# status message
 	echo "Processed!"
 done
