@@ -77,31 +77,31 @@ cp $baseDir"/Basic/Scripts/"* $inputsPath"/aligned"
 cd $inputsPath"/aligned"
 
 # loop through all filtered sam files
-for f1 in $inputsPath"/aligned/"*".sam"; do
+#for f1 in $inputsPath"/aligned/"*".sam"; do
 	# print status message
-	echo "Processing $f1"
+	#echo "Processing $f1"
 	# run SSR pipeline
 	#python2 GapGenes.v3.py -sam $f1 -C $infoPath
 	##python2 GapGenes.v3.py -sam $f1 -C $infoPath -P "paired"
-	python2 SnipMatrix.py $f1".Matrix.txt"
+	#python2 SnipMatrix.py $f1".Matrix.txt"
 	##python2 SnipMatrix.py $f1".Matrix.1.txt"
 	##python2 SnipMatrix.py $f1".Matrix.2.txt"
 	# status message
-	echo "Processed!"
-done
+	#echo "Processed!"
+#done
 
 # retrieve and format sample tag list
-#sampleTags=$(for i in $inputsPath"/aligned/"*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done)
-#sampleTags=$(echo $sampleTags | sed 's/.$//')
+sampleTags=$(for i in $inputsPath"/aligned/"*.sam; do basename $i | sed "s/^/\"/g" | sed "s/\.sam/\",/g" | tr '\n' ' '; done)
+sampleTags=$(echo $sampleTags | sed 's/.$//')
 
 # find and replace the sample list
-#sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
+sed -i "s/\"FIND_ME_REPLACE_ME\"/$sampleTags/g" Format_Matrix.py
 
 # format matrix
-#python2 Format_Matrix.py
+python2 Format_Matrix.py
 
 # re-name and move output matrix
-#mv SNP_Matrix.txt $outputsPath"/"$runNum".txt"
+mv SNP_Matrix.txt $outputsPath"/"$runNum".txt"
 
 # clean up
 #rm -r $inputsPath
