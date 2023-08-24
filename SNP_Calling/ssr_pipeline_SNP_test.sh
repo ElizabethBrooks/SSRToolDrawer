@@ -9,16 +9,12 @@
 # usage: qsub ssr_pipeline_SNP.sh runInputs
 # usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run1.txt
 
-# TO-DO
-# add the combination of plate runs to VC
+## TO-DO
+## add the combination of plate runs to VC
 
-# required modules for ND CRC servers
+# load required software modules
 module load bio/2.0
-module load parallel
-
-# activate the python2 environment for local run
-source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
-conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
+#module load parallel
 
 ## if necessary
 ## activate the python2 environment for job run
@@ -48,83 +44,95 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
-#mkdir $outputsPath
+mkdir $outputsPath
 # check if the folder already exists
-#if [ $? -ne 0 ]; then
-#	echo "The $outputsPath directory already exsists... please remove before proceeding."
-#	exit 1
-#fi
+if [ $? -ne 0 ]; then
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
+fi
 
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
-#mkdir $inputsPath
+mkdir $inputsPath
 
 # prepare data for analysis
-#cd $baseDir"/Prep"
-#bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
+cd $baseDir"/Prep"
+bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 
-# TO-DO
-# make sure to check mapping efficiency
-# note that we did not remove primers in advance
-# consider demultiplexing using primers
-# or removing primers using trimmomatic along with adapters
+## TO-DO
+## make sure to check mapping efficiency
+## note that we did not remove primers in advance
+## consider demultiplexing using primers
+## or removing primers using trimmomatic along with adapters
 
-# TO-DO
-# consider sorting and removinng PCR duplicates before filtering with SamIAM.py
+## TO-DO
+## consider sorting and removinng PCR duplicates before filtering with SamIAM.py
 
 
 # SSR Analysis Stage - SNP Calling Workflow
+
+# unload modules
+module unload bio/2.0
+#module unload parallel
+
+# activate the python2 environment for local run
+source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
+conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
 # status message
 echo "SSR SNP analysis started..."
 
 # move to the alignment directory
-#cd $inputsPath"/aligned"
+cd $inputsPath"/aligned"
 
 # copy pipeline scripts to the aligned directory
-#cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
+cp $baseDir"/SNP_Calling/Scripts/SamIAm.py" $inputsPath"/aligned"
 
 # set outputs path
-#outputsDir=$inputsPath"/alignedFiltered50"
+outputsDir=$inputsPath"/alignedFiltered50"
 # create the directory
-#mkdir $outputsDir
+mkdir $outputsDir
 
 # loop through all aligned sam files
-#for f1 in $inputsPath"/aligned/"*".sam"; do
+for f1 in $inputsPath"/aligned/"*".sam"; do
 	# trim file path from current folder name
-#	curSampleNoPath=$(basename "$f1" | sed 's/\.sam$//g')
+	curSampleNoPath=$(basename "$f1" | sed 's/\.sam$//g')
 	# print status message
-#	echo "Processing $f1"
+	echo "Processing $f1"
 	# run SSR pipeline
-#	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
+	python2 SamIAm.py -sam $f1 -C $infoPath -p "yes"
 	# replace SAM header
-#	grep "^@" $f1 > $outputsDir"/"$curSampleNoPath".header.sam"
+	grep "^@" $f1 > $outputsDir"/"$curSampleNoPath".header.sam"
 	# append filtered sequences
-#	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsDir"/"$curSampleNoPath".header.sam"
-#	rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
-#	rm $inputsPath"/aligned/"$curSampleNoPath".sam.hitInfo"
-#done
+	cat $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam" >> $outputsDir"/"$curSampleNoPath".header.sam"
+	rm $inputsPath"/aligned/"$curSampleNoPath".sam.filter50.sam"
+	rm $inputsPath"/aligned/"$curSampleNoPath".sam.hitInfo"
+done
+
+# load required software modules
+module load bio/2.0
+module load parallel
 
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
 
 # run script to perform sorting and removal of pcr duplicates
-#bash sorting_samtools.sh $inputsPath
+bash sorting_samtools.sh $inputsPath
 
 # run script to keep only unique read alignments
-#bash filterByMapQ_samtools.sh $inputsPath
+bash filterByMapQ_samtools.sh $inputsPath
 
 # run script to clip primer and ssr sequences
-#bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 
-# TO-DO
-# consider single sample calling
-# https://github.com/samtools/bcftools/issues/811
-# bcftools mpileup -a AD
-# bcftools call -G -
+## TO-DO
+## consider single sample calling
+## https://github.com/samtools/bcftools/issues/811
+## bcftools mpileup -a AD
+## bcftools call -G -
 
 # run script to perform variant calling
-#bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
+bash variantCalling_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # run script to perform variant filtering
 bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
@@ -133,7 +141,7 @@ bash variantFiltering_bcftools.sh $inputsPath $inputsFile $baseDir
 bash variantTrimming_bedtools.sh $inputsPath $inputsFile $baseDir
 
 # format matrix
-bash variantMatrix_bcftools.sh $inputsPath $inputsFile $baseDir
+#bash variantMatrix_bcftools.sh $inputsPath $inputsFile $baseDir
 
 # clean up
 #rm -r $inputsPath
