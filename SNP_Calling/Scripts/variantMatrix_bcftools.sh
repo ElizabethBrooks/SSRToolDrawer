@@ -66,10 +66,16 @@ echo -en 'Sample\t'"$contigList" > $resultsFile
 for f2 in $inputsPath"/variantsTrimmed/"*".noHeader.vcf"; do
 	# retrieve sample tag
 	sampleTag=$(basename $f2 | sed "s/\.noHeader\.vcf$//g")
+	## TO-DO ##
+	# retrieve read group
+	#readGroup=$(basename $f2 | sed "s/\.noHeader\.vcf$//g")
 	# output status message
 	echo "Processing $sampleTag"
 	# add sample tag to matrix row
 	echo -en '\n'$sampleTag >> $resultsFile
+	## TO-DO ##
+	# add read group tag to matrix row
+	#echo -en '\t'$readGroup
 	# loop over each marker
 	for i in $contigList; do
 		# create file with current marker variants

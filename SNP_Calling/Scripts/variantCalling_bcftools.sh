@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantCalling_bcftools.sh inputsFile baseDir inputsPathList
+# usage: bash variantCalling_bcftools.sh inputsPath baseDir inputsPathList
 
-# retrieve inputs file
-inputsFile=$2
+# retrieve input outputs path
+inputsPath=$1
 
 # retrieve base of working directory
-baseDir=$3
+baseDir=$2
 
 # set run num tag
 runNum="combined"
@@ -42,22 +42,23 @@ rm $outputsPath"/inputBAMList.txt"
 # loop over each input file
 for arg in "${@:3}"; do
 	# retrieve input outputs path
-	inputsPath=$1
+	#inputsPath=$1
 	# loop through all filtered sam files
-	ls $inputsPath"/"*".readGroups.bam" >> $outputsPath"/inputBAMList.txt"
+	#ls $inputsPath"/"*".readGroups.bam" >> $outputsPath"/inputBAMList.txt"
+	ls $arg"/"*".readGroups.bam" >> $outputsPath"/inputBAMList.txt"
 done
 
 # status message
 echo "Performing variant calling..."
 
-# TO-DO
-# https://github.com/samtools/bcftools/issues/811
-# bcftools mpileup -a AD
-# bcftools call -G
+## TO-DO
+## https://github.com/samtools/bcftools/issues/811
+## bcftools mpileup -a AD
+## bcftools call -G
 
 # calculate the read coverage of positions in the genome
 bcftools mpileup --threads 4 -d 8000 -f $ref -Ob -o $outputsPath"/"$runNum"_raw.bcf" -b $outputsPath"/inputBAMList.txt"
-rm $outputsPath"/inputBAMList.txt"
+#rm $outputsPath"/inputBAMList.txt"
 # detect the single nucleotide polymorphisms 
 bcftools call --threads 4 -mv -Oz -o $outputsPath"/"$runNum"_calls.vcf.gz" $outputsPath"/"$runNum"_raw.bcf" 
 rm $outputsPath"/"$runNum"_raw.bcf"
