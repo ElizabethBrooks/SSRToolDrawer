@@ -33,6 +33,9 @@ inputsPath=$outputsPath"/SSR_SNP_prep"
 # status message
 echo "SSR SNP analysis started..."
 
+# move to scripts dorectory
+cd $baseDir"/SNP_Calling/Scripts"
+
 # loop over each input file
 for run in "$@"; do
 	# status message
@@ -40,7 +43,7 @@ for run in "$@"; do
 	# set inputs file name
 	inputsFile="inputs_"$run".txt"
 	# run bash script to process the current subset
-	bash ssr_pipeline_subset_SNP.sh $inputsFile
+	bash ssr_pipeline_subset_SNP.sh $inputsFile $baseDir
 done
 
 # load software modules

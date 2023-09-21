@@ -1,11 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash ssr_pipeline_SNP.sh inputsFile
-# usage Ex: bash ssr_pipeline_SNP_test.sh inputs_run1.txt
-
-## TO-DO
-## add the combination of plate runs to VC
+# usage: bash ssr_pipeline_SNP.sh inputsFile baseDir
 
 # load required software modules
 module load bio/2.0
@@ -20,11 +16,8 @@ module load bio/2.0
 # retrieve input argument of a inputs file
 inputsFile=$1
 
-# retrieve current working directory
-currDir=$(pwd)
-
 # retrieve base directory path
-baseDir=$(dirname $currDir)
+baseDir=$2
 
 # retrieve the run number 
 runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
@@ -107,7 +100,7 @@ module load bio/2.0
 #module load parallel
 
 # move to pipeline scripts directory
-cd $currDir"/Scripts"
+cd $baseDir"/SNP_Calling/Scripts"
 
 # run script to perform sorting and removal of pcr duplicates
 bash sorting_samtools.sh $inputsPath
