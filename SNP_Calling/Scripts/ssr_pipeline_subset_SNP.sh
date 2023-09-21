@@ -1,13 +1,8 @@
 #!/bin/bash
-#$ -M ebrooks5@nd.edu
-#$ -m abe
-#$ -r n
-#$ -N test_ssr_SNP_jobOutput
-#$ -pe smp 4
 
 # script to run the SSR pipeline
-# usage: qsub ssr_pipeline_SNP.sh inputsFile
-# usage Ex: qsub ssr_pipeline_SNP_test.sh inputs_run1.txt
+# usage: bash ssr_pipeline_SNP.sh inputsFile
+# usage Ex: bash ssr_pipeline_SNP_test.sh inputs_run1.txt
 
 ## TO-DO
 ## add the combination of plate runs to VC
@@ -78,7 +73,7 @@ source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
 conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
 # status message
-echo "SSR SNP analysis started..."
+echo "SSR SNP data prep started for $runNum..."
 
 # move to the alignment directory
 cd $inputsPath"/aligned"
@@ -109,7 +104,7 @@ done
 
 # load required software modules
 module load bio/2.0
-module load parallel
+#module load parallel
 
 # move to pipeline scripts directory
 cd $currDir"/Scripts"
@@ -133,4 +128,4 @@ bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
 #rm -r $inputsPath
 
 # status message
-echo "SSR VC analysis complete!"
+echo "SSR VC data prep complete for $runNum!"
