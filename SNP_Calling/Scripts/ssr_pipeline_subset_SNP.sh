@@ -5,7 +5,7 @@
 
 # load required software modules
 module load bio/2.0
-#module load parallel
+module load parallel
 
 ## if necessary
 ## activate the python2 environment for job run
@@ -58,7 +58,7 @@ bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 
 # unload modules
 module unload bio/2.0
-#module unload parallel
+module unload parallel
 
 # activate the python2 environment for local run
 source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
@@ -94,9 +94,12 @@ for f1 in $inputsPath"/aligned/"*".sam"; do
 	rm $inputsPath"/aligned/"$curSampleNoPath".sam.hitInfo"
 done
 
+# deactivate the conda environment
+conda deactivate
+
 # load required software modules
 module load bio/2.0
-#module load parallel
+module load parallel
 
 # move to pipeline scripts directory
 cd $baseDir"/SNP_Calling/Scripts"
