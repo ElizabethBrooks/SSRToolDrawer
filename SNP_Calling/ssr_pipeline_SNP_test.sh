@@ -46,6 +46,7 @@ for run in "$@"; do
 	# set inputs file name
 	subsetFile="inputs_"$run".txt"
 	# run bash script to process the current subset
+	#qsub ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
 	bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
 	# setup the inputs path
 	#subsetPath=$outputsPath"/SSR_SNP_prep_"$run
