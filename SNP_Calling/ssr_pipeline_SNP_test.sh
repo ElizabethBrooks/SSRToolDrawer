@@ -8,6 +8,7 @@
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runList
 # usage Ex: qsub ssr_pipeline_SNP_test.sh run1 run2 run3
+# usage Ex: qsub ssr_pipeline_SNP_test.sh run4 run5 run6 run7
 # usage Ex: qsub ssr_pipeline_SNP_test.sh run1 run2 run3 run4 run5 run6 run7
 
 # retrieve input argument of a inputs file
@@ -27,8 +28,7 @@ outputsPath=$outputsPath"/SSR_SNP"
 mkdir $outputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then
-	echo "The $outputsPath directory already exsists... please remove before proceeding."
-	exit 1
+	echo "Warning! The $outputsPath directory already exsists. Proceeding..."
 fi
 
 # SSR Analysis Stage - SNP Calling Workflow
