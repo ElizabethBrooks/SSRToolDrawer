@@ -1,16 +1,17 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantCalling_bcftools.sh inputsPath baseDir inputsPathList
-
-# retrieve input outputs path
-inputsPath=$1
+# usage: bash variantCalling_bcftools.sh baseDir
 
 # retrieve base of working directory
-baseDir=$2
+baseDir=$1
 
 # set run num tag
 runNum="combined"
+
+# retrieve analysis outputs path
+inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+inputsPath=$inputsPath"/SSR_SNP"
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve ssr regions path
@@ -30,23 +31,11 @@ versionFile=$inputsPath"/software_VC_summary.txt"
 echo "Variant calling: " >> $versionFile
 bcftools --version >> $versionFile
 
-# set inputs inputsPath
-inputsPath=$inputsPath"/clipped"
-
 
 # Variant Calling Stage - SNP Calling Workflow
 
-# pre-clean up
-rm $outputsPath"/inputBAMList.txt"
-
-# loop over each input file
-for arg in "${@:3}"; do
-	# retrieve input outputs path
-	#inputsPath=$1
-	# loop through all filtered sam files
-	#ls $inputsPath"/"*".readGroups.bam" >> $outputsPath"/inputBAMList.txt"
-	ls $arg"/"*".readGroups.bam" >> $outputsPath"/inputBAMList.txt"
-done
+# add the inputs file paths to a txt file
+ls -d $inputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
 
 # status message
 echo "Performing variant calling..."
