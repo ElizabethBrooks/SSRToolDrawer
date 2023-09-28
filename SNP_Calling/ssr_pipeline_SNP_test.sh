@@ -64,8 +64,5 @@ bash variantCalling_bcftools.sh $baseDir
 # format matrix
 ##bash variantMatrix_bcftools.sh $inputsPath $baseDir
 
-# clean up
-#rm -r $inputsPath
-
 # status message
 echo "SSR VC analysis complete!"
