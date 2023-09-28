@@ -50,7 +50,7 @@ cd $baseDir"/SNP_Calling/Scripts"
 #done
 
 # load software modules
-#module load bio/2.0
+module load bio/2.0
 
 # run script to perform variant calling
 bash variantCalling_bcftools.sh $baseDir
