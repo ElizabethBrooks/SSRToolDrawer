@@ -58,7 +58,7 @@ bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -
 ##bcftools norm --threads 4 -m -any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
 bcftools norm --threads 4 -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
 echo "& with left alignment and normalized indels: " >> $outputsFile
-bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.bcf" | grep -v "#" | wc -l >> $outputsFile
+bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.vcf" | grep -v "#" | wc -l >> $outputsFile
 
 # index the bcf
 #bcftools index $outputsPath"/"$runNum"_calls.flt-norm.vcf"
