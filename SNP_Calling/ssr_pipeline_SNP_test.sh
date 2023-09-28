@@ -56,7 +56,7 @@ module load bio/2.0
 #bash variantCalling_bcftools.sh $baseDir
 
 # run script to perform variant filtering
-#bash variantFiltering_bcftools.sh $baseDir
+bash variantFiltering_bcftools.sh $baseDir
 
 # run script to perform variant trimming
 bash variantTrimming_bedtools.sh $baseDir
