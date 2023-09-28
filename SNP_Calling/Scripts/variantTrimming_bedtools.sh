@@ -1,19 +1,17 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantTrimming_bedtools.sh inputsPath inputsFile baseDir
-
-# retrieve input outputs path
-inputsPath=$1
-
-# retrieve inputs file
-inputsFile=$2
+# usage: bash variantTrimming_bedtools.sh baseDir
 
 # retrieve base of working directory
-baseDir=$3
+baseDir=$1
 
-# retrieve the run number 
-runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
+# set run num tag
+runNum="combined"
+
+# retrieve analysis inputs path
+inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+inputsPath=$inputsPath"/SSR_SNP"
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 # retrieve primers path
@@ -25,7 +23,7 @@ outputsPath=$inputsPath"/variantsTrimmed"
 mkdir $outputsPath
 
 # name of output file of inputs
-versionFile=$inputsPath"/software_VC_summary.txt"
+versionFile=$outputsPath"/software_VT_summary.txt"
 
 # set inputs path
 inputsPath=$inputsPath"/variantsFiltered"
