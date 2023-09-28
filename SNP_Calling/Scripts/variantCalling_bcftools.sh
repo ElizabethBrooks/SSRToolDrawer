@@ -9,7 +9,7 @@ baseDir=$1
 # set run num tag
 runNum="combined"
 
-# retrieve analysis outputs path
+# retrieve analysis inputs path
 inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 inputsPath=$inputsPath"/SSR_SNP"
 # retrieve reference path

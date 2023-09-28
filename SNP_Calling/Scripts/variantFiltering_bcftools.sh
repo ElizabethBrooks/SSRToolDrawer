@@ -1,19 +1,17 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantFiltering_bcftools.sh inputsPath inputsFile baseDir
-
-# retrieve input outputs path
-inputsPath=$1
-
-# retrieve inputs file
-inputsFile=$2
+# usage: bash variantFiltering_bcftools.sh baseDir
 
 # retrieve base of working directory
-baseDir=$3
+baseDir=$1
 
-# retrieve the run number 
-runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
+# set the run number 
+runNum="combined"
+
+# retrieve analysis inputs path
+inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+inputsPath=$inputsPath"/SSR_SNP"
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 
@@ -23,10 +21,10 @@ outputsPath=$inputsPath"/variantsFiltered"
 mkdir $outputsPath
 
 # name of output file of inputs
-versionFile=$inputsPath"/software_VC_summary.txt"
+versionFile=$outputsPath"/software_VF_summary.txt"
 
 # name of output file of filtering summary
-outputsFile=$inputsPath"/variantFiltering_stats.txt"
+outputsFile=$outputsPath"/variantFiltering_stats.txt"
 
 # set inputs path
 inputsPath=$inputsPath"/variantsCalled"
