@@ -5,19 +5,17 @@
 #$ -N SNP_matrix_jobOutput
 
 # script to create a formatted variant matrix
-# usage: bash variantMatrix_bcftools.sh inputsPath inputsFile baseDir
-
-# retrieve input outputs path
-inputsPath=$1
-
-# retrieve inputs file
-inputsFile=$2
+# usage: bash variantMatrix_bcftools.sh baseDir
 
 # retrieve base of working directory
-baseDir=$3
+baseDir=$1
 
-# retrieve the run number 
-runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
+# set run num tag
+runNum="combined"
+
+# retrieve analysis inputs path
+inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+inputsPath=$inputsPath"/SSR_SNP"
 # retrieve the project ID 
 projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
 # retrieve analysis outputs path
@@ -26,10 +24,10 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 
 # set outputs path
-outputsPath=$outputsPath"/"$projectDir"_SSR_SNP"
+outputsPath=$inputsPath"/"$projectDir"_SSR_SNP"
 
 # name of output file of inputs
-versionFile=$inputsPath"/software_VC_summary.txt"
+versionFile=$inputsPath"/software_VM_summary.txt"
 
 # output software version
 echo "Variant matrix formatting: " >> $versionFile
@@ -42,7 +40,7 @@ bcftools --version >> $versionFile
 echo "Performing variant matrix formatting for $runNum"
 
 # subset vcf file by sample and remove header lines
-for f1 in $inputsPath"/clipped/"*".readGroups.bam"; do
+for f1 in $inputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam"; do
 	# retrieve sample name and remove the file extension
 	sampleTag=$(basename $f1 | sed 's/\.readGroups\.bam$//g')
 	# print status message
