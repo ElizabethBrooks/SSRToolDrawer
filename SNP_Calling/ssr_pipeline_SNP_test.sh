@@ -49,6 +49,16 @@ cd $baseDir"/SNP_Calling/Scripts"
 	#bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
 #done
 
+# add run tags to sample files names
+#for i in $outputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam"; do
+	# retrieve sanmepl run tag
+	#sampleRun=$(dirname $i | cut -d "/" -f 10 | cut -d "_" -f 4)
+	# create updated file name
+	#newName=$(echo $i | sed "s/\.readGroups\.bam$/\_$sampleRun\.readGroups\.bam/g")
+	# update the sample file name
+	#mv $i $newName
+#done
+
 # load software modules
 module load bio/2.0
 

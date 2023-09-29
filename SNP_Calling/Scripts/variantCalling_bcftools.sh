@@ -34,16 +34,6 @@ bcftools --version >> $versionFile
 
 # Variant Calling Stage - SNP Calling Workflow
 
-# add run tags to sample files names
-for i in $inputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam"; do
-	# retrieve sanmepl run tag
-	sampleRun=$(dirname $i | cut -d "/" -f 10 | cut -d "_" -f 4)
-	# create updated file name
-	newName=$(echo $i | sed "s/\.readGroups\.bam$/\_$sampleRun\.readGroups\.bam/g")
-	# update the sample file name
-	mv $i $newName
-done
-
 # add the inputs file paths to a txt file
 ls -d $inputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
 
