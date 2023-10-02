@@ -23,7 +23,7 @@ outputsPath=$inputsPath"/variantsTrimmed"
 mkdir $outputsPath
 
 # name of output file of inputs
-versionFile=$outputsPath"/software_VT_summary.txt"
+versionFile=$inputsPath"/software_summary.txt"
 
 # set inputs path
 inputsPath=$inputsPath"/variantsFiltered"

@@ -40,36 +40,26 @@ echo "SSR SNP analysis started..."
 cd $baseDir"/SNP_Calling/Scripts"
 
 # loop over each input file
-#for run in "$@"; do
+for run in "$@"; do
 	# status message
-	#echo "Preparing data for $run"
+	echo "Preparing data for $run"
 	# set inputs file name
-	#subsetFile="inputs_"$run".txt"
+	subsetFile="inputs_"$run".txt"
 	# run bash script to process the current subset
-	#bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
-#done
-
-# add run tags to sample files names
-#for i in $outputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam"; do
-	# retrieve sanmepl run tag
-	#sampleRun=$(dirname $i | cut -d "/" -f 10 | cut -d "_" -f 4)
-	# create updated file name
-	#newName=$(echo $i | sed "s/\.readGroups\.bam$/\_$sampleRun\.readGroups\.bam/g")
-	# update the sample file name
-	#mv $i $newName
-#done
+	bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
+done
 
 # load software modules
 module load bio/2.0
 
 # run script to perform variant calling
-#bash variantCalling_bcftools.sh $baseDir
+bash variantCalling_bcftools.sh $baseDir
 
 # run script to perform variant filtering
-#bash variantFiltering_bcftools.sh $baseDir
+bash variantFiltering_bcftools.sh $baseDir
 
 # run script to perform variant trimming
-#bash variantTrimming_bedtools.sh $baseDir
+bash variantTrimming_bedtools.sh $baseDir
 
 # format matrix
 bash variantMatrix_bcftools.sh $baseDir

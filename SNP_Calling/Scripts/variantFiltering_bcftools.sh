@@ -21,7 +21,7 @@ outputsPath=$inputsPath"/variantsFiltered"
 mkdir $outputsPath
 
 # name of output file of inputs
-versionFile=$outputsPath"/software_VF_summary.txt"
+versionFile=$inputsPath"/software_summary.txt"
 
 # name of output file of filtering summary
 outputsFile=$outputsPath"/variantFiltering_stats.txt"

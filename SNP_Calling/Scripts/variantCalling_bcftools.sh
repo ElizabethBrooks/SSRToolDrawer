@@ -25,7 +25,7 @@ outputsPath=$inputsPath"/variantsCalled"
 mkdir $outputsPath
 
 # name of output file of inputs
-versionFile=$outputsPath"/software_VC_summary.txt"
+versionFile=$inputsPath"/software_summary.txt"
 
 # output software version
 echo "Variant calling: " >> $versionFile

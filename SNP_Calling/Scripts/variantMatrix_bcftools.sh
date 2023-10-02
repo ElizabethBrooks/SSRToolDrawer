@@ -23,10 +23,10 @@ regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | 
 outputsPath=$inputsPath
 
 # name of output file of inputs
-versionFile=$inputsPath"/software_VM_summary.txt"
+versionFile=$inputsPath"/software_summary.txt"
 
 # output software version
-echo "Variant matrix formatting: " > $versionFile
+echo "Variant matrix formatting: " >> $versionFile
 bcftools --version >> $versionFile
 
 

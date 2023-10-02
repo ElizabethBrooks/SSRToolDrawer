@@ -111,7 +111,7 @@ bash sorting_samtools.sh $inputsPath
 bash filterByMapQ_samtools.sh $inputsPath
 
 # run script to clip primer and ssr sequences
-bash clipping_samtools_bamclipper.sh $inputsPath $baseDir
+bash clipping_samtools_bamclipper.sh $inputsPath $baseDir $runNum
 
 ## TO-DO
 ## consider single sample calling

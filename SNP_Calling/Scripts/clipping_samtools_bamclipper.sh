@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to clip primer and ssr sequences
-# usage: bash clipping_samtools_bamclipper.sh inputsPath baseDir
+# usage: bash clipping_samtools_bamclipper.sh inputsPath baseDir runNum
 
 # retrieve inputs path
 inputsPath=$1
@@ -9,13 +9,16 @@ inputsPath=$1
 # retrieve base of working directory
 baseDir=$2
 
+# retrieve run number
+sampleRun=$3
+
 # retrieve primers path
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 # bamclipper tool path
 clipperPath=$(grep "bamclipperTool:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
 
 # name of output file of inputs
-versionFile=$inputsPath"/software_VC_summary.txt"
+versionFile=$inputsPath"/software_summary.txt"
 
 # output software version
 echo "Clipping: " >> $versionFile
@@ -31,6 +34,14 @@ inputsPath=$inputsPath"/alignedFilteredMapQ"
 
 
 # Clipping Stage - SNP Calling Workflow
+
+# add run tags to sample files names
+for i in $inputsPath"/"*".filteredMapQ.bam"; do
+	# retrieve sanmepl run tag
+	newName=$(echo $i | sed "s/\.filteredMapQ\.bam$/\_$sampleRun\.filteredMapQ\.bam/g")
+	# update the sample file name
+	mv $i $newName
+done
 
 # copy bamclipper software directory
 cp -r $clipperPath $outputsPath

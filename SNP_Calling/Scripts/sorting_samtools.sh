@@ -7,7 +7,7 @@
 inputsPath=$1
 
 # name of output file of inputs
-versionFile=$inputsPath"/software_VC_summary.txt"
+versionFile=$inputsPath"/software_summary.txt"
 
 # output software version
 echo "Sorting: " >> $versionFile
