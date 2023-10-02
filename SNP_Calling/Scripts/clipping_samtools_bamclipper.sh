@@ -69,6 +69,7 @@ for f1 in $inputsPath"/"*".filteredMapQ.bam"; do
 done
 
 # clean up
+#rm -r $inputsPath
 rm -r $outputsPath"/"$clipperBase
 
 # move back to pipeline scripts directory

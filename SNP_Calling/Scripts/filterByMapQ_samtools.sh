@@ -39,5 +39,8 @@ for f in $inputsPath"/"*".sortedCoordinate.bam"; do
 	samtools index -@ 4 $outputsPath"/"$curSampleNoPath".filteredMapQ.bam"
 done
 
+# clean up
+#rm -r $inputsPath
+
 # status message
 echo "Analysis conplete!"

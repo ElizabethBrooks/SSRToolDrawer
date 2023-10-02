@@ -48,5 +48,8 @@ for f in $inputsPath"/"*".header.sam"; do
 	echo "Processed!"
 done
 
+# clean up
+#rm -r $inputsPath
+
 # status message
 echo "Analysis conplete!"

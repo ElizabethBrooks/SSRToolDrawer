@@ -25,11 +25,11 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/SSR_SNP"
-#mkdir $outputsPath
+mkdir $outputsPath
 # check if the folder already exists
-#if [ $? -ne 0 ]; then
-	#echo "Warning! The $outputsPath directory already exsists. Proceeding..."
-#fi
+if [ $? -ne 0 ]; then
+	echo "Warning! The $outputsPath directory already exsists. Proceeding..."
+fi
 
 # SSR Analysis Stage - SNP Calling Workflow
 
