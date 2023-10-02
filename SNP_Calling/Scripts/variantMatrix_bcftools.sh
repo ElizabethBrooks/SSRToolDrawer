@@ -16,21 +16,17 @@ runNum="combined"
 # retrieve analysis inputs path
 inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 inputsPath=$inputsPath"/SSR_SNP"
-# retrieve the project ID 
-projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
-# retrieve analysis outputs path
-outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 
 # set outputs path
-outputsPath=$inputsPath"/"$projectDir"_SSR_SNP"
+outputsPath=$inputsPath
 
 # name of output file of inputs
 versionFile=$inputsPath"/software_VM_summary.txt"
 
 # output software version
-echo "Variant matrix formatting: " >> $versionFile
+echo "Variant matrix formatting: " > $versionFile
 bcftools --version >> $versionFile
 
 
