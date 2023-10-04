@@ -56,7 +56,8 @@ bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -
 #Turn on left alignment, normalize indels
 ## and split multiallelic sites
 ##bcftools norm --threads 4 -m -any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
-bcftools norm --threads 4 -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
+# and collapse multi allelic sites
+bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
 echo "& with left alignment and normalized indels: " >> $outputsFile
 bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.vcf" | grep -v "#" | wc -l >> $outputsFile
 

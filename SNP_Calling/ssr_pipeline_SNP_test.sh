@@ -25,11 +25,11 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/SSR_SNP"
-mkdir $outputsPath
+#mkdir $outputsPath
 # check if the folder already exists
-if [ $? -ne 0 ]; then
-	echo "Warning! The $outputsPath directory already exsists. Proceeding..."
-fi
+#if [ $? -ne 0 ]; then
+	#echo "Warning! The $outputsPath directory already exsists. Proceeding..."
+#fi
 
 # SSR Analysis Stage - SNP Calling Workflow
 
@@ -40,20 +40,20 @@ echo "SSR SNP analysis started..."
 cd $baseDir"/SNP_Calling/Scripts"
 
 # loop over each input file
-for run in "$@"; do
+#for run in "$@"; do
 	# status message
-	echo "Preparing data for $run"
+	#echo "Preparing data for $run"
 	# set inputs file name
-	subsetFile="inputs_"$run".txt"
+	#subsetFile="inputs_"$run".txt"
 	# run bash script to process the current subset
-	bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
-done
+	#bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
+#done
 
 # load software modules
 module load bio/2.0
 
 # run script to perform variant calling
-bash variantCalling_bcftools.sh $baseDir
+#bash variantCalling_bcftools.sh $baseDir
 
 # run script to perform variant filtering
 bash variantFiltering_bcftools.sh $baseDir
