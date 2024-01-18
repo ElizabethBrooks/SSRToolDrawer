@@ -14,6 +14,7 @@
 # usage Ex: qsub ssr_pipeline_basic.sh inputs_run5.txt
 # usage Ex: qsub ssr_pipeline_basic.sh inputs_run6.txt
 # usage Ex: qsub ssr_pipeline_basic.sh inputs_run7.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputs_run8.txt
 
 # required modules for ND CRC servers
 module load bio/2.0
