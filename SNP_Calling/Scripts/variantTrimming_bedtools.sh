@@ -11,7 +11,7 @@ runNum="combined"
 
 # retrieve analysis inputs path
 inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-inputsPath=$inputsPath"/SSR_SNP"
+inputsPath=$inputsPath"/SNP_Calling"
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 # retrieve primers path

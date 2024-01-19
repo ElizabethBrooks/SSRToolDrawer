@@ -29,10 +29,10 @@ ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " "
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsPath=$outputsPath"/SSR_SNP"
+outputsPath=$outputsPath"/SNP_Calling"
 
 # setup the inputs path
-inputsPath=$outputsPath"/SSR_SNP_prep_"$runNum
+inputsPath=$outputsPath"/SNP_Calling_prep_"$runNum
 mkdir $inputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then

@@ -15,7 +15,7 @@ runNum="combined"
 
 # retrieve analysis inputs path
 inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-inputsPath=$inputsPath"/SSR_SNP"
+inputsPath=$inputsPath"/SNP_Calling"
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 
@@ -36,7 +36,7 @@ bcftools --version >> $versionFile
 echo "Performing variant matrix formatting for $runNum"
 
 # subset vcf file by sample and remove header lines
-for f1 in $inputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam"; do
+for f1 in $inputsPath"/SNP_Calling_prep_run"*"/clipped/"*".readGroups.bam"; do
 	# retrieve sample name and remove the file extension
 	sampleTag=$(basename $f1 | sed 's/\.readGroups\.bam$//g')
 	# print status message

@@ -11,7 +11,7 @@ runNum="combined"
 
 # retrieve analysis inputs path
 inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-inputsPath=$inputsPath"/SSR_SNP"
+inputsPath=$inputsPath"/SNP_Calling"
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve ssr regions path
@@ -35,7 +35,7 @@ bcftools --version >> $versionFile
 # Variant Calling Stage - SNP Calling Workflow
 
 # add the inputs file paths to a txt file
-ls -d $inputsPath"/SSR_SNP_prep_run"*"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
+ls -d $inputsPath"/SNP_Calling_prep_run"*"/clipped/"*".readGroups.bam" > $outputsPath"/inputBAMList.txt"
 
 # status message
 echo "Performing variant calling..."
