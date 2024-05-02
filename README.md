@@ -82,9 +82,17 @@ Formats the output of SNPMatrix.py into a format that can be read by JoinMap.
 - run3: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220128_JB-861_Romero-Severson-Chestnut/Fastq
 - run4: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220408_JB-998_ChestnutSSR_Round4/Fastq
 - run5: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
+- run6: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207-230130_JRS-ChestnutSSR-Set6
+- run7: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230719_ChestnutSSR_Round7
+- run8: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/240112_DS-2529_ChestnutSSR_Round8
 
+#### Note
 
-## Analysis Data Sets
+Note that the plate 6 sets were split across two runs:
+- /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230130_JRS-ChestnutSSR-Set6
+- /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207_JRS-ChestnutSSR-Set6
+
+## Past Analysis Data Sets
 
 Original test: 
 - /afs/crc.nd.edu/group/genomics/yoda/JRS_MiSeq_7-27-17
@@ -100,7 +108,3 @@ Walnut:
 Last chestnut:
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_2021_miseq
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq
-
-Plate 6 runs:
-- /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230130_JRS-ChestnutSSR-Set6
-- /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207_JRS-ChestnutSSR-Set6
