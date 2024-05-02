@@ -18,18 +18,21 @@ ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " "
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 # retrieve primers path
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_SNP.txt"
+
+# output software version
+echo "Variant calling: " >> $versionFile
+bcftools --version >> $versionFile
+echo -e "\n" >> $versionFile
 
 # setup the variant calling directory
 outputsPath=$inputsPath"/variantsCalled"
 # create the directory
 mkdir $outputsPath
-
-# name of output file of inputs
-versionFile=$inputsPath"/software_summary.txt"
-
-# output software version
-echo "Variant calling: " >> $versionFile
-bcftools --version >> $versionFile
 
 
 # Variant Calling Stage - SNP Calling Workflow

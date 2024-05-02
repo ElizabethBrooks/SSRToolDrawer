@@ -16,13 +16,16 @@ sampleRun=$3
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
 # bamclipper tool path
 clipperPath=$(grep "bamclipperTool:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/bamclipperTool://g")
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
-# name of output file of inputs
-versionFile=$inputsPath"/software_summary.txt"
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_SNP.txt"
 
 # output software version
 echo "Clipping: " >> $versionFile
 samtools --version >> $versionFile
+echo -e "\n" >> $versionFile
 
 # set outputs path
 outputsPath=$inputsPath"/clipped"

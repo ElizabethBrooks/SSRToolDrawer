@@ -1,17 +1,24 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash sorting_samtools.sh inputsPath
+# usage: bash sorting_samtools.sh inputsPath baseDir
 
 # retrieve inputs path
 inputsPath=$1
 
-# name of output file of inputs
-versionFile=$inputsPath"/software_summary.txt"
+# retrieve base of working directory
+baseDir=$2
+
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_SNP.txt"
 
 # output software version
 echo "Sorting: " >> $versionFile
 samtools --version >> $versionFile
+echo -e "\n" >> $versionFile
 
 # set outputs path
 outputsPath=$inputsPath"/sorted"

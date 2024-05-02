@@ -18,16 +18,19 @@ inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -
 inputsPath=$inputsPath"/SNP_Calling"
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_SNP.txt"
 
 # set outputs path
 outputsPath=$inputsPath
 
-# name of output file of inputs
-versionFile=$inputsPath"/software_summary.txt"
-
 # output software version
 echo "Variant matrix formatting: " >> $versionFile
 bcftools --version >> $versionFile
+echo -e "\n" >> $versionFile
 
 
 # Variant Matrix Formatting Stage - SNP Calling Workflow

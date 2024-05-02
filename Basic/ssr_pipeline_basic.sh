@@ -56,6 +56,9 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+# make a directory for the software version info
+mkdir $outputsPath"/info"
+
 # setup the inputs path
 inputsPath=$outputsPath"/"$projectDir"_SSR_prep"
 mkdir $inputsPath

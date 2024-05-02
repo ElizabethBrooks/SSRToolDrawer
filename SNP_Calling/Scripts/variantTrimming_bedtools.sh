@@ -16,14 +16,16 @@ inputsPath=$inputsPath"/SNP_Calling"
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
 # retrieve primers path
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_SNP.txt"
 
 # setup the variant calling directory
 outputsPath=$inputsPath"/variantsTrimmed"
 # create the directory
 mkdir $outputsPath
-
-# name of output file of inputs
-versionFile=$inputsPath"/software_summary.txt"
 
 # set inputs path
 inputsPath=$inputsPath"/variantsFiltered"
@@ -31,6 +33,7 @@ inputsPath=$inputsPath"/variantsFiltered"
 # output software version
 echo "Variant trimming: " >> $versionFile
 bcftools --version >> $versionFile
+echo -e "\n" >> $versionFile
 
 
 # Variant Trimming Stage - SNP Trimming Workflow

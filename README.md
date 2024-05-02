@@ -7,6 +7,9 @@
 3. To run the "Basic" workflow, move to the **Basic** directory and run the *ssr_pipeline_basic.sh* script by following the usage notes at the top of the file (e.g., qsub ssr_pipeline_basic.sh inputs_run8.txt).
 3. To run the "SNP Calling" workflow, move to the **SNP_Calling** directory and run the *ssr_pipeline_SNP.sh* script by following the usage notes at the top of the file. (e.g., qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8)
 
+### Note
+
+The *ssr_pipeline_basic.sh* (lines 77 and 78) and *ssr_pipeline_subset_SNP.sh* (lines 64 and 65) files in the Scripts subdirectory of the SNP_Calling directory uses the bashrc and python2 environment setup by the ebrooks5 user.
 
 ## Workflows
 

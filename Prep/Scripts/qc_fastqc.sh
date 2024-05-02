@@ -17,13 +17,16 @@ baseDir=$3
 
 # retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
-# name of output file of inputs
-versionFile=$inputsPath"/software_prep_summary.txt"
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_prep.txt"
 
 # output software version
 echo "QC: " >> $versionFile
 fastqc -version >> $versionFile
+echo -e "\n" >> $versionFile
 
 # make a new directory for analysis
 qcOut=$inputsPath"/qc"

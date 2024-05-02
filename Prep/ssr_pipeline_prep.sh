@@ -14,9 +14,11 @@ baseDir=$3
 
 # retrieve the project ID 
 projectDir=$(grep "ID:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/ID://g")
+# retrieve analysis outputs path
+outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # name output file of inputs
-versionFile=$inputsPath"/software_prep_summary.txt"
+versionFile=$outputsPath"/info/software_summary_prep.txt"
 # add pipeline info to outputs
 echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
 

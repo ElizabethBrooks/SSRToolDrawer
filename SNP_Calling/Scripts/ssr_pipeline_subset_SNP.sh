@@ -105,10 +105,10 @@ module load parallel
 cd $baseDir"/SNP_Calling/Scripts"
 
 # run script to perform sorting and removal of pcr duplicates
-bash sorting_samtools.sh $inputsPath
+bash sorting_samtools.sh $inputsPath $baseDir
 
 # run script to keep only unique read alignments
-bash filterByMapQ_samtools.sh $inputsPath
+bash filterByMapQ_samtools.sh $inputsPath $baseDir
 
 # run script to clip primer and ssr sequences
 bash clipping_samtools_bamclipper.sh $inputsPath $baseDir $runNum

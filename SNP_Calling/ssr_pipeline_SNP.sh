@@ -30,6 +30,9 @@ if [ $? -ne 0 ]; then
 	echo "Warning! The $outputsPath directory already exsists. Proceeding..."
 fi
 
+# make a directory for the software version info
+mkdir $outputsPath"/info"
+
 # SSR Analysis Stage - SNP Calling Workflow
 
 # status message
@@ -62,6 +65,12 @@ bash variantTrimming_bedtools.sh $baseDir
 
 # format matrix
 bash variantMatrix_bcftools.sh $baseDir
+
+# clean up
+rm -r $outputsPath"/SNP_Calling_prep_run"*
+rm -r $outputsPath"/variantsCalled"
+rm -r $outputsPath"/variantsFiltered"
+rm -r $outputsPath"/variantsTrimmed"
 
 # status message
 echo "SSR VC analysis complete!"

@@ -19,15 +19,18 @@ baseDir=$3
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
 # retrieve paired reads absolute path for alignment
 readPath=$(grep "pairedReads:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/pairedReads://g")
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
-# name of output file of inputs
-versionFile=$inputsPath"/software_prep_summary.txt"
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_prep.txt"
 
 # output software version
 echo "Alignment: " >> $versionFile
 bwa &> tmp.txt
 cat tmp.txt | head -3 >> $versionFile
 rm tmp.txt
+echo -e "\n" >> $versionFile
 
 # make an outputs directory for analysis
 anOut=$inputsPath"/aligned"

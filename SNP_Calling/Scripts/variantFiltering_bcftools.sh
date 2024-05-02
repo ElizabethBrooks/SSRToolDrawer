@@ -14,14 +14,16 @@ inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -
 inputsPath=$inputsPath"/SNP_Calling"
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+# retrieve analysis outputs path
+infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+
+# name output file of inputs
+versionFile=$infoPath"/info/software_summary_SNP.txt"
 
 # setup the variant calling directory
 outputsPath=$inputsPath"/variantsFiltered"
 # create the directory
 mkdir $outputsPath
-
-# name of output file of inputs
-versionFile=$inputsPath"/software_summary.txt"
 
 # name of output file of filtering summary
 outputsFile=$outputsPath"/variantFiltering_stats.txt"
@@ -32,6 +34,7 @@ inputsPath=$inputsPath"/variantsCalled"
 # output software version
 echo "Variant filtering: " >> $versionFile
 bcftools --version >> $versionFile
+echo -e "\n" >> $versionFile
 
 
 # Variant Filtering Stage - SNP Calling Workflow
