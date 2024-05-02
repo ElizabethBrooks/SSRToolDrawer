@@ -1,11 +1,25 @@
 # SSRTools
 
+## Installation
+
+<b>First,</b> download this GitHub repository using the git clone command in the terminal as follows.
+
+To download the code onto a local computer or server space, click the green <i>< > Code</i> button and copy the link. Then, using the HTTPS web URL in the terminal:
+
+git clone https://github.com/ElizabethBrooks/SSRToolDrawer.git
+
+Alternatively, using SSH:
+
+git clone git@github.com:ElizabethBrooks/SSRToolDrawer.git
+
+The latest version of this application may also be downloaded from this repository by clicking the green <i>< > Code</i> button near the top of the page, and then clicking <i>Download ZIP</i>.
+
 ## Running
 
-1. Update the **outputs** path in the *inputs_sst_pipeline.txt* file. Usually the final directory in the outputs path is updated to the current month and year like so: SSRAnalysis\_**MonthYear** (e.g., SSRAnalysis_May2024)
-2. Add a file to the InputData directory that contains the **run**, **ID**, and **pairedReads**. The file should be named with the run number like so: inputs_run**Number**.txt (e.g., inputs_run1.txt). For example formatting, refer to the *inputs_run1.txt* file.
+1. Update the **outputs** path in the *inputs_sst_pipeline.txt* file. Usually the final directory in the outputs path is updated to the current month and year like so: SSRAnalysis\_**MonthYear** (e.g., SSRAnalysis_May2024).
+2. Add a file to the InputData directory that contains the **run**, **ID**, and **pairedReads**. The file should be named with the run number like so: inputs_run**Number**.txt (e.g., inputs_run1.txt). For example input data file formatting, refer to the *inputs_run1.txt* file.
 3. To run the "Basic" workflow, move to the **Basic** directory and run the *ssr_pipeline_basic.sh* script by following the usage notes at the top of the file (e.g., qsub ssr_pipeline_basic.sh inputs_run8.txt).
-3. To run the "SNP Calling" workflow, move to the **SNP_Calling** directory and run the *ssr_pipeline_SNP.sh* script by following the usage notes at the top of the file. (e.g., qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8)
+4. To run the "SNP Calling" workflow, move to the **SNP_Calling** directory and run the *ssr_pipeline_SNP.sh* script by following the usage notes at the top of the file (e.g., qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8).
 
 ### Note
 
