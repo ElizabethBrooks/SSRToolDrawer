@@ -2,7 +2,7 @@
 #$ -M ebrooks5@nd.edu
 #$ -m abe
 #$ -r n
-#$ -N test_ssr_SNP_jobOutput
+#$ -N ssr_SNP_jobOutput
 #$ -pe smp 4
 
 # script to run the SSR pipeline

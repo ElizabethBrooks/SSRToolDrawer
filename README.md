@@ -1,5 +1,10 @@
 # SSRTools
 
+## Running
+
+1. Update the **outputs** path in the *inputs_sst_pipeline.txt* file. Usually the outputs path is updated to the current month and year like so: SSRAnalysis_May2024
+2. 
+
 ## Workflows
 
 There are two possible workflows.
