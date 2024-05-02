@@ -88,7 +88,7 @@ Formats the output of SNPMatrix.py into a format that can be read by JoinMap.
 
 #### Note
 
-Note that the plate 6 sets were split across two runs:
+The plate 6 sets were split across two runs:
 - /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230130_JRS-ChestnutSSR-Set6
 - /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207_JRS-ChestnutSSR-Set6
 
