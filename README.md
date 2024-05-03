@@ -23,7 +23,7 @@ The latest version of this application may also be downloaded from this reposito
 
 ### Note
 
-The *ssr_pipeline_basic.sh* (lines 77 and 78) and *ssr_pipeline_subset_SNP.sh* (lines 64 and 65) files in the Scripts subdirectory of the SNP_Calling directory uses the bashrc and python2 environment setup by the ebrooks5 user.
+The *ssr_pipeline_basic.sh* (lines 77 and 78) file in the Basic directory and *ssr_pipeline_subset_SNP.sh* (lines 64 and 65) file in the Scripts subdirectory of the SNP_Calling directory uses the bashrc and python2 environment setup by the ebrooks5 user.
 
 ## Workflows
 
