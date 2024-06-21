@@ -3,7 +3,7 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_basic_jobOutput
-#$ -pe smp 4
+#$ -pe smp 8
 
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_basic.sh runInputs
@@ -15,6 +15,7 @@
 # usage Ex: qsub ssr_pipeline_basic.sh inputs_run6.txt
 # usage Ex: qsub ssr_pipeline_basic.sh inputs_run7.txt
 # usage Ex: qsub ssr_pipeline_basic.sh inputs_run8.txt
+# usage Ex: qsub ssr_pipeline_basic.sh inputs_run9.txt
 
 # required modules for ND CRC servers
 module load bio/2.0

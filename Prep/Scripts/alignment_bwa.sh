@@ -53,7 +53,7 @@ for f1 in "$trimmedFolder"/*pForward.fq.gz; do
 	# print status message
 	echo "Processing $curSampleNoPath"
 	# run bwa with default settings
-	bwa mem -t 4 $ref $f1 $curSample"_pReverse.fq.gz" > $anOut"/"$curSampleNoPath".sam"
+	bwa mem -t 8 $ref $f1 $curSample"_pReverse.fq.gz" > $anOut"/"$curSampleNoPath".sam"
 	# status message
 	echo "Processed!"
 done

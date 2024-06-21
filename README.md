@@ -108,3 +108,8 @@ Walnut:
 Last chestnut:
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_2021_miseq
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq
+
+
+## TO-DO
+
+- Fix writing of software versions to summary file in the info directory

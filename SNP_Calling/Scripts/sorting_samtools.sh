@@ -38,15 +38,15 @@ for f in $inputsPath"/"*".header.sam"; do
 	# status message
 	echo "Sorting $f"
 	# convert sam to bam
-	samtools view -@ 4 -bo $outputsPath"/"$curSampleNoPath".header.bam" $f
+	samtools view -@ 8 -bo $outputsPath"/"$curSampleNoPath".header.bam" $f
 	# run samtools to prepare mapped reads for sorting
-	samtools sort -@ 4 -n -o $outputsPath"/"$curSampleNoPath".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".header.bam"
+	samtools sort -@ 8 -n -o $outputsPath"/"$curSampleNoPath".sortedName.bam" -T "/tmp/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".header.bam"
 	rm $outputsPath"/"$curSampleNoPath".header.bam"
 	# run fixmate -m to update paired-end flags for singletons
 	samtools fixmate -m $outputsPath"/"$curSampleNoPath".sortedName.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	rm $outputsPath"/"$curSampleNoPath".sortedName.bam"
 	# run samtools to prepare mapped reads for sorting by coordinate
-	samtools sort -@ 4 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
+	samtools sort -@ 8 -o $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" -T "/tmp/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	rm $outputsPath"/"$curSampleNoPath".sortedFixed.bam"
 	# remove duplicate reads
 	#samtools markdup -r $outputsPath"/"$curSampleNoPath".sortedCoordinate.bam" $outputsPath"/"$curSampleNoPath".noDups.bam"

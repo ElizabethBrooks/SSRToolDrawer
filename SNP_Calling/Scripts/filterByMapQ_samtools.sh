@@ -40,9 +40,9 @@ for f in $inputsPath"/"*".sortedCoordinate.bam"; do
 	# status message
 	echo "Filtering $f"
 	# keep only unique read alignments using a mapq score of 60
-	samtools view -@ 4 -bq 60 $f > $outputsPath"/"$curSampleNoPath".filteredMapQ.bam"
+	samtools view -@ 8 -bq 60 $f > $outputsPath"/"$curSampleNoPath".filteredMapQ.bam"
 	# index bam file
-	samtools index -@ 4 $outputsPath"/"$curSampleNoPath".filteredMapQ.bam"
+	samtools index -@ 8 $outputsPath"/"$curSampleNoPath".filteredMapQ.bam"
 done
 
 # clean up

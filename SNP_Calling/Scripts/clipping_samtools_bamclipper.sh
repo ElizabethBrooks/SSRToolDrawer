@@ -66,7 +66,7 @@ for f1 in $inputsPath"/"*".filteredMapQ.bam"; do
 	# soft mask primers sequences
 	./bamclipper.sh -b $f1 -p $primerPath -n 4
 	# add read groups
-	samtools addreplacerg -@ 4 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".filteredMapQ.primerclipped.bam"
+	samtools addreplacerg -@ 8 -r ID:"SSR_"$runNum"_"$curSampleNoPath -r SM:$curSampleNoPath -o $outputsPath"/"$curSampleNoPath".readGroups.bam" $outputsPath"/"$clipperBase"/"$curSampleNoPath".filteredMapQ.primerclipped.bam"
 	# status message
 	echo "Processed!"
 done

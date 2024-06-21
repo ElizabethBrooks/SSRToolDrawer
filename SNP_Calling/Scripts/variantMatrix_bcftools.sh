@@ -45,7 +45,7 @@ for f1 in $inputsPath"/SNP_Calling_prep_run"*"/clipped/"*".readGroups.bam"; do
 	# print status message
 	echo "Subsetting VCF and removing header for $sampleTag"
 	# subset vcf files by sample and remove header
-	bcftools view --threads 4 -H -Ov -o $inputsPath"/variantsTrimmed/"$sampleTag".noHeader.vcf" -s $sampleTag $inputsPath"/variantsTrimmed/"$runNum"_trimmed.vcf"	
+	bcftools view --threads 8 -H -Ov -o $inputsPath"/variantsTrimmed/"$sampleTag".noHeader.vcf" -s $sampleTag $inputsPath"/variantsTrimmed/"$runNum"_trimmed.vcf"	
 	# status message
 	echo "Processed!"
 done

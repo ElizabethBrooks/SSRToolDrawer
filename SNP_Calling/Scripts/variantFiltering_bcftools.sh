@@ -47,22 +47,22 @@ echo "Total variants from filtered reads with MQ > 60: " > $outputsFile
 bcftools view $inputsPath"/"$runNum"_calls.norm.bcf" | grep -v "#" | wc -l >> $outputsFile
 
 #Include sites with quality > 20 
-bcftools filter --threads 4 -i '%QUAL>20' $inputsPath"/"$runNum"_calls.norm.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-qual.bcf"
+bcftools filter --threads 8 -i '%QUAL>20' $inputsPath"/"$runNum"_calls.norm.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-qual.bcf"
 echo "& including sites with quality > 20: " >> $outputsFile
-bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-qual.bcf" | grep -v "#" | wc -l >> $outputsFile
+bcftools view --threads 8 $outputsPath"/"$runNum"_calls.flt-qual.bcf" | grep -v "#" | wc -l >> $outputsFile
 
 #Include sites with average read depth > 10
-bcftools filter --threads 4 -i 'INFO/DP>10' $outputsPath"/"$runNum"_calls.flt-qual.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-qualDP.bcf"
+bcftools filter --threads 8 -i 'INFO/DP>10' $outputsPath"/"$runNum"_calls.flt-qual.bcf" -Ob -o $outputsPath"/"$runNum"_calls.flt-qualDP.bcf"
 echo "& including sites with average read depth > 10: " >> $outputsFile
-bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -v "#" | wc -l >> $outputsFile
+bcftools view --threads 8 $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" | grep -v "#" | wc -l >> $outputsFile
 
 #Turn on left alignment, normalize indels
 ## and split multiallelic sites
-##bcftools norm --threads 4 -m -any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
+##bcftools norm --threads 8 -m -any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
 # and collapse multi allelic sites
-bcftools norm --threads 4 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
+bcftools norm --threads 8 -m +any -f $ref $outputsPath"/"$runNum"_calls.flt-qualDP.bcf" -Ov -o $outputsPath"/"$runNum"_calls.flt-norm.vcf"
 echo "& with left alignment and normalized indels: " >> $outputsFile
-bcftools view --threads 4 $outputsPath"/"$runNum"_calls.flt-norm.vcf" | grep -v "#" | wc -l >> $outputsFile
+bcftools view --threads 8 $outputsPath"/"$runNum"_calls.flt-norm.vcf" | grep -v "#" | wc -l >> $outputsFile
 
 # index the bcf
 #bcftools index $outputsPath"/"$runNum"_calls.flt-norm.vcf"

@@ -61,7 +61,7 @@ for f1 in "$readPath"/*"_R1_001.fastq.gz"; do
 	fi
 	echo $qcFolder"/"$sampleTag"_R1_001_fastqc/fastqc_data.txt"
 	# perform adapter trimming on paired reads using 8 threads
-	trimmomatic PE -threads 4 -phred"$score" $f1 $f2 $trimOut"/"$sampleTag"_pForward.fq.gz" $trimOut"/"$sampleTag"_uForward.fq.gz" $trimOut"/"$sampleTag"_pReverse.fq.gz" $trimOut"/"$sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+	trimmomatic PE -threads 8 -phred"$score" $f1 $f2 $trimOut"/"$sampleTag"_pForward.fq.gz" $trimOut"/"$sampleTag"_uForward.fq.gz" $trimOut"/"$sampleTag"_pReverse.fq.gz" $trimOut"/"$sampleTag"_uReverse.fq.gz" ILLUMINACLIP:"$adapterPath" LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 	# print status message
 	echo "Processed!"
 done
