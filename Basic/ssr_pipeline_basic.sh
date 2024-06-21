@@ -66,7 +66,7 @@ mkdir $inputsPath
 
 # prepare data for analysis
 cd $baseDir"/Prep"
-bash ssr_pipeline_prep.sh $inputsPath $inputsFile
+bash ssr_pipeline_prep.sh $inputsPath $inputsFile $baseDir
 
 
 # SSR Analysis Stage - Basic Workflow

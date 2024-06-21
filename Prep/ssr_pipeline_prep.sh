@@ -1,13 +1,19 @@
 #!/bin/bash
 
 # script to prep input data for the SSR pipelines
-# usage: bash ssr_pipeline_prep.sh inputsPath inputsFile
+# usage: bash ssr_pipeline_prep.sh inputsPath inputsFile baseDir
 
 # retrieve input argument of a inputs file
 inputsPath=$1
 
 # retrieve analysis outputs absolute path
 inputsFile=$2
+
+# retrieve base of working directory
+baseDir=$3
+
+# retrieve analysis outputs path
+outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # retrieve analysis outputs path
 outputsPath=$(dirname $inputsPath)
@@ -16,7 +22,7 @@ outputsPath=$(dirname $inputsPath)
 versionFile=$outputsPath"/info/software_summary_prep.txt"
 
 # add pipeline info to outputs
-echo -e "SSR pipeline prep software versions for $projectDir \n" > $versionFile
+echo -e "SSR pipeline prep software versions: \n" > $versionFile
 
 # setup reports outputs path
 reportsOut=$outputsPath"/reports"
