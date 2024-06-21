@@ -71,5 +71,8 @@ rm -r $outputsPath"/variantsCalled"
 rm -r $outputsPath"/variantsFiltered"
 rm -r $outputsPath"/variantsTrimmed"
 
+# output run time
+echo $SECONDS > $outputsPath"/combined_seconds.txt"
+
 # status message
 echo "SSR VC analysis complete!"

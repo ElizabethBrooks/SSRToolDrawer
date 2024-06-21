@@ -114,5 +114,8 @@ mv SNP_Matrix.txt $outputsPath"/"$runNum".txt"
 # clean up
 rm -r $inputsPath
 
+# output run time
+echo $SECONDS > $outputsPath"/"$runNum"_seconds.txt"
+
 # status message
 echo "SSR SNP analysis complete!"

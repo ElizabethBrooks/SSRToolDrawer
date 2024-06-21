@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to perform trimming of paired end reads
-# usage: bash report_multiqc.sh inputsPath inputType
+# usage: bash report_multiqc.sh inputsPath inputsFile inputType
 
 # required modules for ND CRC servers
 #module load bio
@@ -9,8 +9,11 @@
 # retrieve input argument of a inputs file
 inputsPath=$1
 
+# retrieve analysis outputs absolute path
+inputsFile=$2
+
 # retrieve inputs type
-inputType=$2
+inputType=$3
 
 # retrieve analysis outputs path
 outputsPath=$(dirname $inputsPath)
@@ -23,8 +26,11 @@ echo "QC report: " >> $versionFile
 multiqc --version >> $versionFile
 echo -e "\n" >> $versionFile
 
+# retrieve the run number 
+runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
+
 # setup multiqc outputs path
-multiqcOut=$outputsPath"/reports/qc_"$inputType
+multiqcOut=$outputsPath"/reports/qc_"$inputType"_"$runNum
 
 # make multiqc outputs directory
 mkdir $multiqcOut
