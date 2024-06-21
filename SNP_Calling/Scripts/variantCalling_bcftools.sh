@@ -12,17 +12,21 @@ runNum="combined"
 # retrieve analysis inputs path
 inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 inputsPath=$inputsPath"/SNP_Calling"
+
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
+
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")
+
 # retrieve primers path
 primerPath=$(grep "primers:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/primers://g")
+
 # retrieve analysis outputs path
-infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+outputsPath=$(dirname $inputsPath)
 
 # name output file of inputs
-versionFile=$infoPath"/info/software_summary_SNP.txt"
+versionFile=$outputsPath"/info/software_summary_SNP.txt"
 
 # output software version
 echo "Variant calling: " >> $versionFile

@@ -10,10 +10,10 @@ inputsPath=$1
 baseDir=$2
 
 # retrieve analysis outputs path
-infoPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
+outputsPath=$(dirname $inputsPath)
 
 # name output file of inputs
-versionFile=$infoPath"/info/software_summary_SNP.txt"
+versionFile=$outputsPath"/info/software_summary_SNP.txt"
 
 # output software version
 echo "Sorting: " >> $versionFile
