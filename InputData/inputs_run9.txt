@@ -1,3 +1,3 @@
 run: run9
 ID: 20240612_ChestnutSSR_Round9
-pairedReads: /afs/crc/group/genomics/Andor/20240612_Shoue_ChestnutSSR_Round_9/fastq
+pairedReads: /afs/crc/group/genomics/Andor/20240612_Shoue_ChestnutSSR_Round_9/Fastq/
