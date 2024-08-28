@@ -1,3 +1,3 @@
 run: run4
-ID: 220408_JB-998_ChestnutSSR_Round4
-pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220408_JB-998_ChestnutSSR_Round4/Fastq
+ID: 220408_ChestnutSSR_Round4
+pairedReads: /afs/crc.nd.edu/group/genomics/Mando/220408_ChestnutSSR_Round4/Fastq

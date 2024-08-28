@@ -1,3 +1,3 @@
 run: run10
-ID: 20240824_Shoue_ChestnutSSR_Round_10
-pairedReads: /afs/crc/group/genomics/Mando/20240824_Shoue_ChestnutSSR_Round_10
+ID: 20240824_ChestnutSSR_Round10
+pairedReads: /afs/crc/group/genomics/Mando/20240824_ChestnutSSR_Round10
