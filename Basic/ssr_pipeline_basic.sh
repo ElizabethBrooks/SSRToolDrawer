@@ -50,7 +50,7 @@ infoPath=$(grep "ssrInfo:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d 
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsPath=$outputsPath"/"$projectDir"_SSR_Basic"
+outputsPath=$outputsPath"/SSR_Basic_"$projectDir
 mkdir $outputsPath
 # check if the folder already exists
 if [ $? -ne 0 ]; then
