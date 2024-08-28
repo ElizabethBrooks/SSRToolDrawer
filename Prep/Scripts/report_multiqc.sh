@@ -32,7 +32,14 @@ runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run:/
 # setup multiqc outputs path
 multiqcOut=$outputsPath"/reports/qc_"$inputType"_"$runNum
 
-# make multiqc outputs directory
+# this is used to re-start analyses
+# check if the outputs directory already exsists
+if [ -d $multiqcOut ]; then
+	echo "Directory exists... exiting"
+	exit
+fi
+
+# make the new directory
 mkdir $multiqcOut
 
 # name of directory with qc results

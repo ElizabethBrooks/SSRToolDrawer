@@ -24,6 +24,9 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/SNP_Calling"
 mkdir $outputsPath
+
+# before re-starting the analysis, make sure to remove any sub directories that were not completely analyzed
+# this should be the last directory that was created during the analysis
 # check if the folder already exists
 if [ $? -ne 0 ]; then
 	echo "Warning! The $outputsPath directory already exsists. Proceeding..."

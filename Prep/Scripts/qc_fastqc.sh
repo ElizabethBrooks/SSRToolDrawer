@@ -29,8 +29,17 @@ echo "QC: " >> $versionFile
 fastqc -version >> $versionFile
 echo -e "\n" >> $versionFile
 
-# make a new directory for analysis
+# name a new directory for analysis
 qcOut=$inputsPath"/qc"
+
+# this is used to re-start analyses
+# check if the outputs directory already exsists
+if [ -d $qcOut ]; then
+	echo "Directory exists... exiting"
+	exit
+fi
+
+# make the new directory
 mkdir $qcOut
 
 # move to the new directory

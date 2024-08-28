@@ -34,6 +34,15 @@ echo -e "\n" >> $versionFile
 
 # make a new directory for analysis
 trimOut=$inputsPath"/trimmed"
+
+# this is used to re-start analyses
+# check if the outputs directory already exsists
+if [ -d $trimOut ]; then
+	echo "Directory exists... exiting"
+	exit
+fi
+
+# make the new directory
 mkdir $trimOut
 
 # move to the new directory

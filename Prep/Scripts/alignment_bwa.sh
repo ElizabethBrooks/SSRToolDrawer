@@ -36,6 +36,15 @@ echo -e "\n" >> $versionFile
 
 # make an outputs directory for analysis
 anOut=$inputsPath"/aligned"
+
+# this is used to re-start analyses
+# check if the outputs directory already exsists
+if [ -d $anOut ]; then
+	echo "Directory exists... exiting"
+	exit
+fi
+
+# make the new directory
 mkdir $anOut
 
 # move to the outputs directory

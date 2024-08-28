@@ -52,6 +52,10 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 # make a new directory for project analysis
 outputsPath=$outputsPath"/SSR_Basic_"$projectDir
 mkdir $outputsPath
+
+# comment this out to re-start the analysis
+# before re-starting the analysis, make sure to remove any sub directories that were not completely analyzed
+# this should be the last directory that was created during the analysis
 # check if the folder already exists
 if [ $? -ne 0 ]; then
 	echo "The $outputsPath directory already exsists... please remove before proceeding."
@@ -80,7 +84,7 @@ source /afs/crc.nd.edu/user/e/ebrooks5/.bashrc
 conda activate /afs/crc.nd.edu/user/e/ebrooks5/.conda/envs/python2
 
 # status message
-echo "SSR basic analysis started..."
+echo "SSR Basic analysis started..."
 
 # copy pipeline scripts to inputs directory
 cp $baseDir"/Basic/Scripts/"* $inputsPath"/aligned"
@@ -119,4 +123,4 @@ rm -r $inputsPath
 echo $SECONDS > $outputsPath"/"$runNum"_seconds.txt"
 
 # status message
-echo "SSR SNP analysis complete!"
+echo "SSR Basic analysis complete!"
