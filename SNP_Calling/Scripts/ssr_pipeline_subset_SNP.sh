@@ -39,7 +39,9 @@ mkdir $inputsPath
 # this should be the last directory that was created during the analysis
 # check if the folder already exists
 if [ $? -ne 0 ]; then
-	echo "Warning! The $inputsPath directory already exsists. Proceeding..."
+	#echo "Warning! The $inputsPath directory already exsists. Proceeding..."
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
 fi
 
 # prepare data for analysis
