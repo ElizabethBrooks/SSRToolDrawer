@@ -7,7 +7,7 @@
 
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runList
-# usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9
+# usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9 run10
 
 # retrieve input argument of a inputs file
 inputsFile=$1
