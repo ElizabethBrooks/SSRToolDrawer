@@ -1,3 +1,3 @@
 run: run1
-ID: 190920_Chestnut_Multiplex-PCR_Plate02
+ID: 190920_ChestnutSSR_Round1
 pairedReads: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/190920_Chestnut_Multiplex-PCR_Plate02
