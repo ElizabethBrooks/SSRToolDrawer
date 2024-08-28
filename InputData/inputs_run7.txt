@@ -1,3 +1,3 @@
 run: run7
-ID: 230719_ChestnutSSR_Round7
-pairedReads: /afs/crc.nd.edu/group/genomics/Mando/230719_ChestnutSSR_Round7
+ID: ChestnutSSR_Round7
+pairedReads: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round7

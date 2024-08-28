@@ -76,21 +76,38 @@ Formats the output of SNPMatrix.py into a format that can be read by JoinMap.
 ### SSR Sequences
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq/finalset-2.fa
 
-### Sequence Capture Data
+### Sequence Capture Data - Working
+- run1: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round1
+- run2: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round2
+- run3: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round3
+- run4: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round4
+- run5: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round5
+- run6: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round6
+- run7: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round7
+- run8: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round8
+- run9: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round9
+- run10: /afs/crc.nd.edu/group/genomics/Mando/ChestnutSSR_Round10
+
+### Sequence Capture Data - Original
 - run1: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/190920_Chestnut_Multiplex-PCR_Plate02
 - run2: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/211111_JB-688_Romero-Severson-Chestnut
-- run3: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220128_JB-861_Romero-Severson-Chestnut/Fastq
-- run4: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220408_JB-998_ChestnutSSR_Round4/Fastq
+- run3: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220128_JB-861_Romero-Severson-Chestnut
+- run4: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220408_JB-998_ChestnutSSR_Round4
 - run5: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/220706_ChestnutSSR_Round5
 - run6: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207-230130_JRS-ChestnutSSR-Set6
 - run7: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230719_ChestnutSSR_Round7
 - run8: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/240112_DS-2529_ChestnutSSR_Round8
+- run9: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/Romero-Severson_DS-2862_ChestnutSSR_Round9_240612_M00314_LL7GG
+- run10: /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/Romero-Severson_DS-3011_240824_M00314
 
 #### Note
 
 The plate 6 sets were split across two runs:
 - /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230130_JRS-ChestnutSSR-Set6
 - /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207_JRS-ChestnutSSR-Set6
+
+Combined plate 6 sets:
+- /afs/crc.nd.edu/group/genomics/DEATHSTAR/MiSeq/230207-230130_JRS-ChestnutSSR-Set6
 
 ## Past Analysis Data Sets
 
@@ -108,8 +125,3 @@ Walnut:
 Last chestnut:
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_2021_miseq
 - /afs/crc.nd.edu/group/genomics/lando/JRS-chestnut_02-2022_miseq
-
-
-## TO-DO
-
-- Fix writing of software versions to summary file in the info directory
