@@ -35,7 +35,7 @@ multiqcOut=$outputsPath"/reports/qc_"$inputType"_"$runNum
 # this is used to re-start analyses
 # check if the outputs directory already exsists
 if [ -d $multiqcOut ]; then
-	echo "Directory exists... exiting"
+	echo "$multiqcOut directory exists... exiting"
 	exit
 fi
 

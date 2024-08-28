@@ -40,7 +40,7 @@ anOut=$inputsPath"/aligned"
 # this is used to re-start analyses
 # check if the outputs directory already exsists
 if [ -d $anOut ]; then
-	echo "Directory exists... exiting"
+	echo "$anOut directory exists... exiting"
 	exit
 fi
 

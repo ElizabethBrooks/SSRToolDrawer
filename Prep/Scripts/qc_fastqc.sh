@@ -35,7 +35,7 @@ qcOut=$inputsPath"/qc"
 # this is used to re-start analyses
 # check if the outputs directory already exsists
 if [ -d $qcOut ]; then
-	echo "Directory exists... exiting"
+	echo "$qcOut directory exists... exiting"
 	exit
 fi
 
