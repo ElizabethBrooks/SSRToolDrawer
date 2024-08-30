@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantTrimming_bedtools.sh baseDir
+# usage: bash variantTrimming_bedtools.sh baseDir inputsPath
 
 # retrieve base of working directory
 baseDir=$1
@@ -10,8 +10,7 @@ baseDir=$1
 runNum="combined"
 
 # retrieve analysis inputs path
-inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-inputsPath=$inputsPath"/SNP_Calling"
+inputsPath=$2
 
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")

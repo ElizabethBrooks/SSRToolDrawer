@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash variantCalling_bcftools.sh baseDir
+# usage: bash variantCalling_bcftools.sh baseDir inputsPath
 
 # retrieve base of working directory
 baseDir=$1
@@ -10,8 +10,7 @@ baseDir=$1
 runNum="combined"
 
 # retrieve analysis inputs path
-inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-inputsPath=$inputsPath"/SNP_Calling"
+inputsPath=$2
 
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # script to run the SSR pipeline
-# usage: bash ssr_pipeline_SNP.sh inputsFile baseDir
+# usage: bash ssr_pipeline_SNP.sh inputsFile baseDir outputsPath
 
 # load required software modules
 module load bio/2.0
@@ -19,17 +19,15 @@ inputsFile=$1
 # retrieve base directory path
 baseDir=$2
 
+# retrieve outputs path
+outputsPath=$3
+
 # retrieve the run number 
 runNum=$(grep "run:" $baseDir"/InputData/"$inputsFile | tr -d " " | sed "s/run://g")
 # retrieve ssr info path
 infoPath=$(grep "ssrInfo:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrInfo://g")
 # retrieve reference path
 ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/reference://g")
-# retrieve analysis outputs path
-outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-
-# make a new directory for project analysis
-outputsPath=$outputsPath"/SNP_Calling"
 
 # setup the inputs path
 inputsPath=$outputsPath"/SNP_Calling_prep_"$runNum

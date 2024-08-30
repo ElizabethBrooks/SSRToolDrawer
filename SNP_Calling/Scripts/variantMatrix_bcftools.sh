@@ -5,7 +5,7 @@
 #$ -N SNP_matrix_jobOutput
 
 # script to create a formatted variant matrix
-# usage: bash variantMatrix_bcftools.sh baseDir
+# usage: bash variantMatrix_bcftools.sh baseDir inputsPath
 
 # retrieve base of working directory
 baseDir=$1
@@ -14,8 +14,7 @@ baseDir=$1
 runNum="combined"
 
 # retrieve analysis inputs path
-inputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
-inputsPath=$inputsPath"/SNP_Calling"
+inputsPath=$2
 
 # retrieve ssr regions path
 regionsPath=$(grep "ssrRegions:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/ssrRegions://g")

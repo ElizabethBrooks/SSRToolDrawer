@@ -23,7 +23,7 @@ baseDir=$(dirname $currDir)
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsPath=$outputsPath"/SNP_Calling"
+outputsPath=$outputsPath"/SNP_Calling_"$1"_to_"$${@: -1}
 mkdir $outputsPath
 
 # before re-starting the analysis, make sure to remove any sub directories that were not completely analyzed
@@ -51,23 +51,23 @@ for run in "$@"; do
 	# set inputs file name
 	subsetFile="inputs_"$run".txt"
 	# run bash script to process the current subset
-	bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir
+	bash ssr_pipeline_subset_SNP.sh $subsetFile $baseDir $outputsPath
 done
 
 # load software modules
 module load bio/2.0
 
 # run script to perform variant calling
-bash variantCalling_bcftools.sh $baseDir
+bash variantCalling_bcftools.sh $baseDir $outputsPath
 
 # run script to perform variant filtering
-bash variantFiltering_bcftools.sh $baseDir
+bash variantFiltering_bcftools.sh $baseDir $outputsPath
 
 # run script to perform variant trimming
-bash variantTrimming_bedtools.sh $baseDir
+bash variantTrimming_bedtools.sh $baseDir $outputsPath
 
 # format matrix
-bash variantMatrix_bcftools.sh $baseDir
+bash variantMatrix_bcftools.sh $baseDir $outputsPath
 
 # clean up
 rm -r $outputsPath"/SNP_Calling_prep_run"*
