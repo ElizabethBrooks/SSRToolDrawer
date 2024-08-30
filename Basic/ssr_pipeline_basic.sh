@@ -3,6 +3,7 @@
 #$ -m abe
 #$ -r n
 #$ -N ssr_basic_jobOutput
+#$ -q largemem
 #$ -pe smp 8
 
 # script to run the SSR pipeline
