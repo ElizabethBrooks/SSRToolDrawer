@@ -23,7 +23,7 @@ baseDir=$(dirname $currDir)
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-outputsPath=$outputsPath"/SNP_Calling_"$1"_to_"$${@: -1}
+outputsPath=$outputsPath"/SNP_Calling_"$1"_to_"${@: -1}
 mkdir $outputsPath
 
 # before re-starting the analysis, make sure to remove any sub directories that were not completely analyzed
