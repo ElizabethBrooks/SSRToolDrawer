@@ -43,13 +43,13 @@ cd Scripts
 bash qc_fastqc.sh $inputsPath $inputsFile $baseDir
 
 # create qc report with multiqc
-bash report_multiqc.sh $inputsPath $inputsFile "raw"
+bash report_multiqc.sh $inputsPath $inputsFile $baseDir "raw"
 
 # trimming with trimmomatic
 bash trimming_trimmomatic.sh $inputsPath $inputsFile $baseDir
 
 # create qc report with multiqc
-bash report_multiqc.sh $inputsPath $inputsFile "trimmed"
+bash report_multiqc.sh $inputsPath $inputsFile $baseDir "trimmed"
 
 # mapping with bwa
 bash alignment_bwa.sh $inputsPath $inputsFile $baseDir

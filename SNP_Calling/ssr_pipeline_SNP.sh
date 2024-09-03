@@ -9,6 +9,7 @@
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runList
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9 run10
+## job 783901
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -70,10 +71,10 @@ bash variantTrimming_bedtools.sh $baseDir $outputsPath
 bash variantMatrix_bcftools.sh $baseDir $outputsPath
 
 # clean up
-rm -r $outputsPath"/SNP_Calling_prep_run"*
-rm -r $outputsPath"/variantsCalled"
-rm -r $outputsPath"/variantsFiltered"
-rm -r $outputsPath"/variantsTrimmed"
+#rm -r $outputsPath"/SNP_Calling_prep_run"*
+#rm -r $outputsPath"/variantsCalled"
+#rm -r $outputsPath"/variantsFiltered"
+#rm -r $outputsPath"/variantsTrimmed"
 
 # output run time
 echo $SECONDS > $outputsPath"/combined_seconds.txt"
