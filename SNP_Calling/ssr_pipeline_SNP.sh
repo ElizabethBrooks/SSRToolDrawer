@@ -8,9 +8,14 @@
 
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runList
+# usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8
+## job
+# usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9
+## job
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9 run10
-## job 783901 -> test2
-## job 792141 -> test3
+## job 783901 -> SNP_Calling_run1_to_run10_test2
+## job 792141 -> SNP_Calling_run1_to_run10_test3
+## job 793827 -> SNP_Calling_run1_to_run10_test4
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -25,8 +30,8 @@ baseDir=$(dirname $currDir)
 outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " " | sed "s/outputs://g")
 
 # make a new directory for project analysis
-#outputsPath=$outputsPath"/SNP_Calling_"$1"_to_"${@: -1}
-outputsPath=$outputsPath"/SNP_Calling"
+#outputsPath=$outputsPath"/SNP_Calling"
+outputsPath=$outputsPath"/SNP_Calling_"$1"_to_"${@: -1}
 mkdir $outputsPath
 
 # before re-starting the analysis, make sure to remove any sub directories that were not completely analyzed
