@@ -33,11 +33,11 @@ ref=$(grep "reference:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr -d " "
 inputsPath=$outputsPath"/SNP_Calling_prep_"$runNum
 mkdir $inputsPath
 
+# comment this out to re-start the analysis
 # before re-starting the analysis, make sure to remove any sub directories that were not completely analyzed
 # this should be the last directory that was created during the analysis
 # check if the folder already exists
 if [ $? -ne 0 ]; then
-	#echo "Warning! The $inputsPath directory already exsists. Proceeding..."
 	echo "The $outputsPath directory already exsists... please remove before proceeding."
 	exit 1
 fi

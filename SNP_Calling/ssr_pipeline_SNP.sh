@@ -9,13 +9,15 @@
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runList
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8
-## job
+## job 795810
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9
-## job
+## job 795812
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9 run10
 ## job 783901 -> SNP_Calling_run1_to_run10_test2
 ## job 792141 -> SNP_Calling_run1_to_run10_test3
 ## job 793827 -> SNP_Calling_run1_to_run10_test4
+# usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run10
+## job 
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -34,11 +36,13 @@ outputsPath=$(grep "outputs:" $baseDir"/InputData/inputs_ssr_pipeline.txt" | tr 
 outputsPath=$outputsPath"/SNP_Calling_"$1"_to_"${@: -1}
 mkdir $outputsPath
 
+# comment this out to re-start the analysis
 # before re-starting the analysis, make sure to remove any sub directories that were not completely analyzed
 # this should be the last directory that was created during the analysis
 # check if the folder already exists
 if [ $? -ne 0 ]; then
-	echo "Warning! The $outputsPath directory already exsists. Proceeding..."
+	echo "The $outputsPath directory already exsists... please remove before proceeding."
+	exit 1
 fi
 
 # make a directory for the software version info
