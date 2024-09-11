@@ -9,15 +9,18 @@
 # script to run the SSR pipeline
 # usage: qsub ssr_pipeline_SNP.sh runList
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8
-## job 795810
+## job 795810 -> SUCCEEDED
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9
-## job 795812
+## job 795812 -> SUCCEEDED
 # usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run9 run10
 ## job 783901 -> SNP_Calling_run1_to_run10_test2
 ## job 792141 -> SNP_Calling_run1_to_run10_test3
 ## job 793827 -> SNP_Calling_run1_to_run10_test4
-# usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run10
+## job 798431 -> [E::hts_open_format] Failed to open file /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/SSRAnalysis_Aug2024/SNP_Calling/SNP_Calling_prep_run9/clipped/CHC4238_S105_L001_run9.readGroups.bam -> [mpileup] failed to open /afs/crc.nd.edu/group/genomics/Mando/GBCF_bioinformatics_romero_SSR/SSRAnalysis_Aug2024/SNP_Calling/SNP_Calling_prep_run9/clipped/CHC4238_S105_L001_run9.readGroups.bam: Too many open files
 ## job 
+# usage Ex: qsub ssr_pipeline_SNP.sh run1 run2 run3 run4 run5 run6 run7 run8 run10
+## job 798430 -> SUCCEEDED
+
 
 # retrieve input argument of a inputs file
 inputsFile=$1
@@ -68,6 +71,25 @@ done
 
 # load software modules
 module load bio/2.0
+
+# get open file limit
+fileLimit=$(ulimit -n)
+
+# print open file limit
+echo "File limit: "$fileLimit
+
+# count the number of input files 
+numFiles=$(ls -d $outputsPath"/SNP_Calling_prep_run"*"/clipped/"*".readGroups.bam" | grep -v "Undetermined")
+
+# add 4 to the number of files
+# https://github.com/samtools/bcftools/issues/2231
+numFiles=$((numFiles+4))
+
+# increase limit on number of open files
+ulimit -n $numFiles
+
+# print updated open file limit
+echo "Updated file limit: "$fileLimit
 
 # run script to perform variant calling
 bash variantCalling_bcftools.sh $baseDir $outputsPath
